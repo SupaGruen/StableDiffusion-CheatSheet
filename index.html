@@ -1,0 +1,347 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Stable Diffusion 1.5 - Cheat Sheet</title>
+<style type="text/css">
+/* roboto-condensed-regular - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Roboto Condensed';
+  font-style: normal;
+  font-weight: 400;
+  src: url('fonts/roboto-condensed-v25-latin-regular.eot'); /* IE9 Compat Modes */
+  src: url('fonts/roboto-condensed-v25-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('fonts/roboto-condensed-v25-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('fonts/roboto-condensed-v25-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('fonts/roboto-condensed-v25-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('fonts/roboto-condensed-v25-latin-regular.svg#RobotoCondensed') format('svg'); /* Legacy iOS */
+}
+
+/* roboto-condensed-700 - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Roboto Condensed';
+  font-style: normal;
+  font-weight: 700;
+  src: url('fonts/roboto-condensed-v25-latin-700.eot'); /* IE9 Compat Modes */
+  src: url('fonts/roboto-condensed-v25-latin-700.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('fonts/roboto-condensed-v25-latin-700.woff2') format('woff2'), /* Super Modern Browsers */
+       url('fonts/roboto-condensed-v25-latin-700.woff') format('woff'), /* Modern Browsers */
+       url('fonts/roboto-condensed-v25-latin-700.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('fonts/roboto-condensed-v25-latin-700.svg#RobotoCondensed') format('svg'); /* Legacy iOS */
+}
+
+/* roboto-slab-regular - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 400;
+  src: url('fonts/roboto-slab-v24-latin-regular.eot'); /* IE9 Compat Modes */
+  src: url('fonts/roboto-slab-v24-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('fonts/roboto-slab-v24-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('fonts/roboto-slab-v24-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('fonts/roboto-slab-v24-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('fonts/roboto-slab-v24-latin-regular.svg#RobotoSlab') format('svg'); /* Legacy iOS */
+}
+
+:root {
+  --bgr: #191D24;
+  --bgr-tp: rgba(25,29,36,.8);
+  --dgr: #303744;
+  --gr: #2A313C;
+  --lg: #47555e;
+  --lb: #7aa5d2;
+  --ow: #eeeeee;
+  --fc: #637289;
+}
+
+html { scroll-padding: 140px 0 0 0; }
+body { margin: 0; padding: 0; font-family: Gotham, "Helvetica Neue", Helvetica, Arial, "sans-serif"; background-color: var(--bgr); }
+* { font-family: 'Roboto Condensed',Gotham,"Helvetica Neue",Helvetica,Arial,sans-serif; color: var(--ow); }
+
+h1 {}
+sup { font-weight: 400; font-size: 0.8rem; }
+
+header { position: sticky; margin: 0; padding: 10px 20px 0 20px; height: 125px; top: 0; left: 0; z-index: 999; background-color: var(--bgr-tp); }
+nav { display: flex; justify-content:space-between; flex-wrap: wrap; }
+nav ul { margin: 2px 0 0 0; padding: 0; list-style-type: none; }
+nav ul li { display: inline; margin: 0 5px 0 0; }
+nav ul li a, .filterbut { padding: 3px 10px; font-size: 1.2rem; color: #FFF; background-color: var(--dgr); text-decoration: none; }
+nav ul li a:hover, nav ul li a.active { background-color: var(--lg); }
+#suche { position: relative; }
+#suche label { display: none; }
+#suche #searchbox { padding: 3px 5px; font-size: 1.2rem; color: #FFF; background-color: var(--dgr); border: none; }
+
+#clearsearch { position: absolute; top: 0px; right: 0; z-index: 9999; display: none; padding: 5px 10px; font-size: 1rem; text-decoration: none; background-color: var(--lg); color: #FFF; }
+#clearsearch.show { display: inline-block; }
+
+section#styles { margin: 20px; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 20px; }
+
+.stylepod { position: relative; display: block; margin: 0; padding: 0; width: 256px; height: 256px; background-size: 512px; border-radius: 5px; overflow: hidden; cursor: pointer; background-repeat: no-repeat; }
+.stylepod h3 { margin: 20px 0 10px 20px; padding: 0 20px 0 0; text-transform: uppercase; text-shadow: 1px 1px 5px #555; }
+.stylepod .styleinfo .more { display: none; }
+.stylepod .gallery { display: none; position: absolute; bottom: 10px; left: 10px; margin: 0; padding: 0; width: 236px; height: 50px; background-image: inherit; background-size: 0 0; justify-content: space-between; }
+.stylepod:hover .gallery { display: flex; }
+.stylepod figure { display: inline-block; margin: 0; padding: 0; width: 50px; height: 50px; background-size: 100px; background-image: inherit; border-radius: 3px; }
+.stylepod figure:nth-child(1) { }
+.stylepod figure:nth-child(2) { background-position: 100% 0px; }
+.stylepod figure:nth-child(3) { background-position: 0px 100%; }
+.stylepod figure:nth-child(4) { background-position: 100% 100%; }
+
+.stylepod figure figcaption { display: none; }
+
+.is-hidden { display: none; }
+
+#allcats { position: absolute; top: 125px; left: 0; margin: 10px 0 0 0; padding: 20px; display: none; flex-wrap: wrap; align-items: flex-start; gap: 5px; background-color: var(--bgr-tp); }
+#allcats.show { display: flex; }
+#allcats span { display: inline-block; padding: 2px 5px; font-size: 1rem; color: #FFF; background-color: var(--lg); border-radius: 3px; cursor: pointer; }
+#allcats span:hover { background-color: var(--lb); }
+#allcats span span { margin: 0; padding: 0; background-color: transparent; color: var(--lb); }
+#allcats span:hover span { color: var(--gr); }
+
+/* Stylepod with .active class */
+.stylepod.active { display: flex; flex-wrap: nowrap; width: 532px; background-position: -999px -999px; align-items: flex-start; }
+.stylepod.active h3 { text-shadow: none; }
+.stylepod.active .styleinfo { display: inline-block; width: 256px; height: 256px; padding-right: 20px; background-color: var(--dgr); }
+.stylepod.active .styleinfo .more { display: block; }
+.stylepod.active .styleinfo .more .category { white-space: nowrap; overflow: hidden; }
+.stylepod.active .styleinfo .more .category, .stylepod.active .styleinfo .more .checkpoint { margin: 0 10px 10px 20px; }
+.stylepod.active .styleinfo .more .category span, .stylepod.active .styleinfo .more .checkpoint span, legend { margin: 0 0 3px 0; display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--fc); }
+.stylepod.active .styleinfo .more fieldset legend { margin: 0; padding: 0; color: var(--lb); }
+.stylepod.active .styleinfo .more fieldset { margin: 15px 0 0 20px; padding: 0; border: none; background-color: rgba(255,255,255,0.05); border-radius: 3px; border: 1px dashed rgba(255,255,255,0.20); }
+.stylepod.active .styleinfo .more fieldset .copyme { display: block; padding: 5px 5px 10px 5px; cursor: copy; }
+.stylepod.active .gallery { display: flex; position: initial; width: 256px; height: 256px; background-image: inherit; background-size: 256px; border-radius: 0 5px 5px 0; }
+.stylepod.active .gallery figure { display: none; }
+
+.stylepod.prompt .styleinfo .more fieldset .copyme  { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 220px; }
+.stylepod.prompt .styleinfo .more .checkpoint span { font-size: 0.75rem; font-weight: 400; text-transform: none; color: var(--ow); }
+
+@media screen and (min-width: 900px) {
+
+.stylepod.active { width: 100%; /*max-width: 1300px;*/ }
+.stylepod.active .styleinfo { display: block; min-width: 256px; height: 256px; }
+.stylepod.active .gallery { display: flex; position: initial; width: 100%; height: 256px; background-image: inherit; background-size: 0 0; justify-content: flex-start; flex-wrap: nowrap; overflow-x: auto; overflow-y: hidden; scrollbar-color: var(--dgr) #222; scrollbar-width: thin; }
+.stylepod.active .gallery figure { display: inline-block; min-width: 256px; height: 256px; background-size: 512px; background-image: inherit; border-radius: 0; }
+.stylepod figure:nth-child(2) { background-position: 100% 0px; }
+.stylepod figure:nth-child(3) { background-position: 0px 100%; }
+.stylepod figure:nth-child(4) { background-position: 100% 100%; border-radius: 0 5px 5px 0!important; }
+
+.stylepod.active .gallery::-webkit-scrollbar { height: 8px; background-color: #aaa; }
+
+}
+
+#snackbar { visibility: hidden; color: #fff; background-color: var(--lb); min-width: 250px; margin-left: -125px; border-radius: 2px; padding: 16px; text-align: center; left: 50%; top: 30px; z-index: 1; position: fixed; z-index: 99999; }
+#snackbar.show { visibility: visible; -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+@-webkit-keyframes fadein { from {top: 0; opacity: 0;} to {top: 30px; opacity: 1;} }
+@keyframes fadein { from {top: 0; opacity: 0;} to {top: 30px; opacity: 1;} }
+@-webkit-keyframes fadeout { from {top: 30px; opacity: 1;} to {top: 0; opacity: 0;} }
+@keyframes fadeout { from {top: 30px; opacity: 1;} to {top: 0; opacity: 0;} }
+</style>
+
+<script src="./lazyload.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded",function(event){
+
+    //Load JSON
+    const url = "https://v33s.com/SD/notizen/stile.json";
+    fetch(url)
+    .then((res) => res.json())
+    .then((data) => {
+
+        //Load JSON and put in DOM
+        var outputdata = '';
+        for(var i=0; i<data.length; i++) {
+        
+            if(data[i].Type==1){
+
+                outputdata = outputdata + '<div id="" class="stylepod lazy" data-bg="./img/' + data[i].Image + '">';
+                outputdata = outputdata + '<div class="styleinfo">';
+                outputdata = outputdata + '<h3>' + data[i].Name + '</h3>';
+                outputdata = outputdata + '<div class="more">';
+                outputdata = outputdata + '<p class="category"><span>Category</span>' + data[i].Category + '</p>';
+                outputdata = outputdata + '<p class="checkpoint"><span>Checkpoint</span>' + data[i].Checkpoint + '</p>';
+                outputdata = outputdata + '<fieldset><legend>Copy Prompt</legend><span class="copyme">' + data[i].Prompt + '</span></fieldset>';
+                outputdata = outputdata + '</div>';
+                outputdata = outputdata + '</div>';
+                outputdata = outputdata + '<div class="gallery">';
+                outputdata = outputdata + '<figure><figcaption></figcaption></figure>';
+                outputdata = outputdata + '<figure></figure>';
+                outputdata = outputdata + '<figure></figure>';
+                outputdata = outputdata + '<figure></figure>';
+                outputdata = outputdata + '</div>';
+                outputdata = outputdata + '</div>';
+            }
+
+        }
+        let puthere = document.getElementById('styles');
+        puthere.innerHTML = outputdata;
+
+        //Vars
+        var filbut = document.querySelector('.filterbut');
+        var catsbox = document.getElementById('allcats');
+        var clearbut = document.getElementById('clearsearch');
+        var filters = document.querySelectorAll('#allcats span');
+
+        var pods = document.querySelectorAll('.stylepod');
+
+        var typingTimer;               
+        var typeInterval = 500;  
+        var searchInput = document.getElementById('searchbox');
+
+        var spans = document.getElementsByClassName('copyme');
+
+        //Prompt Clipboard
+        for(var i = 0; i < spans.length; i++){
+            currentspan = spans[i];
+            currentspan.addEventListener('click',function(){
+                var inp = document.createElement('input');
+                var alttxt = this.innerText;
+                //console.log("Copy:", alttxt);
+                document.body.appendChild(inp);
+                inp.value = alttxt;
+                inp.select();
+                document.execCommand('copy',false);
+                inp.remove();
+                showSnackBar();
+            });
+        };
+
+        //Style open/close
+        if(pods){
+            for(var i = 0; i < pods.length; i++){
+                var currentpod = pods[i];
+                currentpod.addEventListener('click',function(e){
+                    if(e.target.classList.contains('copyme')) return
+                    this.classList.toggle('active');
+
+                    //Anchor in url bar
+                    var getnewanker = e.target.id;
+                    //console.log(getnewanker);
+                    if(!getnewanker){
+                        const url = window.location.href.replace(/#.*/, "");
+                        history.pushState({}, "", url);
+                    } else {
+                        const url = window.location.href.replace(/#.*/, "") + '#' + getnewanker;
+                        history.pushState({}, "", url);
+                    }
+
+                    let thishash = window.location.hash;
+                    if(thishash){
+                        location.hash = thishash;
+                    }
+
+                });
+            };
+        };
+
+        //Check if Anchor in url
+        if(window.location.hash){
+            let thishash = window.location.hash;
+            let thishashnew = thishash.replace('#','');
+            if(thishash){
+                let machaktiv = document.getElementById(thishashnew).classList.add('active');
+                location.hash = thishash;
+            }
+        }
+
+        //Search  - https://css-tricks.com/in-page-filtered-search-with-vanilla-javascript/
+        function liveSearch(){
+            let search_query = document.getElementById("searchbox").value;
+            for (var i = 0; i < pods.length; i++) {
+                //console.log(search_query.toLowerCase());
+                if(pods[i].textContent.toLowerCase().includes(search_query.toLowerCase())){
+                    pods[i].classList.remove("is-hidden");
+                    clearbut.classList.remove('show');
+                } else {
+                    pods[i].classList.add("is-hidden");
+                    clearbut.classList.add('show');
+                }
+            }
+        }
+
+        //A little delay
+        searchInput.addEventListener('keyup', () => {
+            clearTimeout(typingTimer);
+            typingTimer = setTimeout(liveSearch, typeInterval);
+        });
+
+
+        //Filter    
+        filbut.onclick = function(e){
+          e.preventDefault();
+          catsbox.classList.toggle('show');
+        }
+        clearbut.onclick = function(e){
+          e.preventDefault();
+          document.getElementById('searchbox').value = '';
+          liveSearch();
+        }
+
+        if(filters){
+            for(var i = 0; i < filters.length; i++){
+                var currentfilter = filters[i];
+                currentfilter.addEventListener('click',function(e){
+                    document.getElementById('searchbox').value = this.dataset.srch;
+                    liveSearch();
+                    catsbox.classList.toggle('show');
+                });
+            };
+        };
+
+
+        //Kopiert Hinweis
+        function showSnackBar() {
+          var sb = document.getElementById("snackbar");
+          sb.className = "show";
+          setTimeout(()=>{ sb.className = sb.className.replace("show", ""); }, 1500);
+        }
+
+        LL = new LazyLoad({});
+
+
+    }).catch((error) => {console.log(error);});
+
+
+});
+
+</script>
+
+</head>
+<body>
+
+<header>
+
+    <h1>Stable Diffusion 1.5 - Cheat Sheet</h1>
+    
+    <nav>
+        <ul>
+            <li><a class="mbut<? if($showme=='1'){ echo ' active'; }?>" href="./?s=1"> Stile</a></li>
+            <li><a class="mbut<? if($showme=='2'){ echo ' active'; }?>" href="./?s=2"> Prompts</a></li>
+        </ul>
+        
+        <div id="suche">
+            <a href="#" class="filterbut">Filter</a>
+            <label for="searchbox" class="is-size-5">Search</label>
+            <input type="search" id="searchbox" placeholder="Search">
+            <a href="#" id="clearsearch">&times;</a>
+        </div>
+    </nav>
+    
+
+    <div id="allcats">
+
+    </div>
+
+    
+</header>
+
+<section id="styles"></section>
+
+<footer></footer>
+
+<span id="snackbar">Copied to Clipboard</span>
+
+</body>
+</html>
