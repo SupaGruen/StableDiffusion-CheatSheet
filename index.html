@@ -145,7 +145,7 @@ section#styles { margin: 20px; display: flex; flex-wrap: wrap; align-items: flex
 document.addEventListener("DOMContentLoaded",function(event){
 
     //Load JSON
-    const url = "https://v33s.com/SD/notizen/stile.json";
+    const url = "https://supagruen.github.io/SD-CheatSheet/stile.json";
     fetch(url)
     .then((res) => res.json())
     .then((data) => {
@@ -316,10 +316,7 @@ document.addEventListener("DOMContentLoaded",function(event){
     <h1>Stable Diffusion 1.5 - Cheat Sheet</h1>
     
     <nav>
-        <ul>
-            <li><a class="mbut<? if($showme=='1'){ echo ' active'; }?>" href="./?s=1"> Stile</a></li>
-            <li><a class="mbut<? if($showme=='2'){ echo ' active'; }?>" href="./?s=2"> Prompts</a></li>
-        </ul>
+        <!--<ul><li></li></ul>-->
         
         <div id="suche">
             <a href="#" class="filterbut">Filter</a>
