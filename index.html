@@ -6,7 +6,7 @@
 <style type="text/css">
 /* roboto-condensed-regular - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
   font-family: 'Roboto Condensed';
   font-style: normal;
   font-weight: 400;
@@ -20,7 +20,7 @@
 
 /* roboto-condensed-700 - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
   font-family: 'Roboto Condensed';
   font-style: normal;
   font-weight: 700;
@@ -34,7 +34,7 @@
 
 /* roboto-slab-regular - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
   font-family: 'Roboto Slab';
   font-style: normal;
   font-weight: 400;
@@ -106,7 +106,7 @@ section#styles { margin: 20px; display: flex; flex-wrap: wrap; align-items: flex
 .stylepod.active h3 { text-shadow: none; }
 .stylepod.active .styleinfo { display: inline-block; width: 256px; height: 256px; padding-right: 20px; background-color: var(--dgr); }
 .stylepod.active .styleinfo .more { display: block; }
-.stylepod.active .styleinfo .more .category { white-space: nowrap; overflow: hidden; }
+.stylepod.active .styleinfo .more .category { white-space: nowrap; overflow: hidden; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 220px; }
 .stylepod.active .styleinfo .more .category, .stylepod.active .styleinfo .more .checkpoint { margin: 0 10px 10px 20px; }
 .stylepod.active .styleinfo .more .category span, .stylepod.active .styleinfo .more .checkpoint span, legend { margin: 0 0 3px 0; display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--fc); }
 .stylepod.active .styleinfo .more fieldset legend { margin: 0; padding: 0; color: var(--lb); }
@@ -141,7 +141,7 @@ section#styles { margin: 20px; display: flex; flex-wrap: wrap; align-items: flex
 </style>
 
 <script src="./lazyload.min.js"></script>
-<script src="data.json"></script>
+<script src="./data.js"></script>
 
 <script>
 document.addEventListener("DOMContentLoaded",function(event){
@@ -150,6 +150,7 @@ document.addEventListener("DOMContentLoaded",function(event){
 
     var outputdata = '';
     var tags = {};
+    var countstyles = 0;
     
     //Put JSON in DOM
     for(var i=0; i<data.length; i++){
@@ -158,12 +159,14 @@ document.addEventListener("DOMContentLoaded",function(event){
             
             let currentAnchor = data[i].Name.replace(/[^a-zA-Z]+/g,'');
             let catlist = data[i].Category.replace(/\\/g,'');
+            let deathdate = ''; let dagger = ''; deathdate = data[i].Death;
+            if(deathdate!=false){ dagger = '<sup> &dagger;</sup>'; }
 
             outputdata = outputdata + '<div id="' + currentAnchor + '" class="stylepod lazy" data-bg="./img/' + data[i].Image + '">';
             outputdata = outputdata + '<div class="styleinfo">';
-            outputdata = outputdata + '<h3>' + data[i].Name + '</h3>';
+            outputdata = outputdata + '<h3>' + data[i].Name + dagger + '</h3>';
             outputdata = outputdata + '<div class="more">';
-            outputdata = outputdata + '<p class="category"><span>Category</span>' + catlist + '</p>';
+            outputdata = outputdata + '<p class="category" title="' + catlist + '"><span>Category</span>' + catlist + '</p>';
             outputdata = outputdata + '<p class="checkpoint"><span>Checkpoint</span>' + data[i].Checkpoint + '</p>';
             outputdata = outputdata + '<fieldset><legend>Copy Prompt</legend><span class="copyme">' + data[i].Prompt + '</span></fieldset>';
             outputdata = outputdata + '</div>';
@@ -175,6 +178,8 @@ document.addEventListener("DOMContentLoaded",function(event){
             outputdata = outputdata + '<figure></figure>';
             outputdata = outputdata + '</div>';
             outputdata = outputdata + '</div>';
+            
+            countstyles++;
             
             //fill tags list for filter
             let arrrrr = data[i].Category.split(', ');
@@ -229,6 +234,7 @@ document.addEventListener("DOMContentLoaded",function(event){
     var typingTimer;               
     var typeInterval = 500;  
     var searchInput = document.getElementById('searchbox');
+    searchInput.placeholder = 'Search in ' + countstyles + ' styles';
 
     var spans = document.getElementsByClassName('copyme');
 
