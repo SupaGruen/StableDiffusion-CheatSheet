@@ -55,6 +55,7 @@
   --lb: #7aa5d2;
   --ow: #eeeeee;
   --fc: #637289;
+  --mutedwhite: #b0b9c3;
 }
 
 html { scroll-padding: 140px 0 0 0; }
@@ -62,7 +63,11 @@ body { margin: 0; padding: 0; font-family: Gotham, "Helvetica Neue", Helvetica, 
 * { font-family: 'Roboto Condensed',Gotham,"Helvetica Neue",Helvetica,Arial,sans-serif; color: var(--ow); }
 
 h1 {}
+h3 { margin: 5rem 0 1rem 0; padding: 0; font-size: 1.7rem; }
+h4 { display: block;  margin: 0 0 1rem 0; padding: 0; width: 100%; font-size: 1.4rem; color: var(--mutedwhite); }
 sup { font-weight: 400; font-size: 0.8rem; }
+p { font-size: 1.2rem; line-height: 1.6rem; color: var(--mutedwhite); }
+p strong { color: white; font-weight: 400; }
 
 header { position: sticky; margin: 0; padding: 10px 20px 0 20px; height: 125px; top: 0; left: 0; z-index: 999; background-color: var(--bgr-tp); }
 nav { display: flex; justify-content:space-between; flex-wrap: wrap; }
@@ -72,15 +77,16 @@ nav ul li a, .filterbut { padding: 3px 10px; font-size: 1.2rem; color: #FFF; bac
 nav ul li a:hover, nav ul li a.active { background-color: var(--lg); }
 #suche { position: relative; }
 #suche label { display: none; }
-#suche #searchbox { padding: 3px 5px; font-size: 1.2rem; color: #FFF; background-color: var(--dgr); border: none; }
+#suche #searchbox, #ratiobox { padding: 3px 5px; font-size: 1.2rem; color: #FFF; background-color: var(--dgr); border: none; }
 
 #clearsearch { position: absolute; top: 0px; right: 0; z-index: 9999; display: none; padding: 5px 10px; font-size: 1rem; text-decoration: none; background-color: var(--lg); color: #FFF; }
 #clearsearch.show { display: inline-block; }
 
-section#styles { margin: 20px; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 20px; }
+section { margin: 20px; }
+section#styles { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 20px; }
 
 .stylepod { position: relative; display: block; margin: 0; padding: 0; width: 256px; height: 256px; background-size: 512px; border-radius: 5px; overflow: hidden; cursor: pointer; background-repeat: no-repeat; }
-.stylepod h3 { margin: 20px 0 10px 20px; padding: 0 20px 0 0; text-transform: uppercase; text-shadow: 1px 1px 5px #555; }
+.stylepod h3 { margin: 20px 0 10px 20px; padding: 0 20px 0 0; font-size: 1.2rem; text-transform: uppercase; text-shadow: 1px 1px 5px #555; }
 .stylepod .styleinfo .more { display: none; }
 .stylepod .gallery { display: none; position: absolute; bottom: 10px; left: 10px; margin: 0; padding: 0; width: 236px; height: 50px; background-image: inherit; background-size: 0 0; justify-content: space-between; }
 .stylepod:hover .gallery { display: flex; }
@@ -93,6 +99,7 @@ section#styles { margin: 20px; display: flex; flex-wrap: wrap; align-items: flex
 .stylepod figure figcaption { display: none; }
 
 .is-hidden { display: none; }
+.nobgr { background-color: transparent!important; }
 
 #allcats { position: absolute; top: 125px; left: 0; margin: 10px 0 0 0; padding: 20px; display: none; flex-wrap: wrap; align-items: flex-start; gap: 5px; background-color: var(--bgr-tp); }
 #allcats.show { display: flex; }
@@ -107,7 +114,7 @@ section#styles { margin: 20px; display: flex; flex-wrap: wrap; align-items: flex
 .stylepod.active .styleinfo { display: inline-block; width: 256px; height: 256px; padding-right: 20px; background-color: var(--dgr); }
 .stylepod.active .styleinfo .more { display: block; }
 .stylepod.active .styleinfo .more .category { white-space: nowrap; overflow: hidden; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 220px; }
-.stylepod.active .styleinfo .more .category, .stylepod.active .styleinfo .more .checkpoint { margin: 0 10px 10px 20px; }
+.stylepod.active .styleinfo .more .category, .stylepod.active .styleinfo .more .checkpoint { margin: 0 10px 10px 20px; font-size: 1rem; line-height: 1; color: white; }
 .stylepod.active .styleinfo .more .category span, .stylepod.active .styleinfo .more .checkpoint span, legend { margin: 0 0 3px 0; display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--fc); }
 .stylepod.active .styleinfo .more fieldset legend { margin: 0; padding: 0; color: var(--lb); }
 .stylepod.active .styleinfo .more fieldset { margin: 15px 0 0 20px; padding: 0; border: none; background-color: rgba(255,255,255,0.05); border-radius: 3px; border: 1px dashed rgba(255,255,255,0.20); }
@@ -117,6 +124,22 @@ section#styles { margin: 20px; display: flex; flex-wrap: wrap; align-items: flex
 
 .stylepod.prompt .styleinfo .more fieldset .copyme  { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 220px; }
 .stylepod.prompt .styleinfo .more .checkpoint span { font-size: 0.75rem; font-weight: 400; text-transform: none; color: var(--ow); }
+
+.examplegallery { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 1.5rem 0; padding: 0; }
+.examplegallery figure { position: relative; margin: 0; padding: 0; }
+.examplegallery figure img { width: 120px; height: auto; }
+.examplegallery figure figcaption { position: absolute; bottom: 10px; left: 10px; padding: 3px; width: 94px; background-color: var(--bgr-tp); font-size: 0.75rem; text-align: center; }
+
+.numberline { display: flex; flex-wrap: wrap; gap: 10px; }
+.numberline span { display: inline-block; padding: 5px 10px; background-color: var(--gr); }
+.numberline span.highlight { background-color: var(--lg); }
+
+table#dimensions {}
+table#dimensions tr td:nth-child(1) { padding: 3px 15px 3px 0; color: var(--mutedwhite); }
+table#dimensions tr td:nth-child(2) { padding: 3px 15px; background-color: var(--dgr); text-align: center; }
+table#dimensions tr td:nth-child(3) { padding: 3px 0 3px 15px; color: var(--mutedwhite); text-align: right; }
+
+#ratiobox { width: 70px; font-size: 1rem; text-align: center; background-color: transparent; }
 
 @media screen and (min-width: 900px) {
 
@@ -210,18 +233,12 @@ document.addEventListener("DOMContentLoaded",function(event){
     },{});
     
     Object.keys(sortedKeys).forEach(key => {
-
         if(sortedKeys[key]>1 && DontShowAnyCountries.includes(key)==false){
             let filtername = key.replace(/\\/g,'');
             FilterOutput = FilterOutput + '<span data-srch="' + filtername + '">' + filtername + ' <span>' + sortedKeys[key] +'</span></span>';    
-        }
+        };
     });
     catsbox.innerHTML = FilterOutput;
-    
-    
-    //console.log(Object.keys(tags).length);
-    //var countTags = Object.keys(tags).length;
-    
     
     //Vars
     var filbut = document.querySelector('.filterbut');
@@ -235,6 +252,8 @@ document.addEventListener("DOMContentLoaded",function(event){
     var typeInterval = 500;  
     var searchInput = document.getElementById('searchbox');
     searchInput.placeholder = 'Search in ' + countstyles + ' styles';
+    
+    var ratioInput = document.getElementById('ratiobox');
 
     var spans = document.getElementsByClassName('copyme');
 
@@ -293,16 +312,20 @@ document.addEventListener("DOMContentLoaded",function(event){
         }
     }
 
-    //Filter    
-    filbut.onclick = function(e){
-      e.preventDefault();
-      catsbox.classList.toggle('show');
-    }
-    clearbut.onclick = function(e){
-      e.preventDefault();
-      document.getElementById('searchbox').value = '';
-      liveSearch();
-    }
+    //Filter
+    if(filbut){
+        filbut.onclick = function(e){
+          e.preventDefault();
+          catsbox.classList.toggle('show');
+        };
+    };
+    if(clearbut){
+        clearbut.onclick = function(e){
+          e.preventDefault();
+          document.getElementById('searchbox').value = '';
+          liveSearch();
+        };
+    };
 
     if(filters){
         for(var i = 0; i < filters.length; i++){
@@ -318,7 +341,7 @@ document.addEventListener("DOMContentLoaded",function(event){
     LL = new LazyLoad({});
     
     
-    //Search  - https://css-tricks.com/in-page-filtered-search-with-vanilla-javascript/
+    //Search - https://css-tricks.com/in-page-filtered-search-with-vanilla-javascript/
     function liveSearch(){
         let search_query = document.getElementById("searchbox").value;
         for (var i = 0; i < pods.length; i++) {
@@ -333,18 +356,41 @@ document.addEventListener("DOMContentLoaded",function(event){
         }
     }
     //A little delay
-    searchInput.addEventListener('keyup', () => {
-        clearTimeout(typingTimer);
-        typingTimer = setTimeout(liveSearch, typeInterval);
-    });
+    if(searchInput){
+        searchInput.addEventListener('keyup',()=>{
+            clearTimeout(typingTimer);
+            typingTimer = setTimeout(liveSearch, typeInterval);
+        });
+    };
 
 
     //Copy Notifier
-    function showSnackBar() {
+    function showSnackBar(){
         var sb = document.getElementById("snackbar");
         sb.className = "show";
         setTimeout(()=>{ sb.className = sb.className.replace("show", ""); }, 1500);
+    };
+    
+    //Image Ratio
+    function ratioCalc(){
+        let imgbasesize = document.getElementById("ratiobox").value;
+        if(imgbasesize>0){
+            let twobythree = (imgbasesize / 2) * 3; document.getElementById("ir2b3").innerHTML = imgbasesize + ' &times; ' + Math.round(twobythree);
+            let threebyfour = (imgbasesize / 3) * 4; document.getElementById("ir3b4").innerHTML = imgbasesize + ' &times; ' + Math.round(threebyfour);
+            let fourbyfive = (imgbasesize / 4) * 5; document.getElementById("ir4b5").innerHTML = imgbasesize + ' &times; ' + Math.round(fourbyfive);
+            let sixteenbynine = (imgbasesize / 9) * 16; document.getElementById("ir16b9").innerHTML = Math.round(sixteenbynine) + ' &times; ' + imgbasesize;
+            let sixteenbyten = (imgbasesize / 10) * 16; document.getElementById("ir16b10").innerHTML = Math.round(sixteenbyten) + ' &times; ' + imgbasesize;
+            let twentyonebynine = (imgbasesize / 9) * 21; document.getElementById("ir21b9").innerHTML = Math.round(twentyonebynine) + ' &times; ' + imgbasesize;
+        }
     }
+
+    //Imaga Ratio Delay
+    if(ratioInput){
+        ratioInput.addEventListener('keyup',()=>{
+            clearTimeout(typingTimer);
+            typingTimer = setTimeout(ratioCalc, typeInterval);
+        });
+    };
     
 });
 
@@ -370,13 +416,179 @@ document.addEventListener("DOMContentLoaded",function(event){
         </div>
     </nav>
     
-
     <div id="allcats"></div>
-
     
 </header>
 
 <section id="styles"></section>
+
+<section id="notes">
+
+    <h3>Image Dimensions</h3>
+    
+    <p>Stable Diffusion was trained for base dimensions around 512px (SD 1.5) and 768px (SD 2/2.1).<br>While it's not necessary to stay in that line of multiples of 128, it's a good starting point.</p>
+    <div class="numberline"><span>128</span><span>256</span><span>384</span><span class="highlight">512</span><span>640</span><span class="highlight">768</span><span>896</span><span>1024</span></div>
+
+    <p><strong>Some of the common ratios in SD dimensions:</strong></p>
+    <table id="dimensions">
+        <tr>
+            <td>Square</td>
+            <td>1:1</td>
+            <td>512 &times; 512</td>
+        </tr>
+        <tr>
+            <td>Photo</td>
+            <td>2:3</td>
+            <td id="ir2b3">512 &times; 768</td>
+        </tr>
+        <tr>
+            <td>Photo</td>
+            <td>3:4</td>
+            <td id="ir3b4">512 &times; 683</td>
+        </tr>
+        <tr>
+            <td>Social Media</td>
+            <td>4:5</td>
+            <td id="ir4b5">512 &times; 640</td>
+        </tr>
+        <tr>
+            <td>Standard Monitor</td>
+            <td>16:9</td>
+            <td id="ir16b9">911 &times; 512</td>
+        </tr>
+        <tr>
+            <td>Monitor</td>
+            <td>16:10</td>
+            <td id="ir16b10">820 &times; 512</td>
+        </tr>
+        <tr>
+            <td>UltraWide Monitor</td>
+            <td>21:9</td>
+            <td id="ir21b9">1195 &times; 512</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="nobgr"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><label for="ratiobox">Base size</label></td>
+            <td class="nobgr"><input type="search" id="ratiobox" placeholder="Base Size" value="512"></td>
+            <td></td>
+        </tr>
+    </table>
+
+    <h3>Prompt Examples - Art Media</h3>
+
+    <h4>Photo</h4>
+    <div class="examplegallery">
+        <figure>
+            <a href="./img/types/00-photo.webp" target="_blank"><img class="lazy" src="./img/types/00-photo.webp"></a></a>
+            <figcaption>Photo</figcaption>
+        </figure>
+        <figure>
+            <a href="./img/types/01-analog-photo.webp" target="_blank"><img class="lazy" src="./img/types/01-analog-photo.webp"></a></a>
+            <figcaption>Analog Photo</figcaption>
+        </figure>
+        <figure>
+            <a href="./img/types/15-lomography.webp" target="_blank"><img class="lazy" src="./img/types/15-lomography.webp"></a>
+            <figcaption>Lomography</figcaption>
+        </figure>
+        <figure>
+            <a href="./img/types/17-pinhole.webp" target="_blank"><img class="lazy" src="./img/types/17-pinhole.webp"></a>
+            <figcaption>Pinhole Photo</figcaption>
+        </figure>
+        <figure>
+            <a href="./img/types/02-wet-plate-photo.webp" target="_blank"><img class="lazy" src="./img/types/02-wet-plate-photo.webp"></a></a>
+            <figcaption>Wet Plate Photo</figcaption>
+        </figure>
+    </div>
+    
+    <h4>Drawing, Painting, Print</h4>
+    <div class="examplegallery">
+        <figure>
+            <a href="./img/types/03-pencil-drawing.webp" target="_blank"><img class="lazy" src="./img/types/03-pencil-drawing.webp"></a>
+            <figcaption>Pencil Drawing</figcaption>
+        </figure>
+        <figure>
+            <a href="./img/types/04-pen-and-ink-drawing.webp" target="_blank"><img class="lazy" src="./img/types/04-pen-and-ink-drawing.webp"></a>
+            <figcaption>Pen and Ink Drawing</figcaption>
+        </figure>
+        <figure>
+            <a href="./img/types/06-watercolor-painting.webp" target="_blank"><img class="lazy" src="./img/types/06-watercolor-painting.webp"></a>
+            <figcaption>Watercolor Painting</figcaption>
+        </figure>
+        <figure>
+            <a href="./img/types/07-pen-and-watercolor-painting.webp" target="_blank"><img class="lazy" src="./img/types/07-pen-and-watercolor-painting.webp"></a>
+            <figcaption>Pen and Watercolor Painting</figcaption>
+        </figure>
+        <figure>
+            <a href="./img/types/08-oil-painting.webp" target="_blank"><img class="lazy" src="./img/types/08-oil-painting.webp"></a>
+            <figcaption>Oil Painting</figcaption>
+        </figure>
+        <figure>
+            <a href="./img/types/09-acrylic-painting.webp" target="_blank"><img class="lazy" src="./img/types/09-acrylic-painting.webp"></a>
+            <figcaption>Acrylic Painting</figcaption>
+        </figure>
+        <figure>
+            <a href="./img/types/10-rough-charcoal-sketch.webp" target="_blank"><img class="lazy" src="./img/types/10-rough-charcoal-sketch.webp"></a>
+            <figcaption>Rough Charcoal Sketch</figcaption>
+        </figure>
+        <figure>
+            <a href="./img/types/20-crayon-drawing.webp" target="_blank"><img class="lazy" src="./img/types/20-crayon-drawing.webp"></a>
+            <figcaption>Crayon Drawing</figcaption>
+        </figure>
+        <figure>
+            <a href="./img/types/23-chinese-painting.webp" target="_blank"><img class="lazy" src="./img/types/23-chinese-painting.webp"></a>
+            <figcaption>Chinese Painting</figcaption>
+        </figure>
+        <figure>
+            <a href="./img/types/05-engraving-illustration.webp" target="_blank"><img class="lazy" src="./img/types/05-engraving-illustration.webp"></a>
+            <figcaption>Engraving Illustration</figcaption>
+        </figure>
+        <figure>
+            <a href="./img/types/24-mezzotint-print.webp" target="_blank"><img class="lazy" src="./img/types/24-mezzotint-print.webp"></a>
+            <figcaption>Mezzotint Print</figcaption>
+        </figure>
+        <figure>
+            <a href="./img/types/25-linocut-print.webp" target="_blank"><img class="lazy" src="./img/types/25-linocut-print.webp"></a>
+            <figcaption>Linocut Print</figcaption>
+        </figure>
+        </div>
+    
+    <h4>Digital, Other</h4>
+    <div class="examplegallery">
+        <figure>
+            <a href="./img/types/16-comic-character.webp" target="_blank"><img class="lazy" src="./img/types/16-comic-character.webp"></a>
+            <figcaption>Comic Character</figcaption>
+        </figure>
+        <figure>
+            <a href="./img/types/19-pixel-art.webp" target="_blank"><img class="lazy" src="./img/types/19-pixel-art.webp"></a>
+            <figcaption>Pixel Art</figcaption>
+        </figure>
+        <figure>
+            <a href="./img/types/22-vector-graphic.webp" target="_blank"><img class="lazy" src="./img/types/22-vector-graphic.webp"></a>
+            <figcaption>Vector Graphic</figcaption>
+        </figure>
+        <figure>
+            <a href="./img/types/11-3d-render.webp" target="_blank"><img class="lazy" src="./img/types/11-3d-render.webp"></a>
+            <figcaption>3D Render</figcaption>
+        </figure>
+        <figure>
+            <a href="./img/types/12-lowpoly-render.webp" target="_blank"><img class="lazy" src="./img/types/12-lowpoly-render.webp"></a>
+            <figcaption>Low Poly Render</figcaption>
+        </figure>
+        <figure>
+            <a href="./img/types/18-modelling-clay.webp" target="_blank"><img class="lazy" src="./img/types/18-modelling-clay.webp"></a>
+            <figcaption>Modelling Clay</figcaption>
+        </figure>
+        <figure>
+            <a href="./img/types/21-embroidery-cross-stitch.webp" target="_blank"><img class="lazy" src="./img/types/21-embroidery-cross-stitch.webp"></a>
+            <figcaption>Embroidery Cross Stitch</figcaption>
+        </figure>
+    </div>
+    
+</section>
 
 <footer></footer>
 
