@@ -85,6 +85,10 @@ nav ul li a:hover, nav ul li a.active { background-color: var(--lg); }
 section { margin: 20px; }
 section#styles { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 20px; }
 
+footer { margin: 20px; text-align: center; color: var(--lg); }
+footer a { color: var(--fc); text-decoration: none; }
+footer a:hover { color: var(--lg); }
+
 .stylepod { position: relative; display: block; margin: 0; padding: 0; width: 256px; height: 256px; background-size: 512px; border-radius: 5px; overflow: hidden; cursor: pointer; background-repeat: no-repeat; }
 .stylepod h3 { margin: 20px 0 10px 20px; padding: 0 20px 0 0; font-size: 1.2rem; text-transform: uppercase; text-shadow: 1px 1px 5px #555; }
 .stylepod .styleinfo .more { display: none; }
@@ -98,7 +102,7 @@ section#styles { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 2
 
 .stylepod figure figcaption { display: none; }
 
-.is-hidden { display: none; }
+.is-hidden { display: none !important; }
 .nobgr { background-color: transparent!important; }
 
 #allcats { position: absolute; top: 125px; left: 0; margin: 10px 0 0 0; padding: 20px; display: none; flex-wrap: wrap; align-items: flex-start; gap: 5px; background-color: var(--bgr-tp); }
@@ -139,7 +143,7 @@ table#dimensions tr td:nth-child(1) { padding: 3px 15px 3px 0; color: var(--mute
 table#dimensions tr td:nth-child(2) { padding: 3px 15px; background-color: var(--dgr); text-align: center; }
 table#dimensions tr td:nth-child(3) { padding: 3px 0 3px 15px; color: var(--mutedwhite); text-align: right; }
 
-#ratiobox { width: 70px; font-size: 1rem; text-align: center; background-color: transparent; }
+#ratiobox { width: 70px; font-size: 1rem; text-align: center; background-color: transparent; border-bottom: 1px dashed var(--mutedwhite); }
 
 @media screen and (min-width: 900px) {
 
@@ -174,6 +178,35 @@ document.addEventListener("DOMContentLoaded",function(event){
     var outputdata = '';
     var tags = {};
     var countstyles = 0;
+    
+    var pages = document.querySelectorAll('section');
+    var menulinks = document.querySelectorAll('.mbut');
+    var searchdiv = document.getElementById('suche');
+    
+    function hidepages(){
+        if(pages){
+            for(var i = 0; i < pages.length; i++){ pages[i].classList.add('is-hidden'); }
+            for(var i = 0; i < menulinks.length; i++){ menulinks[i].classList.remove('active'); }
+            searchdiv.classList.add('is-hidden');
+        }
+    };
+    hidepages();
+    if(pages){ pages[0].classList.remove('is-hidden'); menulinks[0].classList.add('active'); searchdiv.classList.remove('is-hidden'); };
+    
+    if(menulinks){
+        for(var i = 0; i < menulinks.length; i++){
+            currentml = menulinks[i];
+            currentml.addEventListener('click',function(e){
+                e.preventDefault();
+                var mldata = this.dataset.page;
+                hidepages();
+                document.getElementById(mldata).classList.remove('is-hidden');
+                this.classList.add('active');
+                if(mldata=='styles'){ searchdiv.classList.remove('is-hidden'); };
+            });
+        };
+    };
+    
     
     //Put JSON in DOM
     for(var i=0; i<data.length; i++){
@@ -344,7 +377,7 @@ document.addEventListener("DOMContentLoaded",function(event){
     //Search - https://css-tricks.com/in-page-filtered-search-with-vanilla-javascript/
     function liveSearch(){
         let search_query = document.getElementById("searchbox").value;
-        for (var i = 0; i < pods.length; i++) {
+        for(var i = 0; i < pods.length; i++) {
             //console.log(search_query.toLowerCase());
             if(pods[i].textContent.toLowerCase().includes(search_query.toLowerCase())){
                 pods[i].classList.remove("is-hidden");
@@ -405,14 +438,15 @@ document.addEventListener("DOMContentLoaded",function(event){
     <h1>Stable Diffusion 1.5 - Cheat Sheet</h1>
     
     <nav>
-        <!-- <ul>
-            <li><a class="mbut" href=""></a></li>
-        </ul>-->
+        <ul>
+            <li><a class="mbut" data-page="styles" href="#">Styles</a></li>
+            <li><a class="mbut" data-page="notes" href="#">Notes</a></li>
+        </ul>
         
         <div id="suche">
             <a href="#" class="filterbut">Filter</a>
             <label for="searchbox" class="is-size-5">Search</label>
-            <input type="search" id="searchbox" placeholder="Search">
+            <input type="text" id="searchbox" placeholder="Search">
             <a href="#" id="clearsearch">&times;</a>
         </div>
     </nav>
@@ -591,7 +625,7 @@ document.addEventListener("DOMContentLoaded",function(event){
     
 </section>
 
-<footer></footer>
+<footer>Created 2023 by Jonis (SupaGruen) - <a href="https://github.com/SupaGruen/SD-CheatSheet">GitHub</a></footer>
 
 <span id="snackbar">Copied to Clipboard</span>
 
