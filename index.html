@@ -375,6 +375,7 @@ document.addEventListener("DOMContentLoaded",function(event){
     function ratioCalc(){
         let imgbasesize = document.getElementById("ratiobox").value;
         if(imgbasesize>0){
+            document.getElementById("ir1b1").innerHTML = imgbasesize + ' &times; ' + imgbasesize;
             let twobythree = (imgbasesize / 2) * 3; document.getElementById("ir2b3").innerHTML = imgbasesize + ' &times; ' + Math.round(twobythree);
             let threebyfour = (imgbasesize / 3) * 4; document.getElementById("ir3b4").innerHTML = imgbasesize + ' &times; ' + Math.round(threebyfour);
             let fourbyfive = (imgbasesize / 4) * 5; document.getElementById("ir4b5").innerHTML = imgbasesize + ' &times; ' + Math.round(fourbyfive);
@@ -434,7 +435,7 @@ document.addEventListener("DOMContentLoaded",function(event){
         <tr>
             <td>Square</td>
             <td>1:1</td>
-            <td>512 &times; 512</td>
+            <td id="ir1b1">512 &times; 512</td>
         </tr>
         <tr>
             <td>Photo</td>
