@@ -53,6 +53,21 @@
   --ow: #eeeeee;
   --fc: #637289;
   --mutedwhite: #b0b9c3;
+  
+  --red: #f94144;
+  --redmuted: #892f34;
+  --orange: #f3722c;
+  --orangemuted: #f3722c;
+  --lorange: #f3722c;
+  --lorangemuted: #885921;
+  --yellow: #f9c74f;
+  --yellowmuted: #897239;
+  --green: #90be6d;
+  --greenmuted: #546d48;
+  --turquoise: #43aa8b;
+  --turquoisemuted: #2e6357;
+  --blue: #577590;
+  --bluemuted: #38495a;
 }
 
 html { scroll-padding: 140px 0 0 0; }
@@ -89,6 +104,7 @@ nav ul li { display: inline; margin: 0 5px 0 0; }
 nav ul li a, .filterbut { padding: 5px 8px; font-size: 1.2rem; color: #FFF; background-color: var(--dgr); text-decoration: none; }
 .filterbut { margin: 0 5px 0 0; }
 nav ul li a:hover, nav ul li a.active { background-color: var(--lg); }
+
 #suche { position: relative; }
 #suche label { display: none; }
 #suche #searchbox, #ratiobox { padding: 5px 8px; font-size: 1.2rem; color: #FFF; background-color: var(--dgr); border: none; }
