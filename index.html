@@ -3,433 +3,10 @@
 <head>
 <meta charset="utf-8">
 <title>Stable Diffusion 1.5 - Cheat Sheet</title>
-<style type="text/css">
-/* roboto-condensed-regular - latin */
-@font-face {
-  font-display: swap;
-  font-family: 'Roboto Condensed';
-  font-style: normal;
-  font-weight: 400;
-  src: url('fonts/roboto-condensed-v25-latin-regular.eot'); /* IE9 Compat Modes */
-  src: url('fonts/roboto-condensed-v25-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('fonts/roboto-condensed-v25-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
-       url('fonts/roboto-condensed-v25-latin-regular.woff') format('woff'), /* Modern Browsers */
-       url('fonts/roboto-condensed-v25-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
-       url('fonts/roboto-condensed-v25-latin-regular.svg#RobotoCondensed') format('svg'); /* Legacy iOS */
-}
-
-/* roboto-condensed-700 - latin */
-@font-face {
-  font-display: swap;
-  font-family: 'Roboto Condensed';
-  font-style: normal;
-  font-weight: 700;
-  src: url('fonts/roboto-condensed-v25-latin-700.eot'); /* IE9 Compat Modes */
-  src: url('fonts/roboto-condensed-v25-latin-700.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('fonts/roboto-condensed-v25-latin-700.woff2') format('woff2'), /* Super Modern Browsers */
-       url('fonts/roboto-condensed-v25-latin-700.woff') format('woff'), /* Modern Browsers */
-       url('fonts/roboto-condensed-v25-latin-700.ttf') format('truetype'), /* Safari, Android, iOS */
-       url('fonts/roboto-condensed-v25-latin-700.svg#RobotoCondensed') format('svg'); /* Legacy iOS */
-}
-
-/* roboto-slab-regular - latin */
-@font-face {
-  font-display: swap;
-  font-family: 'Roboto Slab';
-  font-style: normal;
-  font-weight: 400;
-  src: url('fonts/roboto-slab-v24-latin-regular.eot'); /* IE9 Compat Modes */
-  src: url('fonts/roboto-slab-v24-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('fonts/roboto-slab-v24-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
-       url('fonts/roboto-slab-v24-latin-regular.woff') format('woff'), /* Modern Browsers */
-       url('fonts/roboto-slab-v24-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
-       url('fonts/roboto-slab-v24-latin-regular.svg#RobotoSlab') format('svg'); /* Legacy iOS */
-}
-
-:root {
-  --bgr: #191D24;
-  --bgr-tp: rgba(25,29,36,.8);
-  --dgr: #303744;
-  --gr: #2A313C;
-  --lg: #47555e;
-  --lb: #7aa5d2;
-  --ow: #eeeeee;
-  --fc: #637289;
-  --mutedwhite: #b0b9c3;
-}
-
-html { scroll-padding: 140px 0 0 0; }
-body { margin: 0; padding: 0; font-family: Gotham, "Helvetica Neue", Helvetica, Arial, "sans-serif"; background-color: var(--bgr); }
-* { font-family: 'Roboto Condensed',Gotham,"Helvetica Neue",Helvetica,Arial,sans-serif; color: var(--ow); }
-
-h1 {}
-h3 { margin: 5rem 0 1rem 0; padding: 0; font-size: 1.7rem; }
-h4 { display: block;  margin: 0 0 1rem 0; padding: 0; width: 100%; font-size: 1.4rem; color: var(--mutedwhite); }
-sup { font-weight: 400; font-size: 0.8rem; }
-p { font-size: 1.2rem; line-height: 1.6rem; color: var(--mutedwhite); }
-p strong { color: white; font-weight: 400; }
-
-header { position: sticky; margin: 0; padding: 10px 20px 0 20px; height: 125px; top: 0; left: 0; z-index: 999; background-color: var(--bgr-tp); }
-nav { display: flex; justify-content:space-between; flex-wrap: wrap; }
-nav ul { margin: 2px 0 0 0; padding: 0; list-style-type: none; }
-nav ul li { display: inline; margin: 0 5px 0 0; }
-nav ul li a, .filterbut { padding: 3px 10px; font-size: 1.2rem; color: #FFF; background-color: var(--dgr); text-decoration: none; }
-nav ul li a:hover, nav ul li a.active { background-color: var(--lg); }
-#suche { position: relative; }
-#suche label { display: none; }
-#suche #searchbox, #ratiobox { padding: 3px 5px; font-size: 1.2rem; color: #FFF; background-color: var(--dgr); border: none; }
-
-#clearsearch { position: absolute; top: 0px; right: 0; z-index: 9999; display: none; padding: 5px 10px; font-size: 1rem; text-decoration: none; background-color: var(--lg); color: #FFF; }
-#clearsearch.show { display: inline-block; }
-
-section { margin: 20px; }
-section#styles { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 20px; }
-
-footer { margin: 20px; text-align: center; color: var(--lg); }
-footer a { color: var(--fc); text-decoration: none; }
-footer a:hover { color: var(--lg); }
-
-.stylepod { position: relative; display: block; margin: 0; padding: 0; width: 256px; height: 256px; background-size: 512px; border-radius: 5px; overflow: hidden; cursor: pointer; background-repeat: no-repeat; }
-.stylepod h3 { margin: 20px 0 10px 20px; padding: 0 20px 0 0; font-size: 1.2rem; text-transform: uppercase; text-shadow: 1px 1px 5px #555; }
-.stylepod .styleinfo .more { display: none; }
-.stylepod .gallery { display: none; position: absolute; bottom: 10px; left: 10px; margin: 0; padding: 0; width: 236px; height: 50px; background-image: inherit; background-size: 0 0; justify-content: space-between; }
-.stylepod:hover .gallery { display: flex; }
-.stylepod figure { display: inline-block; margin: 0; padding: 0; width: 50px; height: 50px; background-size: 100px; background-image: inherit; border-radius: 3px; }
-.stylepod figure:nth-child(1) { }
-.stylepod figure:nth-child(2) { background-position: 100% 0px; }
-.stylepod figure:nth-child(3) { background-position: 0px 100%; }
-.stylepod figure:nth-child(4) { background-position: 100% 100%; }
-
-.stylepod figure figcaption { display: none; }
-
-.is-hidden { display: none !important; }
-.nobgr { background-color: transparent!important; }
-
-#allcats { position: absolute; top: 125px; left: 0; margin: 10px 0 0 0; padding: 20px; display: none; flex-wrap: wrap; align-items: flex-start; gap: 5px; background-color: var(--bgr-tp); }
-#allcats.show { display: flex; }
-#allcats span { display: inline-block; padding: 2px 5px; font-size: 1rem; color: #FFF; background-color: var(--lg); border-radius: 3px; cursor: pointer; }
-#allcats span:hover { background-color: var(--lb); }
-#allcats span span { margin: 0; padding: 0; background-color: transparent; color: var(--lb); }
-#allcats span:hover span { color: var(--gr); }
-
-/* Stylepod with .active class */
-.stylepod.active { display: flex; flex-wrap: nowrap; width: 532px; background-position: -999px -999px; align-items: flex-start; }
-.stylepod.active h3 { text-shadow: none; }
-.stylepod.active .styleinfo { display: inline-block; width: 256px; height: 256px; padding-right: 20px; background-color: var(--dgr); }
-.stylepod.active .styleinfo .more { display: block; }
-.stylepod.active .styleinfo .more .category { white-space: nowrap; overflow: hidden; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 220px; }
-.stylepod.active .styleinfo .more .category, .stylepod.active .styleinfo .more .checkpoint { margin: 0 10px 10px 20px; font-size: 1rem; line-height: 1; color: white; }
-.stylepod.active .styleinfo .more .category span, .stylepod.active .styleinfo .more .checkpoint span, legend { margin: 0 0 3px 0; display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--fc); }
-.stylepod.active .styleinfo .more fieldset legend { margin: 0; padding: 0; color: var(--lb); }
-.stylepod.active .styleinfo .more fieldset { margin: 15px 0 0 20px; padding: 0; border: none; background-color: rgba(255,255,255,0.05); border-radius: 3px; border: 1px dashed rgba(255,255,255,0.20); }
-.stylepod.active .styleinfo .more fieldset .copyme { display: block; padding: 5px 5px 10px 5px; cursor: copy; }
-.stylepod.active .gallery { display: flex; position: initial; width: 256px; height: 256px; background-image: inherit; background-size: 256px; border-radius: 0 5px 5px 0; }
-.stylepod.active .gallery figure { display: none; }
-
-.stylepod.prompt .styleinfo .more fieldset .copyme  { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 220px; }
-.stylepod.prompt .styleinfo .more .checkpoint span { font-size: 0.75rem; font-weight: 400; text-transform: none; color: var(--ow); }
-
-.examplegallery { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 1.5rem 0; padding: 0; }
-.examplegallery figure { position: relative; margin: 0; padding: 0; }
-.examplegallery figure img { width: 120px; height: auto; }
-.examplegallery figure figcaption { position: absolute; bottom: 10px; left: 10px; padding: 3px; width: 94px; background-color: var(--bgr-tp); font-size: 0.75rem; text-align: center; }
-
-.numberline { display: flex; flex-wrap: wrap; gap: 10px; }
-.numberline span { display: inline-block; padding: 5px 10px; background-color: var(--gr); }
-.numberline span.highlight { background-color: var(--lg); }
-
-table#dimensions {}
-table#dimensions tr td:nth-child(1) { padding: 3px 15px 3px 0; color: var(--mutedwhite); }
-table#dimensions tr td:nth-child(2) { padding: 3px 15px; background-color: var(--dgr); text-align: center; }
-table#dimensions tr td:nth-child(3) { padding: 3px 0 3px 15px; color: var(--mutedwhite); text-align: right; }
-
-#ratiobox { width: 70px; font-size: 1rem; text-align: center; background-color: transparent; border-bottom: 1px dashed var(--mutedwhite); }
-
-@media screen and (min-width: 900px) {
-
-.stylepod.active { width: 100%; /*max-width: 1300px;*/ }
-.stylepod.active .styleinfo { display: block; min-width: 256px; height: 256px; }
-.stylepod.active .gallery { display: flex; position: initial; width: 100%; height: 256px; background-image: inherit; background-size: 0 0; justify-content: flex-start; flex-wrap: nowrap; overflow-x: auto; overflow-y: hidden; scrollbar-color: var(--dgr) #222; scrollbar-width: thin; }
-.stylepod.active .gallery figure { display: inline-block; min-width: 256px; height: 256px; background-size: 512px; background-image: inherit; border-radius: 0; }
-.stylepod figure:nth-child(2) { background-position: 100% 0px; }
-.stylepod figure:nth-child(3) { background-position: 0px 100%; }
-.stylepod figure:nth-child(4) { background-position: 100% 100%; border-radius: 0 5px 5px 0!important; }
-
-.stylepod.active .gallery::-webkit-scrollbar { height: 8px; background-color: #aaa; }
-
-}
-
-#snackbar { visibility: hidden; color: #fff; background-color: var(--lb); min-width: 250px; margin-left: -125px; border-radius: 2px; padding: 16px; text-align: center; left: 50%; top: 30px; z-index: 1; position: fixed; z-index: 99999; }
-#snackbar.show { visibility: visible; -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
-@-webkit-keyframes fadein { from {top: 0; opacity: 0;} to {top: 30px; opacity: 1;} }
-@keyframes fadein { from {top: 0; opacity: 0;} to {top: 30px; opacity: 1;} }
-@-webkit-keyframes fadeout { from {top: 30px; opacity: 1;} to {top: 0; opacity: 0;} }
-@keyframes fadeout { from {top: 30px; opacity: 1;} to {top: 0; opacity: 0;} }
-</style>
-
+<link href="./style.css" rel="stylesheet">
 <script src="./lazyload.min.js"></script>
 <script src="./data.js"></script>
-
-<script>
-document.addEventListener("DOMContentLoaded",function(event){
-
-    var DontShowAnyCountries = ['Sweden','USA','Ukraine','Belarus','Spain','Brazil','Denmark','Japan','Austria','France','Philippines','UK','Poland','Poland','Germany','Canada','Netherlands','Italy','Taiwan','Belgium','Russia','Australia','Czech Republic','Bulgaria','China'];
-
-    var outputdata = '';
-    var tags = {};
-    var countstyles = 0;
-    
-    var pages = document.querySelectorAll('section');
-    var menulinks = document.querySelectorAll('.mbut');
-    var searchdiv = document.getElementById('suche');
-    
-    function hidepages(){
-        if(pages){
-            for(var i = 0; i < pages.length; i++){ pages[i].classList.add('is-hidden'); }
-            for(var i = 0; i < menulinks.length; i++){ menulinks[i].classList.remove('active'); }
-            searchdiv.classList.add('is-hidden');
-        }
-    };
-    hidepages();
-    if(pages){ pages[0].classList.remove('is-hidden'); menulinks[0].classList.add('active'); searchdiv.classList.remove('is-hidden'); };
-    
-    if(menulinks){
-        for(var i = 0; i < menulinks.length; i++){
-            currentml = menulinks[i];
-            currentml.addEventListener('click',function(e){
-                e.preventDefault();
-                var mldata = this.dataset.page;
-                hidepages();
-                document.getElementById(mldata).classList.remove('is-hidden');
-                this.classList.add('active');
-                if(mldata=='styles'){ searchdiv.classList.remove('is-hidden'); };
-            });
-        };
-    };
-    
-    
-    //Put JSON in DOM
-    for(var i=0; i<data.length; i++){
-
-        if(data[i].Type==1){
-            
-            let currentAnchor = data[i].Name.replace(/[^a-zA-Z]+/g,'');
-            let catlist = data[i].Category.replace(/\\/g,'');
-            let deathdate = ''; let dagger = ''; deathdate = data[i].Death;
-            if(deathdate!=false){ dagger = '<sup> &dagger;</sup>'; }
-
-            outputdata = outputdata + '<div id="' + currentAnchor + '" class="stylepod lazy" data-bg="./img/' + data[i].Image + '">';
-            outputdata = outputdata + '<div class="styleinfo">';
-            outputdata = outputdata + '<h3>' + data[i].Name + dagger + '</h3>';
-            outputdata = outputdata + '<div class="more">';
-            outputdata = outputdata + '<p class="category" title="' + catlist + '"><span>Category</span>' + catlist + '</p>';
-            outputdata = outputdata + '<p class="checkpoint"><span>Checkpoint</span>' + data[i].Checkpoint + '</p>';
-            outputdata = outputdata + '<fieldset><legend>Copy Prompt</legend><span class="copyme">' + data[i].Prompt + '</span></fieldset>';
-            outputdata = outputdata + '</div>';
-            outputdata = outputdata + '</div>';
-            outputdata = outputdata + '<div class="gallery">';
-            outputdata = outputdata + '<figure><figcaption></figcaption></figure>';
-            outputdata = outputdata + '<figure></figure>';
-            outputdata = outputdata + '<figure></figure>';
-            outputdata = outputdata + '<figure></figure>';
-            outputdata = outputdata + '</div>';
-            outputdata = outputdata + '</div>';
-            
-            countstyles++;
-            
-            //fill tags list for filter
-            let arrrrr = data[i].Category.split(', ');
-            arrrrr.forEach(function(tag){
-                if (tag in tags) {
-                  // If animal is present, increment the count
-                  tags[tag] = tags[tag] + 1;
-                } else {
-                  // If animal is not present, add the entry
-                  tags[tag] = 1;
-                }
-            });
-   
-        }
-
-    }
-    
-    var putStyles = document.getElementById('styles');
-    putStyles.innerHTML = outputdata;
-    
-    //Create filter tags  DontShowAnyCountries
-    var FilterOutput = '';
-    var catsbox = document.getElementById('allcats');
-    
-    var sortedKeys = Object.keys(tags).sort().reduce((objEntries, key) => {
-        objEntries[key] = tags[key];
-        return objEntries;
-    },{});
-    
-    Object.keys(sortedKeys).forEach(key => {
-        if(sortedKeys[key]>1 && DontShowAnyCountries.includes(key)==false){
-            let filtername = key.replace(/\\/g,'');
-            FilterOutput = FilterOutput + '<span data-srch="' + filtername + '">' + filtername + ' <span>' + sortedKeys[key] +'</span></span>';    
-        };
-    });
-    catsbox.innerHTML = FilterOutput;
-    
-    //Vars
-    var filbut = document.querySelector('.filterbut');
-    
-    var clearbut = document.getElementById('clearsearch');
-    var filters = document.querySelectorAll('#allcats span');
-
-    var pods = document.querySelectorAll('.stylepod');
-
-    var typingTimer;               
-    var typeInterval = 500;  
-    var searchInput = document.getElementById('searchbox');
-    searchInput.placeholder = 'Search ' + countstyles + ' Styles';
-    
-    var ratioInput = document.getElementById('ratiobox');
-
-    var spans = document.getElementsByClassName('copyme');
-
-
-    //Prompt Clipboard
-    for(var i = 0; i < spans.length; i++){
-        currentspan = spans[i];
-        currentspan.addEventListener('click',function(){
-            var inp = document.createElement('input');
-            var alttxt = this.innerText;
-            //console.log("Copy:", alttxt);
-            document.body.appendChild(inp);
-            inp.value = alttxt;
-            inp.select();
-            document.execCommand('copy',false);
-            inp.remove();
-            showSnackBar();
-        });
-    };
-
-    //Style open/close
-    if(pods){
-        for(var i = 0; i < pods.length; i++){
-            var currentpod = pods[i];
-            currentpod.addEventListener('click',function(e){
-                if(e.target.classList.contains('copyme')) return
-                this.classList.toggle('active');
-
-                //Anchor in url bar
-                var getnewanker = e.target.id;
-                //console.log(getnewanker);
-                if(!getnewanker){
-                    const url = window.location.href.replace(/#.*/, "");
-                    history.pushState({}, "", url);
-                } else {
-                    const url = window.location.href.replace(/#.*/, "") + '#' + getnewanker;
-                    history.pushState({}, "", url);
-                }
-
-                let thishash = window.location.hash;
-                if(thishash){
-                    location.hash = thishash;
-                }
-
-            });
-        };
-    };
-
-    //Check if Anchor in url
-    if(window.location.hash){
-        let thishash = window.location.hash;
-        let thishashnew = thishash.replace('#','');
-        if(thishash){
-            let machaktiv = document.getElementById(thishashnew).classList.add('active');
-            location.hash = thishash;
-        }
-    }
-
-    //Filter
-    if(filbut){
-        filbut.onclick = function(e){
-          e.preventDefault();
-          catsbox.classList.toggle('show');
-        };
-    };
-    if(clearbut){
-        clearbut.onclick = function(e){
-          e.preventDefault();
-          document.getElementById('searchbox').value = '';
-          liveSearch();
-        };
-    };
-
-    if(filters){
-        for(var i = 0; i < filters.length; i++){
-            var currentfilter = filters[i];
-            currentfilter.addEventListener('click',function(e){
-                document.getElementById('searchbox').value = this.dataset.srch;
-                liveSearch();
-                catsbox.classList.toggle('show');
-            });
-        };
-    };
-
-    LL = new LazyLoad({});
-    
-    
-    //Search - https://css-tricks.com/in-page-filtered-search-with-vanilla-javascript/
-    function liveSearch(){
-        let search_query = document.getElementById("searchbox").value;
-        for(var i = 0; i < pods.length; i++) {
-            //console.log(search_query.toLowerCase());
-            if(pods[i].textContent.toLowerCase().includes(search_query.toLowerCase())){
-                pods[i].classList.remove("is-hidden");
-                clearbut.classList.remove('show');
-            } else {
-                pods[i].classList.add("is-hidden");
-                clearbut.classList.add('show');
-            }
-        }
-    }
-    //A little delay
-    if(searchInput){
-        searchInput.addEventListener('keyup',()=>{
-            clearTimeout(typingTimer);
-            typingTimer = setTimeout(liveSearch, typeInterval);
-        });
-    };
-
-
-    //Copy Notifier
-    function showSnackBar(){
-        var sb = document.getElementById("snackbar");
-        sb.className = "show";
-        setTimeout(()=>{ sb.className = sb.className.replace("show", ""); }, 1500);
-    };
-    
-    //Image Ratio
-    function ratioCalc(){
-        let imgbasesize = document.getElementById("ratiobox").value;
-        if(imgbasesize>0){
-            document.getElementById("ir1b1").innerHTML = imgbasesize + ' &times; ' + imgbasesize;
-            let twobythree = (imgbasesize / 2) * 3; document.getElementById("ir2b3").innerHTML = imgbasesize + ' &times; ' + Math.round(twobythree);
-            let threebyfour = (imgbasesize / 3) * 4; document.getElementById("ir3b4").innerHTML = imgbasesize + ' &times; ' + Math.round(threebyfour);
-            let fourbyfive = (imgbasesize / 4) * 5; document.getElementById("ir4b5").innerHTML = imgbasesize + ' &times; ' + Math.round(fourbyfive);
-            let sixteenbynine = (imgbasesize / 9) * 16; document.getElementById("ir16b9").innerHTML = Math.round(sixteenbynine) + ' &times; ' + imgbasesize;
-            let sixteenbyten = (imgbasesize / 10) * 16; document.getElementById("ir16b10").innerHTML = Math.round(sixteenbyten) + ' &times; ' + imgbasesize;
-            let twentyonebynine = (imgbasesize / 9) * 21; document.getElementById("ir21b9").innerHTML = Math.round(twentyonebynine) + ' &times; ' + imgbasesize;
-        }
-    }
-
-    //Imaga Ratio Delay
-    if(ratioInput){
-        ratioInput.addEventListener('keyup',()=>{
-            clearTimeout(typingTimer);
-            typingTimer = setTimeout(ratioCalc, typeInterval);
-        });
-    };
-    
-});
-
-</script>
-
+<script src="./spaghetticode.js"></script>
 </head>
 <body>
 
@@ -440,7 +17,8 @@ document.addEventListener("DOMContentLoaded",function(event){
     <nav>
         <ul>
             <li><a class="mbut" data-page="styles" href="#">Styles</a></li>
-            <li><a class="mbut" data-page="notes" href="#">Notes</a></li>
+            <li><a class="mbut" data-page="helpers" href="#">Little Helpers</a></li>
+            <li><a class="mbut" data-page="info" href="#">Info</a></li>
         </ul>
         
         <div id="suche">
@@ -455,13 +33,17 @@ document.addEventListener("DOMContentLoaded",function(event){
     
 </header>
 
-<section id="styles"></section>
+<section id="styles">
+    <h3>Artist Inspired Styles</h3>
+    <p>A collection of what Stable Diffusion (and/or the chosen Checkpoint) imagines an artist to look like.</p><p>While having an overview is helpful, these styles only imitate aspects of the artist's work (color, medium, location, etc.) and are heavily influenced by SD's general knowledge.</p>
+    <div id="allthestyles"></div>
+</section>
 
-<section id="notes">
+<section id="helpers">
 
     <h3>Image Dimensions</h3>
     
-    <p>Stable Diffusion was trained for base dimensions around 512px (SD 1.5) and 768px (SD 2/2.1).<br>While it's not necessary to stay in that line of multiples of 128, it's a good starting point.</p>
+    <p>Stable Diffusion was trained with base dimensions of 512 pixels (SD 1.5) and 768 pixels (SD 2/2.1).<br>While it's not necessary to stick to multiples of 128, it's a good place to start.</p>
     <div class="numberline"><span>128</span><span>256</span><span>384</span><span class="highlight">512</span><span>640</span><span class="highlight">768</span><span>896</span><span>1024</span></div>
 
     <p><strong>Some of the common ratios in SD dimensions:</strong></p>
@@ -489,12 +71,12 @@ document.addEventListener("DOMContentLoaded",function(event){
         <tr>
             <td>Standard Monitor</td>
             <td>16:9</td>
-            <td id="ir16b9">911 &times; 512</td>
+            <td id="ir16b9">910 &times; 512</td>
         </tr>
         <tr>
             <td>Monitor</td>
             <td>16:10</td>
-            <td id="ir16b10">820 &times; 512</td>
+            <td id="ir16b10">819 &times; 512</td>
         </tr>
         <tr>
             <td>UltraWide Monitor</td>
@@ -623,9 +205,154 @@ document.addEventListener("DOMContentLoaded",function(event){
         </figure>
     </div>
     
+    <h3>Art History - Some Pointers</h3>
+    
+    <ul id="arthistory">
+        <li>
+            <h4>Renaissance (14<sup>th</sup>-16<sup>th</sup> Centuries)</h4>
+            <ul>
+                <li>Famous Artists: Leonardo da Vinci, Michelangelo Buonarroti, Raffaello Sanzio da Urbino, Sandro Botticelli</li>
+                <li>Medium: Oil on wood or canvas</li>
+            </ul>
+        </li>
+        <li>
+            <h4>Baroque (17<sup>th</sup> Century)</h4>
+            <ul>
+                <li>Famous Artists: Michelangelo Merisi da Caravaggio, Gian Lorenzo Bernini, Rembrandt van Rijn, Peter Paul Rubens</li>
+                <li>Medium: Oil on canvas</li>
+            </ul>
+        </li>
+        <li>
+            <h4>Rococo (18<sup>th</sup> Century)</h4>
+            <ul>
+                <li>Famous Artists: Jean-Antoine Watteau, François Boucher, Jean-Honoré Fragonard</li>
+                <li>Medium: Oil on canvas</li>
+            </ul>
+        </li>
+        <li>
+            <h4>Neoclassicism (18<sup>th</sup>-19<sup>th</sup> Centuries)</h4>
+            <ul>
+                <li>Famous Artists: Jacques-Louis David, Jean-Auguste-Dominique Ingres, Antonio Canova</li>
+                <li>Medium: Oil on canvas</li>
+            </ul>
+        </li>
+        <li>
+            <h4>Romanticism (late 18<sup>th</sup>-19<sup>th</sup> Centuries)</h4>
+            <ul>
+                <li>Famous Artists: Joseph Mallord William Turner, Francisco de Goya y Lucientes, Eugène Delacroix, Caspar David Friedrich</li>
+                <li>Medium: Oil on canvas</li>
+            </ul>
+        </li>
+        <li>
+            <h4>Realism (mid-19<sup>th</sup> Century)</h4>
+            <ul>
+                <li>Famous Artists: Gustave Courbet, Honoré Daumier, Jean-François Millet</li>
+                <li>Medium: Oil on canvas</li>
+            </ul>
+        </li>
+        <li>
+            <h4>Impressionism (late 19<sup>th</sup> Century)</h4>
+            <ul>
+                <li>Famous Artists: Claude Monet, Pierre-Auguste Renoir, Edgar Degas, Mary Cassatt</li>
+                <li>Medium: Oil on canvas</li>
+            </ul>
+        </li>
+        <li>
+            <h4>Expressionism (early 20<sup>th</sup> Century)</h4>
+            <ul>
+                <li>Famous Artists: Edvard Munch, Wassily Kandinsky, Ernst Ludwig Kirchner</li>
+                <li>Medium: Oil on canvas or woodcuts</li>
+            </ul>
+        </li>
+        <li>
+            <h4>Cubism (early 20<sup>th</sup> Century)</h4>
+            <ul>
+                <li>Famous Artists: Pablo Picasso, Georges Braque, Juan Gris</li>
+                <li>Medium: Oil on canvas or collage</li>
+            </ul>
+        </li>
+        <li>
+            <h4>Futurism (1909-1916)</h4>
+            <ul>
+                <li>Famous Artists: Umberto Boccioni, Giacomo Balla, Gino Severini</li>
+                <li>Medium: Oil on canvas or mixed media</li>
+            </ul>
+        </li>
+        <li>
+            <h4>Surrealism (1920s-30s)</h4>
+            <ul>
+                <li>Famous Artists: Salvador Dalí, René Magritte, Max Ernst</li>
+                <li>Medium: Oil on canvas or mixed media</li>
+            </ul>
+        </li>
+        <li>
+            <h4>Abstract Expressionism (1940s-50s)</h4>
+            <ul>
+                <li>Famous Artists: Jackson Pollock, Mark Rothko, Willem de Kooning</li>
+                <li>Medium: Oil on canvas or mixed media</li>
+            </ul>
+        </li>
+        <li>
+            <h4>Pop Art (1950s-60s)</h4>
+            <ul>
+                <li>Famous Artists: Andy Warhol, Roy Lichtenstein, Richard Hamilton</li>
+                <li>Medium: Acrylic or oil on canvas or mixed media</li>
+            </ul>
+        </li>
+        <li>
+            <h4>Minimalism (1960s-70s)</h4>
+            <ul>
+                <li>Famous Artists: Donald Judd, Dan Flavin, Sol LeWitt</li>
+                <li>Medium: Acrylic or oil on canvas or mixed media</li>
+            </ul>
+        </li>
+        <li>
+            <h4>Postmodernism (1970s-90s)</h4>
+            <ul>
+                <li>Famous Artists: Cindy Sherman, Jeff Koons, Barbara Kruger</li>
+                <li>Medium: A wide range of media, including painting, sculpture, installation, and performance art</li>
+            </ul>
+        </li>
+    </ul>
+    
 </section>
 
-<footer>Created 2023 by Jonis (SupaGruen) - <a href="https://github.com/SupaGruen/SD-CheatSheet">GitHub</a></footer>
+<section id="info">
+
+    <h3>Image Generation for Styles</h3>
+    
+    <p>All images were generated with either the <a href="https://huggingface.co/XpucT/Deliberate">Deliberate v2</a> or the <a href="https://huggingface.co/Lykon/DreamShaper">DreamShaper Checkpoint</a>.</p>
+    <p>The prompt for the <a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Features#prompts-from-file-or-textbox">textbox</a> was:
+        <code>
+        --prompt style of ArtistName --negative_prompt nude, nsfw, frame, border, text<br>
+        --prompt style of ArtistName, portrait of a woman --negative_prompt same as above<br>
+        --prompt style of ArtistName, Henry C_____ --negative_prompt superman<br>
+        --prompt style of ArtistName, street --negative_prompt text, frame, border
+        </code>
+        While Deliberate has some NSFW Checkpoint mixed in and needs 'nsfw' in the negative prompt, DreamShaper likes manga a lot and frequently requires 'manga, anime' in the np.
+    </p>
+    <p><em>Why these exact prompts?</em></p>
+    <p>The first line conveys a broad, uninfluenced impression.</p>
+    <p>With "portrait of a woman," you will get a wider range of portraits that are more in line with the artist's personal aesthetic.</p>
+    <p>For the third line: The actor Henry C. is currently well-known and has been well-trained into SD. You can also judge the dominance of a style if he is still rendered normally (weak artist style) or when his superhero costume appears.</p>
+    <p>The last line, 'street,' will give you a good idea of how houses, people, and technical items (cars, bikes, etc.) appear.</p>
+
+    <h3>Useful Links</h3>
+    
+    <p>Links that helped me understand the technical side of Stable Diffusion (no affiliation):</p>
+    
+    <ul>
+        <li><a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki">Automatic111 Wiki</a></li>
+        <li><a href="https://stable-diffusion-art.com/tutorials/">Stable-Diffusion-Art.com - Tutorials</a></li>
+    </ul>
+    
+    <h3>Errors</h3>
+    
+    <p>All information has been collected with the utmost care, however, mistakes always happen. Location information is sometimes difficult when artists move very early in life, or the indication of the era, if the lifetime falls between two centuries.</p>
+
+</section>
+
+<footer>Created 2023 - Version 1.0 - <a href="https://github.com/SupaGruen/SD-CheatSheet">GitHub</a></footer>
 
 <span id="snackbar">Copied to Clipboard</span>
 
