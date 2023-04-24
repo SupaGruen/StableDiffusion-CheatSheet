@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded",function(event){
                 e.preventDefault();
                 var mldata = this.dataset.page;
                 hidepages();
+                window.scroll(0, 100);
                 document.getElementById(mldata).classList.remove('is-hidden');
                 this.classList.add('active');
                 if(mldata=='styles'){ searchdiv.classList.remove('is-hidden'); };

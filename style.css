@@ -147,7 +147,7 @@ footer a:hover { color: var(--lg); }
 .stylepod.active h3 { text-shadow: none; }
 .stylepod.active .styleinfo { display: inline-block; width: 256px; height: 256px; padding-right: 20px; background-color: var(--dgr); }
 .stylepod.active .styleinfo .more { display: block; }
-.stylepod.active .styleinfo .more .category { white-space: nowrap; overflow: hidden; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 220px; }
+.stylepod.active .styleinfo .more .category { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 220px; }
 .stylepod.active .styleinfo .more .category, .stylepod.active .styleinfo .more .checkpoint { margin: 0 10px 10px 20px; font-size: 1rem; line-height: 1; color: white; }
 .stylepod.active .styleinfo .more .category span, .stylepod.active .styleinfo .more .checkpoint span, legend { margin: 0 0 3px 0; display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--fc); }
 .stylepod.active .styleinfo .more fieldset legend { margin: 0; padding: 0; color: var(--lb); }
@@ -189,7 +189,7 @@ table#dimensions tr td:nth-child(3) { padding: 3px 0 3px 15px; color: var(--mute
 
 }
 
-#snackbar { visibility: hidden; color: #fff; background-color: var(--lb); min-width: 250px; margin-left: -125px; border-radius: 2px; padding: 16px; text-align: center; left: 50%; top: 30px; z-index: 1; position: fixed; z-index: 99999; }
+#snackbar { visibility: hidden; color: #fff; background-color: var(--lb); min-width: 250px; margin-left: -125px; border-radius: 2px; padding: 16px; text-align: center; left: 50%; top: 30px; position: fixed; z-index: 99999; }
 #snackbar.show { visibility: visible; -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
 @-webkit-keyframes fadein { from {top: 0; opacity: 0;} to {top: 30px; opacity: 1;} }
 @keyframes fadein { from {top: 0; opacity: 0;} to {top: 30px; opacity: 1;} }
