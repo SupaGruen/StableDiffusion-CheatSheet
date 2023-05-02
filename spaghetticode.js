@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded",function(event){
 
-    var DontShowAnyCountries = ['Sweden','USA','Ukraine','Belarus','Spain','Brazil','Denmark','Japan','Austria','France','Philippines','UK','Poland','Poland','Germany','Canada','Netherlands','Italy','Israel','Taiwan','Belgium','Russia','Australia','Czech Republic','Bulgaria','China'];
+    var DontShowAnyCountries = ['Sweden','Switzerland','USA','Ukraine','Belarus','Spain','Brazil','Denmark','Japan','Austria','France','Philippines','UK','Poland','Poland','Germany','Canada','Netherlands','Italy','Israel','Taiwan','Belgium','Russia','Australia','Czech Republic','Bulgaria','China'];
 
     var outputdata = '';
     var tags = {};
