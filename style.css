@@ -184,6 +184,45 @@ table#dimensions tr td:nth-child(3) { padding: 3px 0 3px 15px; color: var(--mute
 
 #ratiobox { width: 80px; font-size: 1rem; text-align: center; background-color: transparent; border-bottom: 1px dashed var(--mutedwhite); }
 
+
+#drop-area {
+  border: 2px dashed #ccc;
+  border-radius: 20px;
+  width: 480px;
+  margin: 50px auto;
+  padding: 20px;
+}
+#drop-area.highlight {
+  border-color: purple;
+}
+.my-form {
+  margin-bottom: 10px;
+}
+#gallery {
+  margin-top: 10px;
+}
+#gallery img {
+  width: 150px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+.button {
+  display: inline-block;
+  padding: 10px;
+  background: #ccc;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.button:hover {
+  background: #ddd;
+}
+#fileElem {
+  display: none;
+}
+
+
 @media screen and (min-width: 900px) {
 
 .stylepod.active { width: 100%; /*max-width: 1300px;*/ }

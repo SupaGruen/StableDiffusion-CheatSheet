@@ -5,6 +5,7 @@
 <title>Stable Diffusion 1.5 - Cheat Sheet</title>
 <link href="./style.css" rel="stylesheet">
 <script src="./lazyload.min.js"></script>
+<script src="./exif-reader.js"></script>
 <script src="./data.js"></script>
 <script src="./spaghetticode.js"></script>
 </head>
@@ -18,7 +19,8 @@
         <ul>
             <li><a class="mbut" data-page="styles" href="#">Styles</a></li>
             <li><a class="mbut" data-page="helpers" href="#">Little Helpers</a></li>
-            <li><a class="mbut" data-page="info" href="#">Info</a></li>
+            <li><a class="mbut" data-page="info" href="#">Image Info</a></li>
+            <li><a class="mbut" data-page="about" href="#">About</a></li>
         </ul>
         
         <div id="suche">
@@ -343,6 +345,22 @@
 
 <section id="info">
 
+    <h3>Image Metadata</h3>
+    
+    <div id="drop-area">
+    <form class="my-form">
+        <p>Drop File Here</p>
+        <input type="file" id="fileElem" multiple accept="image/*" onchange="handleFiles(this.files)">
+    </form>
+    <div id="gallery"></div>
+    </div>
+
+    <div id="allMetaDataSpan"></div>
+
+</section>
+
+<section id="about">
+
     <h3>Image Generation for Styles</h3>
     
     <p>All images were generated with either the <a href="https://huggingface.co/XpucT/Deliberate">Deliberate v2</a> or the <a href="https://huggingface.co/Lykon/DreamShaper">DreamShaper 3.2</a> Checkpoint.<br>Sampler was DMP++ 2M Karras or DMP++ SDE Karras, depending on the better result.<br>Very rarely DDIM (less than 0.5&percnt;). Final resolution never smaller than 768px &times; 768px.</p>
@@ -376,7 +394,8 @@
 
     <h3>Credits</h3>
     
-    <p><a href="https://github.com/verlok/vanilla-lazyload">Lazyload Script</a> from Verlok, Webfont is Google's <a href="https://fonts.google.com/specimen/Roboto">Roboto</a>, SVG Icons from <a href="https://github.com/ionic-team/ionicons">Ionicons</a></p>
+    <p>A BIG THANK YOU TO:</p>
+    <p><a href="https://github.com/verlok/vanilla-lazyload">Lazyload Script</a> from Verlok, Webfont is Google's <a href="https://fonts.google.com/specimen/Roboto">Roboto</a>, SVG Icons from <a href="https://github.com/ionic-team/ionicons">Ionicons</a>, MattiasW's <a href="https://github.com/mattiasw/ExifReader">ExifReader</a>, Code from Himuro-Majika's <a href="https://github.com/himuro-majika/Stable_Diffusion_image_metadata_viewer">Stable Diffusion image metadata viewer</a> Browser Extension</p>
     <p>Stable Diffusion by <a href="https://ommer-lab.com/research/latent-diffusion-models/">LMU</a> and <a href="https://stability.ai/">stability.ai</a></p>
 
 </section>

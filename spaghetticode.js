@@ -283,4 +283,182 @@ document.addEventListener("DOMContentLoaded",function(event){
     
     
     
+    
+    
+    var allMetaDataSpan = document.getElementById('allMetaDataSpan');
+
+
+    // Drag and Drop Start
+    // Joseph Zimmerman - https://www.smashingmagazine.com/2018/01/drag-drop-file-uploader-vanilla-js/
+    
+    let dropArea = document.getElementById("drop-area")
+
+    // Prevent default drag behaviors
+    ;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+      dropArea.addEventListener(eventName, preventDefaults, false)   
+      document.body.addEventListener(eventName, preventDefaults, false)
+    })
+
+    // Highlight drop area when item is dragged over it
+    ;['dragenter', 'dragover'].forEach(eventName => {
+      dropArea.addEventListener(eventName, highlight, false)
+    })
+
+    ;['dragleave', 'drop'].forEach(eventName => {
+      dropArea.addEventListener(eventName, unhighlight, false)
+    })
+
+    // Handle dropped files
+    dropArea.addEventListener('drop', handleDrop, false)
+
+    function preventDefaults (e) {
+      e.preventDefault()
+      e.stopPropagation()
+    }
+
+    function highlight(e) {
+      dropArea.classList.add('highlight')
+    }
+
+    function unhighlight(e) {
+      dropArea.classList.remove('active')
+    }
+
+    function handleDrop(e) {
+      var dt = e.dataTransfer
+      var files = dt.files
+
+      handleFiles(files)
+    }
+
+    function handleFiles(files) {
+      files = [...files]
+      files.forEach(previewFile)
+    }
+
+    // Drag and Drop end
+    
+    
+    // EXIF Start
+    
+    async function previewFile(file) {    
+
+        let reader = new FileReader()
+        reader.readAsDataURL(file)
+
+
+        // when loaded, put image in DOM
+        reader.onloadend = function() {
+        let img = document.createElement('img')
+            img.setAttribute('id','thisimg');
+            img.src = reader.result
+            document.getElementById('gallery').innerHTML = ''
+            document.getElementById('gallery').appendChild(img);        
+        }
+
+        const tags = await ExifReader.load(file);
+        getComment(tags);
+
+        // https://github.com/himuro-majika/Stable_Diffusion_image_metadata_viewer
+        function getComment(tags) {
+            //console.dir(JSON.parse(JSON.stringify(tags)));
+            let com = '';
+
+            // Exif - JPG
+            if (tags && tags.UserComment) {
+                com = decodeUnicode(tags.UserComment.value);
+                extractPrompt(com);
+                return;
+            }
+            // A1111 - PNG
+            if (tags.parameters) {
+                com = tags.parameters.description;
+                extractPrompt(com);
+                return;
+            }
+            extractPrompt(com);
+            return;
+        }
+
+        function decodeUnicode(array) {
+            const plain = array.map(t => t.toString(16).padStart(2, "0")).join("");
+            if (!plain.match(/^554e49434f44450/)) {
+                return;
+            }
+            const hex = plain.replace(/^554e49434f44450[0-9]/, "").replace(/[0-9a-f]{4}/g, ",0x$&").replace(/^,/, "");
+            const arhex = hex.split(",");
+            let decode = "";
+            arhex.forEach(v => {
+                decode += String.fromCodePoint(v);
+            })
+            return decode;
+        }
+
+        function extractPrompt(com) {
+            const positive = extractPositivePrompt(com);
+            const negative = extractNegativePrompt(com);
+            const others = extractOthers(com);
+            if (!positive && !negative && !others) return;
+            const prompt = {
+                positive: positive,
+                negative: negative,
+                others: others
+            }
+            makeData(prompt);
+        }
+
+
+        function makeData(prompt) {
+            const positive = prompt.positive;
+            const negative = prompt.negative;
+            const others = prompt.others;
+
+            allMetaDataSpan.innerHTML = positive + negative + others;
+
+        }
+
+        function extractPositivePrompt(text) {
+            try {
+                let matchtext = 
+                text.match(/([^]+)Negative prompt: /) || 
+                text.match(/([^]+)Steps: /) || 
+                text.match(/([^]+){"steps"/) || 
+                text.match(/([^]+)\[[^[]+\]/);
+                return matchtext[1];
+            } catch (e) {
+                console.log(text);
+                return "";
+            }
+        }
+
+        function extractNegativePrompt(text) {
+            try {
+                let matchtext = 
+                text.match(/Negative prompt: ([^]+)Steps: /) || 
+                text.match(/"uc": "([^]+)"}/) || 
+                text.match(/\[([^[]+)\]/);
+                return matchtext[1];
+            } catch (e) {
+                console.log(text);
+                return "";
+            }
+        }
+
+        function extractOthers(text) {
+            try {
+                let matchtext = 
+                text.match(/(Steps: [^]+)/) || 
+                text.match(/{("steps"[^]+)"uc": /) || 
+                text.match(/\]([^]+)/);
+                return matchtext[1];
+            } catch (e) {
+                console.log(text);
+                return text;
+            }
+        }
+
+    }
+    
+    
+    
 });
