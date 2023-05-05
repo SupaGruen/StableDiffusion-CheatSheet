@@ -1,7 +1,11 @@
 ## Stable Diffusion Cheat-Sheet
 
-This is a list of styles, a collection of little helpers and a metadata viewer for offline use.
-Let's hope it is useful to some.
+This is a list of styles, a collection of little helpers and a metadata viewer for **offline use**.
+
+Let's hope it is useful to someone.
+
+![StableDiffusion CheatSheet - Preview Image 01](https://raw.githubusercontent.com/SupaGruen/StableDiffusion-CheatSheet/main/img/other/01.webp)
+![StableDiffusion CheatSheet - Preview Image 02](https://raw.githubusercontent.com/SupaGruen/StableDiffusion-CheatSheet/main/img/other/02.webp)
 
 ### Credits
 
