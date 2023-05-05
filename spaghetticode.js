@@ -425,12 +425,12 @@ document.addEventListener("DOMContentLoaded",function(event){
             if(negative){ MDOut = MDOut + '<p><strong>Negative Prompt</strong><br>' + negative + '</p>'; }
             if(NewOthers){ MDOut = MDOut + '<p>' + NewOthers + '</p>'; }
 
-            let copymetadataprompt = '<span id="copyprompt">' + positive + ' Negative prompt: ' + negative + ' ' + others + '</span><span id="copypromptbutton">Copy Prompt</span>';
+            let copymetadataprompt = '<span id="copyprompt">' + positive + '\nNegative prompt: ' + negative + '\n' + others + '</span><span id="copypromptbutton">Copy Prompt</span>';
 
             allMetaData.innerHTML = MDOut + copymetadataprompt;
             
             document.getElementById('copypromptbutton').addEventListener('click',function(e){
-                var inp = document.createElement('input');
+                var inp = document.createElement('textarea');
                 var txt = document.getElementById('copyprompt').innerText;
                 document.body.appendChild(inp);
                 inp.value = txt;
