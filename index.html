@@ -18,8 +18,8 @@
     <nav>
         <ul>
             <li><a class="mbut" data-page="styles" href="#">Styles</a></li>
-            <li><a class="mbut" data-page="helpers" href="#">Little Helpers</a></li>
-            <li><a class="mbut" data-page="info" href="#">Image Info</a></li>
+            <li><a class="mbut" data-page="helpers" href="#">Notes</a></li>
+            <li><a class="mbut" data-page="info" href="#">Metadata</a></li>
             <li><a class="mbut" data-page="about" href="#">About</a></li>
         </ul>
         
@@ -347,15 +347,17 @@
 
     <h3>Image Metadata</h3>
     
-    <div id="drop-area">
-    <form class="my-form">
-        <p>Drop File Here</p>
-        <input type="file" id="fileElem" multiple accept="image/*" onchange="handleFiles(this.files)">
-    </form>
-    <div id="gallery"></div>
-    </div>
+    <div id="metadataboxes">
+        <div id="drop-area">
+            <form class="my-form">
+                <p>Drop File Here</p>
+                <input type="file" id="fileElem" accept="image/*" onchange="handleFiles(this.files)">
+            </form>
+            <div id="gallery"></div>
+        </div>
 
-    <div id="allMetaDataSpan"></div>
+        <div id="allMetaData"></div>
+    </div>
 
 </section>
 
@@ -400,7 +402,7 @@
 
 </section>
 
-<footer>Created 2023 - Version 1.0.0 - <a href="https://github.com/SupaGruen/SD-CheatSheet">GitHub</a></footer>
+<footer>Created 2023 - Version 1.0.0 - <a href="https://github.com/SupaGruen/StableDiffusion-CheatSheet">GitHub</a></footer>
 
 <span id="snackbar">Copied to Clipboard</span>
 

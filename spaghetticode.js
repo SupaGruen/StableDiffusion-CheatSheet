@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded",function(event){
 
     var SearchEngine = 'https://www.google.com/search?q=';
 
-    var DontShowAnyCountries = ['Sweden','Switzerland','USA','Ukraine','Belarus','Spain','Brazil','Denmark','Japan','Austria','France','Philippines','UK','Poland','Poland','Germany','Canada','Netherlands','Italy','Israel','Taiwan','Belgium','Russia','Australia','Czech Republic','Bulgaria','China'];
+    var DontShowAnyCountries = ['Sweden','South Korea','Portugal','Switzerland','USA','Ukraine','Belarus','Spain','Brazil','Denmark','Japan','Austria','France','Philippines','UK','Poland','Poland','Germany','Canada','Netherlands','Italy','Israel','Taiwan','Belgium','Russia','Australia','Czech Republic','Bulgaria','China'];
 
     var outputdata = '';
     var tags = {};
@@ -283,9 +283,7 @@ document.addEventListener("DOMContentLoaded",function(event){
     
     
     
-    
-    
-    var allMetaDataSpan = document.getElementById('allMetaDataSpan');
+    var allMetaData = document.getElementById('allMetaData');
 
 
     // Drag and Drop Start
@@ -346,7 +344,6 @@ document.addEventListener("DOMContentLoaded",function(event){
         let reader = new FileReader()
         reader.readAsDataURL(file)
 
-
         // when loaded, put image in DOM
         reader.onloadend = function() {
         let img = document.createElement('img')
@@ -376,6 +373,7 @@ document.addEventListener("DOMContentLoaded",function(event){
                 extractPrompt(com);
                 return;
             }
+            
             extractPrompt(com);
             return;
         }
@@ -395,6 +393,7 @@ document.addEventListener("DOMContentLoaded",function(event){
         }
 
         function extractPrompt(com) {
+
             const positive = extractPositivePrompt(com);
             const negative = extractNegativePrompt(com);
             const others = extractOthers(com);
@@ -413,7 +412,33 @@ document.addEventListener("DOMContentLoaded",function(event){
             const negative = prompt.negative;
             const others = prompt.others;
 
-            allMetaDataSpan.innerHTML = positive + negative + others;
+            const Allothers = others.split(',');
+            let NewOthers = '';
+            
+            for(var i=0; i<Allothers.length; i++){
+                let oother = Allothers[i].split(':');
+                NewOthers = NewOthers + '<span><strong>' + oother[0] + '</strong>' + oother[1] + '</span>';
+            };
+
+            let MDOut = '';
+            if(positive){ MDOut = MDOut + '<p><strong>Prompt</strong><br>' + positive + '</p>'; }
+            if(negative){ MDOut = MDOut + '<p><strong>Negative Prompt</strong><br>' + negative + '</p>'; }
+            if(NewOthers){ MDOut = MDOut + '<p>' + NewOthers + '</p>'; }
+
+            let copymetadataprompt = '<span id="copyprompt">' + positive + ' Negative prompt: ' + negative + ' ' + others + '</span><span id="copypromptbutton">Copy Prompt</span>';
+
+            allMetaData.innerHTML = MDOut + copymetadataprompt;
+            
+            document.getElementById('copypromptbutton').addEventListener('click',function(e){
+                var inp = document.createElement('input');
+                var txt = document.getElementById('copyprompt').innerText;
+                document.body.appendChild(inp);
+                inp.value = txt;
+                inp.select();
+                document.execCommand('copy',false);
+                inp.remove();
+                showSnackBar();
+            });
 
         }
 
@@ -422,8 +447,7 @@ document.addEventListener("DOMContentLoaded",function(event){
                 let matchtext = 
                 text.match(/([^]+)Negative prompt: /) || 
                 text.match(/([^]+)Steps: /) || 
-                text.match(/([^]+){"steps"/) || 
-                text.match(/([^]+)\[[^[]+\]/);
+                text.match(/([^]+){"steps"/) || text.match(/([^]+)\[[^[]+\]/);
                 return matchtext[1];
             } catch (e) {
                 console.log(text);
@@ -431,15 +455,14 @@ document.addEventListener("DOMContentLoaded",function(event){
             }
         }
 
-        function extractNegativePrompt(text) {
+        function extractNegativePrompt(text) { // removed b/c false negative from checkpoint name in square braces -> || text.match(/\[([^[]+)\]/)
             try {
                 let matchtext = 
                 text.match(/Negative prompt: ([^]+)Steps: /) || 
-                text.match(/"uc": "([^]+)"}/) || 
-                text.match(/\[([^[]+)\]/);
+                text.match(/"uc": "([^]+)"}/);
                 return matchtext[1];
             } catch (e) {
-                console.log(text);
+                //console.log(text);
                 return "";
             }
         }
@@ -448,8 +471,7 @@ document.addEventListener("DOMContentLoaded",function(event){
             try {
                 let matchtext = 
                 text.match(/(Steps: [^]+)/) || 
-                text.match(/{("steps"[^]+)"uc": /) || 
-                text.match(/\]([^]+)/);
+                text.match(/{("steps"[^]+)"uc": /) || text.match(/\]([^]+)/);
                 return matchtext[1];
             } catch (e) {
                 console.log(text);
