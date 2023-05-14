@@ -1,8 +1,11 @@
 document.addEventListener("DOMContentLoaded",function(event){
 
     var SearchEngine = 'https://www.google.com/search?q=';
+    
+    var EndOfLastVer = 202305050000;
 
-    var DontShowAnyCountries = ['Sweden','South Korea','Portugal','Switzerland','USA','Ukraine','Belarus','Spain','Brazil','Denmark','Japan','Austria','France','Philippines','UK','Poland','Poland','Germany','Canada','Netherlands','Italy','Israel','Taiwan','Belgium','Russia','Australia','Czech Republic','Bulgaria','China'];
+    // Filter Buttons - Don't show countries or tags that are too common
+    var DontShowAnyCountries = ['Oil','Painting','Illustration','Lithuania','Sweden','South Korea','Portugal','Switzerland','USA','Ukraine','Belarus','Spain','Brazil','Denmark','Japan','Austria','France','Philippines','UK','Poland','Poland','Germany','Canada','Netherlands','Italy','Israel','Taiwan','Belgium','Russia','Australia','Czech Republic','Bulgaria','China'];
 
     var outputdata = '';
     var tags = {};
@@ -58,7 +61,7 @@ document.addEventListener("DOMContentLoaded",function(event){
                 var LUArtist = SearchEngine + LUPart1;
             }
             
-            outputdata = outputdata + '<div id="' + currentAnchor + '" class="stylepod lazy" data-bg="./img/' + data[i].Image + '">';
+            outputdata = outputdata + '<div id="' + currentAnchor + '" class="stylepod lazy" data-creatime="' + data[i].Creation + '" data-bg="./img/' + data[i].Image + '">';
             outputdata = outputdata + '<div class="styleinfo">';
             outputdata = outputdata + '<h3>' + data[i].Name + dagger + '</h3>';
             outputdata = outputdata + '<div class="more">';
@@ -112,6 +115,7 @@ document.addEventListener("DOMContentLoaded",function(event){
             FilterOutput = FilterOutput + '<span data-srch="' + filtername + '">' + filtername + ' <span>' + sortedKeys[key] +'</span></span>';    
         };
     });
+    FilterOutput = '<span data-srch="New Styles">New with 1.1.0<span></span></span>' + FilterOutput;
     catsbox.innerHTML = FilterOutput;
     
     //Vars
@@ -221,16 +225,31 @@ document.addEventListener("DOMContentLoaded",function(event){
     //Search - https://css-tricks.com/in-page-filtered-search-with-vanilla-javascript/
     function liveSearch(){
         let search_query = document.getElementById("searchbox").value;
+        
         for(var i = 0; i < pods.length; i++) {
             //console.log(search_query.toLowerCase());
-            if(pods[i].textContent.toLowerCase().includes(search_query.toLowerCase())){
-                pods[i].classList.remove("is-hidden");
-                clearbut.classList.remove('show');
+            
+            if(search_query == 'New Styles'){
+                let currentstyledate = pods[i].dataset.creatime;
+                if(currentstyledate>EndOfLastVer){
+                    pods[i].classList.remove("is-hidden");
+                    clearbut.classList.remove('show');
+                } else {
+                    pods[i].classList.add("is-hidden");
+                    clearbut.classList.add('show');
+                }
             } else {
-                pods[i].classList.add("is-hidden");
-                clearbut.classList.add('show');
+                if(pods[i].textContent.toLowerCase().includes(search_query.toLowerCase())){
+                    pods[i].classList.remove("is-hidden");
+                    clearbut.classList.remove('show');
+                } else {
+                    pods[i].classList.add("is-hidden");
+                    clearbut.classList.add('show');
+                }
             }
+            
         }
+        
     }
     //A little delay
     if(searchInput){
@@ -482,5 +501,22 @@ document.addEventListener("DOMContentLoaded",function(event){
     }
     
     
-    
+    // Custom Sorting Of Styles
+    function sortStylesAZ(){ // A to Z
+        const container = document.querySelector('#allthestyles');
+        const key = (a) => a.querySelector('h3').textContent.trim();
+
+        Array.from(container.children)
+             .sort((a, b) => key(a).localeCompare(key(b)))
+             .forEach(child => container.appendChild(child));
+    }
+    function sortStyles321(){ // Creation Time - Newest First
+        const container = document.querySelector('#allthestyles');
+        const key = (a) => a.getAttribute('data-creatime');
+
+        Array.from(container.children)
+             .sort((b, a) => key(a).localeCompare(key(b)))
+             .forEach(child => container.appendChild(child));
+    }
+
 });
