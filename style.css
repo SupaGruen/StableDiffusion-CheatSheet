@@ -52,6 +52,7 @@
   --lb: #7aa5d2;
   --ow: #eeeeee;
   --fc: #637289;
+  --lblgr: #7C8AA0;
   --mutedwhite: #b0b9c3;
   
   --red: #f94144;
@@ -140,7 +141,7 @@ footer a:hover { color: var(--lg); }
 #allcats.show { display: flex; }
 #allcats span { display: inline-block; padding: 5px 8px; font-size: 1rem; color: #FFF; background-color: var(--lg); border-radius: 2px; cursor: pointer; }
 #allcats span:hover { background-color: var(--dgr); }
-#allcats span span { padding: 0; background-color: transparent!important; }
+#allcats span span { padding: 0; color: var(--lblgr); background-color: transparent!important; }
 
 /* Stylepod with .active class */
 .stylepod.active { display: flex; flex-wrap: nowrap; width: 532px; background-position: -999px -999px; align-items: flex-start; }
