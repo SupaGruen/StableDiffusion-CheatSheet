@@ -19,7 +19,8 @@ document.addEventListener("DOMContentLoaded",function(event){
         if(pages){
             for(var i = 0; i < pages.length; i++){ pages[i].classList.add('is-hidden'); }
             for(var i = 0; i < menulinks.length; i++){ menulinks[i].classList.remove('active'); }
-            searchdiv.classList.add('is-hidden');
+            searchdiv.classList.add('is-hidden'); //hide search box
+            document.getElementById('allcats').classList.remove('show'); //hide filters
         }
     };
     hidepages();
@@ -31,11 +32,11 @@ document.addEventListener("DOMContentLoaded",function(event){
             currentml.addEventListener('click',function(e){
                 e.preventDefault();
                 var mldata = this.dataset.page;
-                hidepages();
-                window.scroll(0, 100);
-                document.getElementById(mldata).classList.remove('is-hidden');
-                this.classList.add('active');
-                if(mldata=='styles'){ searchdiv.classList.remove('is-hidden'); };
+                hidepages(); //hide everything first
+                window.scroll(0, 100); //scroll up
+                document.getElementById(mldata).classList.remove('is-hidden'); //display div that has id of menu links data
+                this.classList.add('active'); //activate current menu link
+                if(mldata=='styles'){ searchdiv.classList.remove('is-hidden'); }; //display search box if styles
             });
         };
     };
