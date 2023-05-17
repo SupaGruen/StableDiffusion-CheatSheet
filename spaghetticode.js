@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded",function(event){
     var EndOfLastVer = 202305050000;
 
     // Filter Buttons - Don't show countries or tags that are too common
-    var DontShowAnyCountries = ['Oil','Painting','Illustration','Lithuania','Sweden','South Korea','Portugal','Switzerland','USA','Ukraine','Belarus','Spain','Brazil','Denmark','Japan','Austria','France','Philippines','UK','Poland','Poland','Germany','Canada','Netherlands','Italy','Israel','Taiwan','Belgium','Russia','Australia','Czech Republic','Bulgaria','China'];
+    var DontShowAnyCountries = ['Oil','Painting','Illustration','Ireland','Lithuania','Sweden','South Korea','Portugal','Switzerland','USA','Ukraine','Belarus','Spain','Brazil','Denmark','Japan','Austria','France','Philippines','UK','Poland','Poland','Germany','Canada','Netherlands','Italy','Israel','Taiwan','Belgium','Russia','Australia','Czech Republic','Bulgaria','China'];
 
     var outputdata = '';
     var tags = {};
@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded",function(event){
     },{});
     
     Object.keys(sortedKeys).forEach(key => {
-        if(sortedKeys[key]>1 && DontShowAnyCountries.includes(key)==false){
+        if(sortedKeys[key]>2 && DontShowAnyCountries.includes(key)==false){
             let filtername = key.replace(/\\/g,'');
             FilterOutput = FilterOutput + '<span data-srch="' + filtername + '">' + filtername + ' <span>' + sortedKeys[key] +'</span></span>';    
         };
