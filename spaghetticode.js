@@ -376,6 +376,23 @@ document.addEventListener("DOMContentLoaded",function(event){
         const tags = await ExifReader.load(file);
         getComment(tags);
 
+        // https://www.geeksforgeeks.org/how-to-convert-special-characters-to-html-in-javascript/
+        function Encode(string) {
+            var i = string.length,
+                a = [];
+  
+            while (i--) {
+                var iC = string[i].charCodeAt();
+                if (iC < 65 || iC > 127 || (iC > 90 && iC < 97)) {
+                    a[i] = '&#' + iC + ';';
+                } else {
+                    a[i] = string[i];
+                }
+            }
+            return a.join('');
+        }
+
+
         // https://github.com/himuro-majika/Stable_Diffusion_image_metadata_viewer
         function getComment(tags) {
             //console.dir(JSON.parse(JSON.stringify(tags)));
@@ -414,14 +431,18 @@ document.addEventListener("DOMContentLoaded",function(event){
 
         function extractPrompt(com) {
 
-            const positive = extractPositivePrompt(com);
-            const negative = extractNegativePrompt(com);
-            const others = extractOthers(com);
+            const positive = Encode(extractPositivePrompt(com));
+            const negative = Encode(extractNegativePrompt(com));
+            const others = extractOthers(com); //is encoded while building the output below
+            const PluginMetaData = Encode(extractPluginData(com));
+            
             if (!positive && !negative && !others) return;
             const prompt = {
                 positive: positive,
                 negative: negative,
-                others: others
+                others: others,
+                PMother: PluginMetaData,
+                originalMD: com
             }
             makeData(prompt);
         }
@@ -431,21 +452,26 @@ document.addEventListener("DOMContentLoaded",function(event){
             const positive = prompt.positive;
             const negative = prompt.negative;
             const others = prompt.others;
+            const PluginMetaData = prompt.PMother;
 
             const Allothers = others.split(',');
             let NewOthers = '';
             
             for(var i=0; i<Allothers.length; i++){
                 let oother = Allothers[i].split(':');
-                NewOthers = NewOthers + '<span><strong>' + oother[0] + '</strong>' + oother[1] + '</span>';
+                let escapedsecondpart = '';
+                if(oother[1]){ escapedsecondpart = Encode(oother[1]); } else { escapedsecondpart = oother[1]; }
+                NewOthers = NewOthers + '<span><strong>' + oother[0] + '</strong>' + escapedsecondpart + '</span>';
             };
 
             let MDOut = '';
             if(positive){ MDOut = MDOut + '<p><strong>Prompt</strong><br>' + positive + '</p>'; }
             if(negative){ MDOut = MDOut + '<p><strong>Negative Prompt</strong><br>' + negative + '</p>'; }
             if(NewOthers){ MDOut = MDOut + '<p>' + NewOthers + '</p>'; }
+            if(PluginMetaData){ MDOut = MDOut + '<p><strong>Other Metadata</strong><br>' + PluginMetaData + '</p>'; }
 
-            let copymetadataprompt = '<span id="copyprompt">' + positive + '\nNegative prompt: ' + negative + '\n' + others + '</span><span id="copypromptbutton">Copy Prompt</span>';
+
+            let copymetadataprompt = '<span id="copyprompt">' + Encode(prompt.originalMD) + '</span><span id="copypromptbutton">Copy Prompt</span>';
 
             allMetaData.innerHTML = MDOut + copymetadataprompt;
             
@@ -467,10 +493,10 @@ document.addEventListener("DOMContentLoaded",function(event){
                 let matchtext = 
                 text.match(/([^]+)Negative prompt: /) || 
                 text.match(/([^]+)Steps: /) || 
-                text.match(/([^]+){"steps"/) || text.match(/([^]+)\[[^[]+\]/);
+                text.match(/([^]+){"steps"/) ||
+                text.match(/([^]+)\[[^[]+\]/);
                 return matchtext[1];
             } catch (e) {
-                console.log(text);
                 return "";
             }
         }
@@ -482,7 +508,6 @@ document.addEventListener("DOMContentLoaded",function(event){
                 text.match(/"uc": "([^]+)"}/);
                 return matchtext[1];
             } catch (e) {
-                //console.log(text);
                 return "";
             }
         }
@@ -491,10 +516,32 @@ document.addEventListener("DOMContentLoaded",function(event){
             try {
                 let matchtext = 
                 text.match(/(Steps: [^]+)/) || 
-                text.match(/{("steps"[^]+)"uc": /) || text.match(/\]([^]+)/);
-                return matchtext[1];
+                text.match(/{("steps"[^]+)"uc": /) ||
+                text.match(/\]([^]+)/);
+                
+                //in case there is more after the positive/negative and steps part, we check for line breaks
+                var separateLines = matchtext[1].match(/[^\r\n]+/g);
+                //return matchtext[1];
+                return separateLines[0];
             } catch (e) {
-                console.log(text);
+                return text;
+            }
+        }
+        
+        function extractPluginData(text) {
+            try {
+                let matchtext = 
+                text.match(/(Steps: [^]+)/) || 
+                text.match(/{("steps"[^]+)"uc": /) ||
+                text.match(/\]([^]+)/);
+                
+                var separateLines = matchtext[1].match(/[^\r\n]+/g);
+                let returnthis = '';
+                separateLines.slice(1).forEach(function(value){ //build output without first
+                    returnthis = returnthis + value;
+                });
+                return returnthis;
+            } catch (e) {
                 return text;
             }
         }
