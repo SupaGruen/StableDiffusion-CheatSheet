@@ -122,7 +122,7 @@ footer a { color: var(--fc); text-decoration: none; }
 footer a:hover { color: var(--lg); }
 
 .stylepod { position: relative; display: block; margin: 0; padding: 0; width: 256px; height: 256px; background-size: 512px; border-radius: 5px; overflow: hidden; cursor: pointer; background-repeat: no-repeat; }
-.stylepod h3 { margin: 20px 0 5px 20px; padding: 0 20px 0 0; font-size: 1.2rem; text-transform: uppercase; text-shadow: 1px 1px 5px #555; }
+.stylepod h3 { margin: 20px 0 5px 20px; padding: 0 20px 0 0; font-size: 1.1rem; text-transform: uppercase; text-shadow: 1px 1px 3px #111; }
 .stylepod .styleinfo .more { display: none; }
 .stylepod .gallery { display: none; position: absolute; bottom: 10px; left: 10px; margin: 0; padding: 0; width: 236px; height: 50px; background-image: inherit; background-size: 0 0; justify-content: space-between; }
 .stylepod:hover .gallery { display: flex; }
@@ -148,21 +148,23 @@ footer a:hover { color: var(--lg); }
 .stylepod.active h3 { text-shadow: none; }
 .stylepod.active .styleinfo { display: inline-block; width: 256px; height: 256px; padding-right: 20px; background-color: var(--dgr); }
 .stylepod.active .styleinfo .more { display: block; }
-.stylepod.active .styleinfo .more .category { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 220px; font-style: italic; color: var(--mutedwhite); }
-.stylepod.active .styleinfo .more .category { margin: 0 10px 10px 20px; font-size: 1rem; line-height: 1; }
-.stylepod.active .styleinfo .more .checkpoint { margin: 15px 0 10px 20px; padding-bottom: 10px; line-height: 1; border-bottom: 1px dashed rgba(255,255,255,0.15); }
-.stylepod.active .styleinfo .more .extralinks { margin: 15px 10px 10px 20px; font-size: 1rem; line-height: 1; }
-.stylepod.active .styleinfo .more .checkpoint span, legend { margin: 0 0 3px 0; display: block; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--fc); }
-.stylepod.active .styleinfo .more .checkpoint span { font-size: 0.8rem; }
-.stylepod.active .styleinfo .more fieldset { margin: 10px 0 0 20px; padding: 0; border: none; background-color: rgba(255,255,255,0.05); border-radius: 3px; }
+.stylepod.active .styleinfo .more .category { margin: 10px 0 0 20px; max-height: 41px; overflow: hidden; line-height: 1; font-size: inherit; }
+.stylepod.active .styleinfo .more .category span { display: inline-block; margin: 0 3px 3px 0; padding: 3px 4px 2px; font-size: 0.8rem; font-weight: 700; color: var(--dgr); background-color: var(--lblgr); border-radius: 2px; }
+.stylepod.active .styleinfo .more .category span.checkpointname { background-color: var(--mutedwhite); }
+.clicklinks { display: inline-block; position: absolute; bottom: 0; }
+.stylepod.active .styleinfo .more .extralinks { margin: 15px 10px 15px 20px; font-size: 1rem; line-height: 1; }
+legend { margin: 0 0 3px 0; display: block; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--fc); }
+.stylepod.active .styleinfo .more fieldset { margin: 10px 0 0 20px; padding: 0; width: 235px; border: none; background-color: rgba(255,255,255,0.05); border-radius: 3px; }
 .stylepod.active .styleinfo .more fieldset:hover { background-color: rgba(255,255,255,0.15); }
 .stylepod.active .styleinfo .more fieldset legend { margin: 0; padding: 0; color: var(--mutedwhite); }
 .stylepod.active .styleinfo .more fieldset .copyme { display: block; padding: 5px 5px 10px 5px; cursor: copy; }
 .stylepod.active .gallery { display: flex; position: initial; width: 256px; height: 256px; background-image: inherit; background-size: 256px; border-radius: 0 5px 5px 0; }
 .stylepod.active .gallery figure { display: none; }
 
-.extralinks a { display: inline-block; width: 35px; height: 35px; margin: 0 15px 0 0; background-color: rgba(255,255,255,0.05); border-radius: 3px; }
+.extralinks a { position: relative; display: inline-block; width: 110px; height: 35px; background-color: rgba(255,255,255,0.05); border-radius: 3px; text-decoration: none; }
+.extralinks a:nth-child(1) { margin: 0 15px 0 0; }
 .extralinks a:hover { background-color: rgba(255,255,255,0.15); }
+.extralinks a span { position: absolute; top: 10px; }
 .zoomimg svg { padding: 5px; width: 25px; fill: white; }
 .lookupartist svg { padding: 5px; width: 25px; fill: white; }
 

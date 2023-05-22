@@ -50,6 +50,13 @@ document.addEventListener("DOMContentLoaded",function(event){
             let CurrentArtistName = data[i].Name;
             let currentAnchor = CurrentArtistName.replace(/[^a-zA-Z]+/g,'');
             let catlist = data[i].Category.replace(/\\/g,''); //remove backslash
+
+            let buildcatlist = catlist.split(',');
+            let buildcatlistoutput = '';
+            buildcatlist.forEach(function(value){ //build output without first
+                buildcatlistoutput = buildcatlistoutput + '<span>' + value.trim() + '</span>';
+            });
+
             let deathdate = ''; let dagger = ''; deathdate = data[i].Death;
             if(deathdate!=false){ dagger = '<sup> &dagger;</sup>'; }
 
@@ -64,12 +71,11 @@ document.addEventListener("DOMContentLoaded",function(event){
             
             outputdata = outputdata + '<div id="' + currentAnchor + '" class="stylepod lazy" data-creatime="' + data[i].Creation + '" data-bg="./img/' + data[i].Image + '">';
             outputdata = outputdata + '<div class="styleinfo">';
-            outputdata = outputdata + '<h3>' + data[i].Name + dagger + '</h3>';
+            outputdata = outputdata + '<h3 title="' + data[i].Name + '">' + data[i].Name + dagger + '</h3>';
             outputdata = outputdata + '<div class="more">';
-            outputdata = outputdata + '<p class="category" title="' + catlist + '">' + catlist + '</p>';
-            outputdata = outputdata + '<p class="checkpoint"><span>' + data[i].Checkpoint + '</span></p>';
-            outputdata = outputdata + '<fieldset><legend>Copy Prompt</legend><span class="copyme">' + data[i].Prompt + '</span></fieldset>';
-            outputdata = outputdata + '<p class="extralinks"><a class="zoomimg" title="Big Image" href="./img/' + data[i].Image + '" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" class="zoomimgsvg" viewBox="0 0 512 512"><path fill="none" stroke="currentColor" stroke-linecap="square" stroke-miterlimit="10" stroke-width="32" d="M432 320v112H320M421.8 421.77L304 304M80 192V80h112M90.2 90.23L208 208M320 80h112v112M421.77 90.2L304 208M192 432H80V320M90.23 421.8L208 304"/></svg></a><a href="' + LUArtist + '" title="Look Up Artist" target="_blank" class="lookupartist"><svg xmlns="http://www.w3.org/2000/svg" class="lookupartistsvg" viewBox="0 0 512 512"><path d="M464 428L339.92 303.9a160.48 160.48 0 0030.72-94.58C370.64 120.37 298.27 48 209.32 48S48 120.37 48 209.32s72.37 161.32 161.32 161.32a160.48 160.48 0 0094.58-30.72L428 464zM209.32 319.69a110.38 110.38 0 11110.37-110.37 110.5 110.5 0 01-110.37 110.37z"/></svg></a></p>';
+            outputdata = outputdata + '<p class="category" title="' + catlist + '"><span class="checkpointname">' + data[i].Checkpoint + '</span>' + buildcatlistoutput + '</p>';
+            outputdata = outputdata + '<span class="clicklinks"><fieldset><legend>Copy Prompt</legend><span class="copyme">' + data[i].Prompt + '</span></fieldset>';
+            outputdata = outputdata + '<p class="extralinks"><a class="zoomimg" title="Big Image" href="./img/' + data[i].Image + '" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" class="zoomimgsvg" viewBox="0 0 512 512"><path fill="none" stroke="currentColor" stroke-linecap="square" stroke-miterlimit="10" stroke-width="32" d="M432 320v112H320M421.8 421.77L304 304M80 192V80h112M90.2 90.23L208 208M320 80h112v112M421.77 90.2L304 208M192 432H80V320M90.23 421.8L208 304"/></svg><span class="elsp">Big Image</span></a><a href="' + LUArtist + '" title="Look Up Artist" target="_blank" class="lookupartist"><svg xmlns="http://www.w3.org/2000/svg" class="lookupartistsvg" viewBox="0 0 512 512"><path d="M464 428L339.92 303.9a160.48 160.48 0 0030.72-94.58C370.64 120.37 298.27 48 209.32 48S48 120.37 48 209.32s72.37 161.32 161.32 161.32a160.48 160.48 0 0094.58-30.72L428 464zM209.32 319.69a110.38 110.38 0 11110.37-110.37 110.5 110.5 0 01-110.37 110.37z"/></svg><span class="elsp">Look Up</span></a></p></span>';
             outputdata = outputdata + '</div>';
             outputdata = outputdata + '</div>';
             outputdata = outputdata + '<div class="gallery">';
@@ -160,7 +166,7 @@ document.addEventListener("DOMContentLoaded",function(event){
             currentpod.addEventListener('click',function(e){
             
                 var cList = e.target.classList;
-                if(cList.contains('copyme') || cList.contains('zoomimgsvg') || cList.contains('lookupartistsvg')){ return }
+                if(cList.contains('copyme') || cList.contains('extralinks') || cList.contains('elsp') || cList.contains('zoomimg') || cList.contains('zoomimgsvg') || cList.contains('lookupartist') || cList.contains('lookupartistsvg')){ return }
                 //if(e.target.classList.contains('copyme')) return 
                 this.classList.toggle('active');
 
@@ -368,8 +374,9 @@ document.addEventListener("DOMContentLoaded",function(event){
         reader.onloadend = function() {
         let img = document.createElement('img')
             img.setAttribute('id','thisimg');
-            img.src = reader.result
-            document.getElementById('gallery').innerHTML = ''
+            img.src = reader.result;
+            document.getElementById('allMetaData').innerHTML = '';
+            document.getElementById('gallery').innerHTML = '';            
             document.getElementById('gallery').appendChild(img);        
         }
 
