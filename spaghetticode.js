@@ -375,7 +375,6 @@ document.addEventListener("DOMContentLoaded",function(event){
         let img = document.createElement('img')
             img.setAttribute('id','thisimg');
             img.src = reader.result;
-            document.getElementById('allMetaData').innerHTML = '';
             document.getElementById('gallery').innerHTML = '';            
             document.getElementById('gallery').appendChild(img);        
         }
