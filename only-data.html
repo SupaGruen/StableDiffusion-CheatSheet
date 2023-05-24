@@ -1,0 +1,188 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Stable Diffusion 1.5 - Cheat Sheet</title>
+<style>
+/* roboto-condensed-regular - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'Roboto Condensed';
+  font-style: normal;
+  font-weight: 400;
+  src: url('fonts/roboto-condensed-v25-latin-regular.eot'); /* IE9 Compat Modes */
+  src: url('fonts/roboto-condensed-v25-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('fonts/roboto-condensed-v25-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('fonts/roboto-condensed-v25-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('fonts/roboto-condensed-v25-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('fonts/roboto-condensed-v25-latin-regular.svg#RobotoCondensed') format('svg'); /* Legacy iOS */
+}
+
+/* roboto-condensed-700 - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'Roboto Condensed';
+  font-style: normal;
+  font-weight: 700;
+  src: url('fonts/roboto-condensed-v25-latin-700.eot'); /* IE9 Compat Modes */
+  src: url('fonts/roboto-condensed-v25-latin-700.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('fonts/roboto-condensed-v25-latin-700.woff2') format('woff2'), /* Super Modern Browsers */
+       url('fonts/roboto-condensed-v25-latin-700.woff') format('woff'), /* Modern Browsers */
+       url('fonts/roboto-condensed-v25-latin-700.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('fonts/roboto-condensed-v25-latin-700.svg#RobotoCondensed') format('svg'); /* Legacy iOS */
+}
+
+/* roboto-slab-regular - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 400;
+  src: url('fonts/roboto-slab-v24-latin-regular.eot'); /* IE9 Compat Modes */
+  src: url('fonts/roboto-slab-v24-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('fonts/roboto-slab-v24-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('fonts/roboto-slab-v24-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('fonts/roboto-slab-v24-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('fonts/roboto-slab-v24-latin-regular.svg#RobotoSlab') format('svg'); /* Legacy iOS */
+}
+
+html { scroll-padding: 140px 0 0 0; }
+body { margin: 0; padding: 0; font-family: Gotham, "Helvetica Neue", Helvetica, Arial, "sans-serif"; background-color: var(--bgr); }
+* { font-family: 'Roboto Condensed',Gotham,"Helvetica Neue",Helvetica,Arial,sans-serif; color: var(--ow); }
+
+header, section { padding: 0 20px 20px 20px; }
+footer { padding: 0 0 20px; text-align: center; color: #555; }
+
+h1 { margin: 0; padding: 20px 0 0 50px; font-size: 1.6rem; }
+#selectmore { margin: 0; padding: 0 0 20px 50px; color: #666; font-style: italic; }
+#allthestyles { overflow-x: auto; }
+
+table {}
+tr {}
+tr:hover { background-color: #DDD; }
+tr:hover td:nth-child(1) { color: #BBB; }
+tr th { text-align: left; }
+th, td { padding: 2px 10px 3px 5px; }
+td:nth-child(1) { padding: 2px 10px 3px; text-align: right; color: #CCC; }
+td:nth-child(4), td:nth-child(5) { padding: 2px 30px 3px 5px; }
+th:nth-child(n+3), td:nth-child(n+3) { display: none; }
+
+body.born th:nth-child(3), body.born td:nth-child(3) { display: table-cell; }
+body.death th:nth-child(4), body.death td:nth-child(4) { display: table-cell; }
+body.checkpoint th:nth-child(5), body.checkpoint td:nth-child(5) { display: table-cell; }
+body.categories th:nth-child(6), body.categories td:nth-child(6) { display: table-cell; }
+body.extrainfo th:nth-child(7), body.extrainfo td:nth-child(7) { display: table-cell; }
+
+</style>
+<script src="./data.js"></script>
+<script type="text/javascript">
+document.addEventListener("DOMContentLoaded",function(event){
+
+    var SearchEngine = 'https://www.google.com/search?q=';
+    var outputdata = '';
+    var tags = {};
+    var countstyles = 0;
+
+    outputdata = outputdata + '<table>';
+    outputdata = outputdata + '<tr><th></th><th>Name</th><th>Born</th><th></th><th>Checkpoint</th><th>Categories</th><th>Extrainfo</th></tr>';
+
+    //Put JSON in DOM
+    for(var i=0; i<data.length; i++){
+
+        if(data[i].Type==1){
+            
+            let CurrentArtistName = data[i].Name;
+            let currentAnchor = CurrentArtistName.replace(/[^a-zA-Z]+/g,'');
+            let catlist = data[i].Category.replace(/\\/g,''); //remove backslash
+
+            let buildcatlist = catlist.split(',');
+            let buildcatlistoutput = '';
+            buildcatlist.forEach(function(value){ //build output without first
+                buildcatlistoutput = buildcatlistoutput + '<span>' + value.trim() + '</span>';
+            });
+
+            let deathdate = ''; let dagger = ''; deathdate = data[i].Death;
+            if(deathdate!=false){ dagger = '<sup> &dagger;</sup>'; }
+
+            const lookupArray = CurrentArtistName.replace(/ *\([^)]*\) */g, "").split(',').map(function(item){ return item.trim(); }); //remove braces, split at comma, trim spaces
+            let LUPart1 = lookupArray[0];
+            let LUPart2 = lookupArray[1];
+            if(LUPart2){
+                var LUArtist = SearchEngine + LUPart2 + '%20' + LUPart1;
+            } else { //if no comma in name
+                var LUArtist = SearchEngine + LUPart1;
+            }
+            
+            outputdata = outputdata + '<tr>';
+            outputdata = outputdata + '<td>' + i + '</td>';
+            outputdata = outputdata + '<td>' + CurrentArtistName + '</td>';
+            outputdata = outputdata + '<td>' + data[i].Born + '</td>';
+            outputdata = outputdata + '<td>' + data[i].Death + '</td>';
+            outputdata = outputdata + '<td>' + data[i].Checkpoint + '</td>';
+            outputdata = outputdata + '<td>' + catlist + '</td>';
+            outputdata = outputdata + '<td>' + data[i].Extrainfo + '</td>';
+            outputdata = outputdata + '</tr>';
+            
+            countstyles++;
+            
+            //fill tags list for filter
+            let arrrrr = data[i].Category.split(', ');
+            arrrrr.forEach(function(tag){
+                if (tag in tags) {
+                  // If animal is present, increment the count
+                  tags[tag] = tags[tag] + 1;
+                } else {
+                  // If animal is not present, add the entry
+                  tags[tag] = 1;
+                }
+            });
+   
+        }
+
+    }
+    
+    outputdata = outputdata + '</table>';
+    
+    var putStyles = document.getElementById('allthestyles');
+    putStyles.innerHTML = outputdata;
+    
+    //Checkboxes
+    var checkers = document.querySelectorAll('input[type=checkbox]');
+    if(checkers){
+        for(var i = 0; i < checkers.length; i++){
+            var currentchecker = checkers[i];
+            currentchecker.addEventListener('change',function(e){
+                let currentcheckboxID = e.target.id;
+                if (this.checked == true){ document.body.classList.add(currentcheckboxID); } else { document.body.classList.remove(currentcheckboxID); }
+            });
+        };
+    };
+    
+    
+});
+</script>
+</head>
+<body class="born death categories">
+
+<header>
+
+    <h1>Stable Diffusion 1.5 - Cheat Sheet Data</h1>
+    
+</header>
+
+<section>
+    <div id="selectmore">Show me
+        <label for="born"><input type="checkbox" id="born" name="born" checked> Born</label>
+        <label for="death"><input type="checkbox" id="death" name="death" checked> Death</label>
+        <label for="checkpoint"><input type="checkbox" id="checkpoint" name="checkpoint"> Checkpoint</label>
+        <label for="categories"><input type="checkbox" id="categories" name="categories" checked> Categories</label>
+        <label for="extrainfo"><input type="checkbox" id="extrainfo" name="extrainfo"> Notes</label>
+    </div>
+
+    <div id="allthestyles"></div>
+</section>
+
+<footer>Created 2023 - Version 1.1.0 - <a href="https://github.com/SupaGruen/StableDiffusion-CheatSheet">GitHub</a></footer>
+
+</body>
+</html>
