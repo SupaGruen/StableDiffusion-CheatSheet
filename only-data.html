@@ -113,8 +113,10 @@ document.addEventListener("DOMContentLoaded",function(event){
                 var LUArtist = SearchEngine + LUPart1;
             }
             
+            let j = i + 1; // don't want to start with zero
+            
             outputdata = outputdata + '<tr>';
-            outputdata = outputdata + '<td>' + i + '</td>';
+            outputdata = outputdata + '<td>' + j + '</td>';
             outputdata = outputdata + '<td>' + CurrentArtistName + '</td>';
             outputdata = outputdata + '<td>' + data[i].Born + '</td>';
             outputdata = outputdata + '<td>' + data[i].Death + '</td>';
