@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded",function(event){
             FilterOutput = FilterOutput + '<span data-srch="' + filtername + '">' + filtername + ' <span>' + sortedKeys[key] +'</span></span>';    
         };
     });
-    FilterOutput = '<span data-srch="New Styles">New with 1.1.0<span></span></span>' + FilterOutput;
+    FilterOutput = '<span data-srch="New Styles">New with 1.1.0</span>' + FilterOutput + '<span data-srch="&dagger;">Only &dagger;</span>';
     catsbox.innerHTML = FilterOutput;
     
     //Vars
@@ -243,7 +243,6 @@ document.addEventListener("DOMContentLoaded",function(event){
                     clearbut.classList.remove('show');
                 } else {
                     pods[i].classList.add("is-hidden");
-                    clearbut.classList.add('show');
                 }
             } else {
                 if(pods[i].textContent.toLowerCase().includes(search_query.toLowerCase())){
@@ -251,10 +250,9 @@ document.addEventListener("DOMContentLoaded",function(event){
                     clearbut.classList.remove('show');
                 } else {
                     pods[i].classList.add("is-hidden");
-                    clearbut.classList.add('show');
                 }
             }
-            
+            if(search_query){ clearbut.classList.add('show'); } //also catches single html-entities like the cross
         }
         
     }
