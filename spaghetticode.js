@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded",function(event){
             FilterOutput = FilterOutput + '<span data-srch="' + filtername + '">' + filtername + ' <span>' + sortedKeys[key] +'</span></span>';    
         };
     });
-    FilterOutput = '<span data-srch="New Styles">New with 1.1.0</span>' + FilterOutput + '<span data-srch="&dagger;">Only &dagger;</span>';
+    FilterOutput = '<span data-srch="New Styles">New with 1.1.0</span>' + FilterOutput + '<span data-srch="&dagger;">Only Deceased Artists <span>&dagger;</span></span>';
     catsbox.innerHTML = FilterOutput;
     
     //Vars
@@ -373,12 +373,12 @@ document.addEventListener("DOMContentLoaded",function(event){
         let img = document.createElement('img')
             img.setAttribute('id','thisimg');
             img.src = reader.result;
-            document.getElementById('gallery').innerHTML = '';            
-            document.getElementById('gallery').appendChild(img);        
+            document.getElementById('gallery').innerHTML = '';
+            document.getElementById('gallery').appendChild(img);
         }
 
-        const tags = await ExifReader.load(file);
-        getComment(tags);
+        const tags = await ExifReader.load(file).catch(error => { console.log('No EXIF Data'); allMetaData.innerHTML = '<p>No EXIF data detected</p>'; });
+        if(tags){ getComment(tags); }
 
         // https://www.geeksforgeeks.org/how-to-convert-special-characters-to-html-in-javascript/
         function Encode(string) {
@@ -403,20 +403,17 @@ document.addEventListener("DOMContentLoaded",function(event){
             let com = '';
 
             // Exif - JPG
-            if (tags && tags.UserComment) {
+            if(tags && tags.UserComment) {
                 com = decodeUnicode(tags.UserComment.value);
                 extractPrompt(com);
                 return;
             }
             // A1111 - PNG
-            if (tags.parameters) {
+            if(tags.parameters) {
                 com = tags.parameters.description;
                 extractPrompt(com);
                 return;
             }
-            
-            extractPrompt(com);
-            return;
         }
 
         function decodeUnicode(array) {
@@ -458,14 +455,22 @@ document.addEventListener("DOMContentLoaded",function(event){
             const others = prompt.others;
             const PluginMetaData = prompt.PMother;
 
-            const Allothers = others.split(',');
+            const Allothers = others.split(', ');
             let NewOthers = '';
+            let UpscaledTo = '';
+            
+            const UpscaleFound = Allothers.find(v => v.includes('upscale'));
             
             for(var i=0; i<Allothers.length; i++){
                 let oother = Allothers[i].split(':');
                 let escapedsecondpart = '';
                 if(oother[1]){ escapedsecondpart = Encode(oother[1]); } else { escapedsecondpart = oother[1]; }
-                NewOthers = NewOthers + '<span><strong>' + oother[0] + '</strong>' + escapedsecondpart + '</span>';
+                
+                let IMGOW = document.getElementById('thisimg').naturalWidth;
+                let IMGOH = document.getElementById('thisimg').naturalHeight;
+                if(oother[0]=='Size' && UpscaleFound){ UpscaledTo = ' <span>[&nearr; ' + IMGOW + 'x' + IMGOH + ']</span>'; } else { UpscaledTo = ''; }
+                
+                NewOthers = NewOthers + '<span><strong>' + oother[0] + '</strong>' + escapedsecondpart + UpscaledTo + '</span>';
             };
 
             let MDOut = '';
@@ -473,7 +478,6 @@ document.addEventListener("DOMContentLoaded",function(event){
             if(negative){ MDOut = MDOut + '<p><strong>Negative Prompt</strong><br>' + negative + '</p>'; }
             if(NewOthers){ MDOut = MDOut + '<p>' + NewOthers + '</p>'; }
             if(PluginMetaData){ MDOut = MDOut + '<p><strong>Other Metadata</strong><br>' + PluginMetaData + '</p>'; }
-
 
             let copymetadataprompt = '<span id="copyprompt">' + Encode(prompt.originalMD) + '</span><span id="copypromptbutton">Copy Prompt</span>';
 
@@ -550,25 +554,6 @@ document.addEventListener("DOMContentLoaded",function(event){
             }
         }
 
-    }
-    
-    
-    // Custom Sorting Of Styles
-    function sortStylesAZ(){ // A to Z
-        const container = document.querySelector('#allthestyles');
-        const key = (a) => a.querySelector('h3').textContent.trim();
-
-        Array.from(container.children)
-             .sort((a, b) => key(a).localeCompare(key(b)))
-             .forEach(child => container.appendChild(child));
-    }
-    function sortStyles321(){ // Creation Time - Newest First
-        const container = document.querySelector('#allthestyles');
-        const key = (a) => a.getAttribute('data-creatime');
-
-        Array.from(container.children)
-             .sort((b, a) => key(a).localeCompare(key(b)))
-             .forEach(child => container.appendChild(child));
     }
 
 });
