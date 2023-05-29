@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded",function(event){
     var EndOfLastVer = 202305050000;
 
     // Filter Buttons - Don't show countries or tags that are too common
-    var DontShowAnyCountries = ['Oil','Painting','Illustration','Ireland','Lithuania','Sweden','South Korea','Portugal','Switzerland','USA','Ukraine','Belarus','Spain','Brazil','Denmark','Japan','Austria','France','Philippines','UK','Poland','Poland','Germany','Canada','Netherlands','Italy','Israel','Taiwan','Belgium','Russia','Australia','Czech Republic','Bulgaria','China'];
+    var DontShowAnyCountries = ['Oil','Painting','Illustration','Portrait','Character Design','Cover Art','Concept Art','Norway','Ireland','Lithuania','Sweden','South Korea','Portugal','Switzerland','USA','Ukraine','Belarus','Spain','Brazil','Denmark','Japan','Austria','France','Philippines','UK','Poland','Poland','Germany','Canada','Netherlands','Italy','Israel','Taiwan','Belgium','Russia','Australia','Czech Republic','Bulgaria','China'];
 
     var outputdata = '';
     var tags = {};
