@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded",function(event){
+document.addEventListener('DOMContentLoaded',function(event){
 
     var SearchEngine = 'https://www.google.com/search?q=';
     
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded",function(event){
             let deathdate = ''; let dagger = ''; deathdate = data[i].Death;
             if(deathdate!=false){ dagger = '<sup> &dagger;</sup>'; }
 
-            const lookupArray = CurrentArtistName.replace(/ *\([^)]*\) */g, "").split(',').map(function(item){ return item.trim(); }); //remove braces, split at comma, trim spaces
+            const lookupArray = CurrentArtistName.replace(/ *\([^)]*\) */g, '').split(',').map(function(item){ return item.trim(); }); //remove braces, split at comma, trim spaces
             let LUPart1 = lookupArray[0];
             let LUPart2 = lookupArray[1];
             if(LUPart2){
@@ -149,7 +149,6 @@ document.addEventListener("DOMContentLoaded",function(event){
         currentspan.addEventListener('click',function(){
             var inp = document.createElement('input');
             var alttxt = this.innerText;
-            //console.log("Copy:", alttxt);
             document.body.appendChild(inp);
             inp.value = alttxt;
             inp.select();
@@ -174,11 +173,11 @@ document.addEventListener("DOMContentLoaded",function(event){
                 var getnewanker = e.target.id;
                 //console.log(getnewanker);
                 if(!getnewanker){
-                    const url = window.location.href.replace(/#.*/, "");
-                    history.pushState({}, "", url);
+                    const url = window.location.href.replace(/#.*/, '');
+                    history.pushState({}, '', url);
                 } else {
-                    const url = window.location.href.replace(/#.*/, "") + '#' + getnewanker;
-                    history.pushState({}, "", url);
+                    const url = window.location.href.replace(/#.*/, '') + '#' + getnewanker;
+                    history.pushState({}, '', url);
                 }
 
                 let thishash = window.location.hash;
@@ -231,7 +230,7 @@ document.addEventListener("DOMContentLoaded",function(event){
     
     //Search - https://css-tricks.com/in-page-filtered-search-with-vanilla-javascript/
     function liveSearch(){
-        let search_query = document.getElementById("searchbox").value;
+        let search_query = document.getElementById('searchbox').value;
         
         for(var i = 0; i < pods.length; i++) {
             //console.log(search_query.toLowerCase());
@@ -239,17 +238,17 @@ document.addEventListener("DOMContentLoaded",function(event){
             if(search_query == 'New Styles'){
                 let currentstyledate = pods[i].dataset.creatime;
                 if(currentstyledate>EndOfLastVer){
-                    pods[i].classList.remove("is-hidden");
+                    pods[i].classList.remove('is-hidden');
                     clearbut.classList.remove('show');
                 } else {
-                    pods[i].classList.add("is-hidden");
+                    pods[i].classList.add('is-hidden');
                 }
             } else {
                 if(pods[i].textContent.toLowerCase().includes(search_query.toLowerCase())){
-                    pods[i].classList.remove("is-hidden");
+                    pods[i].classList.remove('is-hidden');
                     clearbut.classList.remove('show');
                 } else {
-                    pods[i].classList.add("is-hidden");
+                    pods[i].classList.add('is-hidden');
                 }
             }
             if(search_query){ clearbut.classList.add('show'); } //also catches single html-entities like the cross
@@ -267,22 +266,22 @@ document.addEventListener("DOMContentLoaded",function(event){
 
     //Copy Notifier
     function showSnackBar(){
-        var sb = document.getElementById("snackbar");
-        sb.className = "show";
-        setTimeout(()=>{ sb.className = sb.className.replace("show", ""); }, 1500);
+        var sb = document.getElementById('snackbar');
+        sb.className = 'show';
+        setTimeout(()=>{ sb.className = sb.className.replace('show', ''); }, 1500);
     };
     
     //Image Ratio
     function ratioCalc(){
-        let imgbasesize = document.getElementById("ratiobox").value;
+        let imgbasesize = document.getElementById('ratiobox').value;
         if(imgbasesize>0){
-            document.getElementById("ir1b1").innerHTML = imgbasesize + ' &times; ' + imgbasesize;
-            let twobythree = (imgbasesize / 2) * 3; document.getElementById("ir2b3").innerHTML = imgbasesize + ' &times; ' + Math.round(twobythree);
-            let threebyfour = (imgbasesize / 3) * 4; document.getElementById("ir3b4").innerHTML = imgbasesize + ' &times; ' + Math.round(threebyfour);
-            let fourbyfive = (imgbasesize / 4) * 5; document.getElementById("ir4b5").innerHTML = imgbasesize + ' &times; ' + Math.round(fourbyfive);
-            let sixteenbynine = (imgbasesize / 9) * 16; document.getElementById("ir16b9").innerHTML = Math.round(sixteenbynine) + ' &times; ' + imgbasesize;
-            let sixteenbyten = (imgbasesize / 10) * 16; document.getElementById("ir16b10").innerHTML = Math.round(sixteenbyten) + ' &times; ' + imgbasesize;
-            let twentyonebynine = (imgbasesize / 9) * 21; document.getElementById("ir21b9").innerHTML = Math.round(twentyonebynine) + ' &times; ' + imgbasesize;
+            document.getElementById('ir1b1').innerHTML = imgbasesize + ' &times; ' + imgbasesize;
+            let twobythree = (imgbasesize / 2) * 3; document.getElementById('ir2b3').innerHTML = imgbasesize + ' &times; ' + Math.round(twobythree);
+            let threebyfour = (imgbasesize / 3) * 4; document.getElementById('ir3b4').innerHTML = imgbasesize + ' &times; ' + Math.round(threebyfour);
+            let fourbyfive = (imgbasesize / 4) * 5; document.getElementById('ir4b5').innerHTML = imgbasesize + ' &times; ' + Math.round(fourbyfive);
+            let sixteenbynine = (imgbasesize / 9) * 16; document.getElementById('ir16b9').innerHTML = Math.round(sixteenbynine) + ' &times; ' + imgbasesize;
+            let sixteenbyten = (imgbasesize / 10) * 16; document.getElementById('ir16b10').innerHTML = Math.round(sixteenbyten) + ' &times; ' + imgbasesize;
+            let twentyonebynine = (imgbasesize / 9) * 21; document.getElementById('ir21b9').innerHTML = Math.round(twentyonebynine) + ' &times; ' + imgbasesize;
         }
     }
 
@@ -313,7 +312,7 @@ document.addEventListener("DOMContentLoaded",function(event){
     // Drag and Drop Start
     // Joseph Zimmerman - https://www.smashingmagazine.com/2018/01/drag-drop-file-uploader-vanilla-js/
     
-    let dropArea = document.getElementById("drop-area")
+    let dropArea = document.getElementById('drop-area');
 
     // Prevent default drag behaviors
     ;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
@@ -359,6 +358,15 @@ document.addEventListener("DOMContentLoaded",function(event){
     }
 
     // Drag and Drop end
+
+
+    // Remove Metadata Image
+    document.getElementById('clearimage').addEventListener('click',function(e){
+        document.getElementById('my-form').reset();
+        allMetaData.innerHTML = '';
+        document.getElementById('gallery').innerHTML = '';
+        dropArea.classList.remove('hasimg');
+    });
     
     
     // EXIF Start
@@ -375,6 +383,7 @@ document.addEventListener("DOMContentLoaded",function(event){
             img.src = reader.result;
             document.getElementById('gallery').innerHTML = '';
             document.getElementById('gallery').appendChild(img);
+            dropArea.classList.add('hasimg');
         }
 
         const tags = await ExifReader.load(file).catch(error => { console.log('No EXIF Data'); allMetaData.innerHTML = '<p>No EXIF data detected</p>'; });
@@ -417,13 +426,13 @@ document.addEventListener("DOMContentLoaded",function(event){
         }
 
         function decodeUnicode(array) {
-            const plain = array.map(t => t.toString(16).padStart(2, "0")).join("");
+            const plain = array.map(t => t.toString(16).padStart(2, '0')).join('');
             if (!plain.match(/^554e49434f44450/)) {
                 return;
             }
-            const hex = plain.replace(/^554e49434f44450[0-9]/, "").replace(/[0-9a-f]{4}/g, ",0x$&").replace(/^,/, "");
-            const arhex = hex.split(",");
-            let decode = "";
+            const hex = plain.replace(/^554e49434f44450[0-9]/, '').replace(/[0-9a-f]{4}/g, ',0x$&').replace(/^,/, '');
+            const arhex = hex.split(',');
+            let decode = '';
             arhex.forEach(v => {
                 decode += String.fromCodePoint(v);
             })
@@ -505,7 +514,7 @@ document.addEventListener("DOMContentLoaded",function(event){
                 text.match(/([^]+)\[[^[]+\]/);
                 return matchtext[1];
             } catch (e) {
-                return "";
+                return '';
             }
         }
 
@@ -516,7 +525,7 @@ document.addEventListener("DOMContentLoaded",function(event){
                 text.match(/"uc": "([^]+)"}/);
                 return matchtext[1];
             } catch (e) {
-                return "";
+                return '';
             }
         }
 

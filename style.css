@@ -191,7 +191,7 @@ table#dimensions tr td:nth-child(3) { padding: 3px 0 3px 15px; color: var(--mute
 #drop-area { position: relative; z-index: 0; width: 100%; min-height: 250px; margin: 0; background-size: auto auto; background-color: rgba(25, 29, 36, 0); background-image: repeating-linear-gradient(135deg, transparent, transparent 20px, rgba(255, 255, 255, 0.05) 20px, rgba(255, 255, 255, 0.05) 40px ); }
 #drop-area.highlight {}
 #drop-area p { width: 100%; margin: 40px 0; text-align: center; font-size: 1.8rem; text-transform: uppercase; font-weight: 700; color: rgba(255,255,255,0.35); }
-.my-form { position: absolute; top: 0; left: 0; width: 100%; z-index: 100; }
+#my-form { position: absolute; top: 0; left: 0; width: 100%; z-index: 100; }
 #gallery { position: relative; z-index: 50; }
 #gallery img { position: relative; display: block; z-index: 50; width: 100%; }
 .button { display: inline-block; padding: 10px; background: #ccc; cursor: pointer; border-radius: 5px; border: 1px solid #ccc; }
@@ -203,7 +203,10 @@ table#dimensions tr td:nth-child(3) { padding: 3px 0 3px 15px; color: var(--mute
 #allMetaData p strong { padding: 1px 5px; background-color: var(--dgr); color: var(--mutedwhite); font-weight: 700; font-size: 1.1rem; text-transform: uppercase; }
 #allMetaData p span { display: block; margin: 0 0 3px 0; }
 #allMetaData p span span { display: inline-block; color: var(--lg); }
-
+#clearimage { display: none; position: absolute; top: 0; right: 0; z-index: 200; text-transform: uppercase; padding: 5px; font-size: 1.6rem; line-height: 0.5; background-color: rgba(255,255,255,0.05); cursor: pointer; color: rgba(255,255,255,0.2); }
+.hasimg #clearimage { display: inline-block; }
+.hasimg:hover p { display: none; }
+.hasimg:hover #clearimage { display: inline-block; }
 #copyprompt { display: none; color: var(--lg); }
 #copypromptbutton { display: inline-block; margin: 10px 0 0 0; padding: 7px 15px; font-size: 1.2rem; cursor: pointer; background-color: var(--dgr); }
 #copypromptbutton:hover { background-color: var(--lg); }
