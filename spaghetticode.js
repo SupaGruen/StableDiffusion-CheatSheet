@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded',function(event){
     var EndOfLastVer = 202305050000;
 
     // Filter Buttons - Don't show countries or tags that are too common
-    var DontShowAnyCountries = ['Oil','Painting','Illustration','Portrait','Character Design','Cover Art','Concept Art','Norway','Ireland','Lithuania','Sweden','South Korea','Portugal','Switzerland','USA','Ukraine','Belarus','Spain','Brazil','Denmark','Japan','Austria','France','Philippines','UK','Poland','Poland','Germany','Canada','Netherlands','Italy','Israel','Taiwan','Belgium','Russia','Australia','Czech Republic','Bulgaria','China'];
+    var DontShowAnyCountries = ['Oil','Painting','Illustration','Portrait','Character Design','Cover Art','Concept Art','Norway','Ireland','Lithuania','Sweden','South Korea','Portugal','Switzerland','USA','Ukraine','Belarus','Spain','Brazil','Denmark','Japan','Austria','France','Philippines','UK','Poland','Poland','Germany','Canada','Netherlands','Italy','Israel','Taiwan','Belgium','Russia','Australia','Czech Republic','Bulgaria','Turkey','China'];
 
     var outputdata = '';
     var tags = {};
@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded',function(event){
             FilterOutput = FilterOutput + '<span data-srch="' + filtername + '">' + filtername + ' <span>' + sortedKeys[key] +'</span></span>';    
         };
     });
-    FilterOutput = '<span data-srch="New Styles">New with 1.1.0</span>' + FilterOutput + '<span data-srch="&dagger;">Only Deceased Artists <span>&dagger;</span></span>';
+    FilterOutput =  FilterOutput + '<span data-srch="New Styles">New with 1.1.0</span><span data-srch="Opened Styles">Opened Styles</span><span data-srch="&dagger;">Only Deceased Artists <span>&dagger;</span></span>';
     catsbox.innerHTML = FilterOutput;
     
     //Vars
@@ -238,6 +238,14 @@ document.addEventListener('DOMContentLoaded',function(event){
             if(search_query == 'New Styles'){
                 let currentstyledate = pods[i].dataset.creatime;
                 if(currentstyledate>EndOfLastVer){
+                    pods[i].classList.remove('is-hidden');
+                    clearbut.classList.remove('show');
+                } else {
+                    pods[i].classList.add('is-hidden');
+                }
+            } else if(search_query == 'Opened Styles'){
+                let currentclasses = pods[i].classList.contains('active');
+                if(currentclasses){
                     pods[i].classList.remove('is-hidden');
                     clearbut.classList.remove('show');
                 } else {

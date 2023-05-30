@@ -153,7 +153,7 @@ footer a:hover { color: var(--lg); }
 .stylepod.active .styleinfo .more .category span.checkpointname { background-color: var(--mutedwhite); }
 .clicklinks { display: inline-block; position: absolute; bottom: 0; }
 .stylepod.active .styleinfo .more .extralinks { margin: 15px 10px 15px 20px; font-size: 1rem; line-height: 1; }
-legend { margin: 0 0 3px 0; display: block; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--fc); }
+legend { margin: 0 0 3px 0; display: inline-block; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--fc); }
 .stylepod.active .styleinfo .more fieldset { margin: 10px 0 0 20px; padding: 0; width: 235px; border: none; background-color: rgba(255,255,255,0.05); border-radius: 3px; }
 .stylepod.active .styleinfo .more fieldset:hover { background-color: rgba(255,255,255,0.15); }
 .stylepod.active .styleinfo .more fieldset legend { margin: 0; padding: 0; color: var(--mutedwhite); }
@@ -202,7 +202,7 @@ table#dimensions tr td:nth-child(3) { padding: 3px 0 3px 15px; color: var(--mute
 #allMetaData p { color: white; }
 #allMetaData p strong { padding: 1px 5px; background-color: var(--dgr); color: var(--mutedwhite); font-weight: 700; font-size: 1.1rem; text-transform: uppercase; }
 #allMetaData p span { display: block; margin: 0 0 3px 0; }
-#allMetaData p span span { display: inline-block; color: var(--lg); }
+#allMetaData p span span { display: inline-block; color: var(--fc); }
 #clearimage { display: none; position: absolute; top: 0; right: 0; z-index: 200; text-transform: uppercase; padding: 5px; font-size: 1.6rem; line-height: 0.5; background-color: rgba(255,255,255,0.05); cursor: pointer; color: rgba(255,255,255,0.2); }
 .hasimg #clearimage { display: inline-block; }
 .hasimg:hover p { display: none; }

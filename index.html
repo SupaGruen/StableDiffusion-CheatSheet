@@ -366,21 +366,21 @@
 
     <h3>Image Generation for Styles</h3>
     
-    <p>All images were generated with either the <a href="https://huggingface.co/XpucT/Deliberate">Deliberate v2</a> or the <a href="https://huggingface.co/Lykon/DreamShaper">DreamShaper 3.2</a> Checkpoint.<br>Sampler was DMP++ 2M Karras or DMP++ SDE Karras, depending on the better result.<br>Very rarely DDIM (less than 0.5&percnt;). Final resolution never smaller than 768px &times; 768px.</p>
+    <p>All images were generated with either the <a href="https://huggingface.co/XpucT/Deliberate">Deliberate v2</a> or the <a href="https://huggingface.co/Lykon/DreamShaper">DreamShaper 3.2</a> Checkpoint.<br>Sampler was DMP++ 2M Karras or DMP++ SDE Karras, depending on the better result.<br>Final resolution never smaller than 768px &times; 768px.</p>
     <p>The prompt for the <a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Features#prompts-from-file-or-textbox">textbox</a> was:
         <code>
         --prompt style of ArtistName --negative_prompt nude, nsfw, frame, border, text<br>
-        --prompt style of ArtistName, portrait of a woman --negative_prompt same as above<br>
+        --prompt style of ArtistName, woman --negative_prompt same as above<br>
         --prompt style of ArtistName, Henry C_____ --negative_prompt superman<br>
-        --prompt style of ArtistName, street --negative_prompt text, frame, border
+        --prompt style of ArtistName, city --negative_prompt text, frame, border
         </code>
         While Deliberate has some NSFW Checkpoint mixed in and needs 'nsfw' in the negative prompt, DreamShaper likes manga a lot and frequently requires 'manga, anime' in the np.
     </p>
-    <p><em>Why these exact prompts?</em></p>
-    <p>The first line conveys a broad, uninfluenced impression.</p>
-    <p>With 'portrait of a woman', you will get a wider range of portraits that are more in line with the artist's personal aesthetic.</p>
+    <p><em>Why these prompts?</em></p>
+    <p>The first line produces a broad, uninfluenced impression of what is most common for that artist (landscape, person, etc.).</p>
+    <p>With 'woman', you will get a wider range of portraits that are more in line with the artist's personal aesthetic.</p>
     <p>For the third line: The actor Henry C. is currently well-known and has been well-trained into SD. You can also judge the dominance of a style if he is still rendered normally (weak artist style) or when his superhero costume appears.</p>
-    <p>The last line, 'street', will give you a good idea of how houses, people, and technical items (cars, bikes, etc.) appear.</p>
+    <p>The last line, 'city' (sometimes replaced by 'village'), will give you a good idea of how houses, people, and technical items (cars, bikes, etc.) appear.</p>
 
     <h3>Useful Links</h3>
     
