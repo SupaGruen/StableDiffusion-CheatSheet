@@ -79,7 +79,7 @@ body.categories #listedartists th:nth-child(6), body.categories #listedartists  
 body.extrainfo #listedartists th:nth-child(7), body.extrainfo #listedartists  td:nth-child(7) { display: table-cell; }
 
 #excludedartists td:nth-child(2), #excludedartists th:nth-child(2) { padding: 2px 5px 3px 5px; }
-#excludedartists td:nth-child(4), #excludedartists th:nth-child(4), #excludedartists th:nth-child(5) { color: #999; }
+#excludedartists td:nth-child(4), #excludedartists th:nth-child(4), #excludedartists td:nth-child(5), #excludedartists th:nth-child(5) { color: #999; }
 
 .style-404 { color: #ffb3ba; }
 .style-304 { color: #ffdfba; }
@@ -205,7 +205,7 @@ document.addEventListener("DOMContentLoaded",function(event){
         outputExcluded = outputExcluded + '<td>' + exclArtists[i].Name.replace(/\\/g,'') + '</td>';
         }
         outputExcluded = outputExcluded + '<td>' + exclArtists[i].FirstName.replace(/\\/g,'') + ' ' + exclArtists[i].Name.replace(/\\/g,'') + '</td>';
-        outputExcluded = outputExcluded + '<td>' + exclArtists[i].Extrainfo + '</td>';
+        outputExcluded = outputExcluded + '<td>' + exclArtists[i].Extrainfo.replace(/\\/g,'') + '</td>';
         outputExcluded = outputExcluded + '</tr>';
 
         countstyles++;
