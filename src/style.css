@@ -203,10 +203,10 @@ table#dimensions tr td:nth-child(3) { padding: 3px 0 3px 15px; color: var(--mute
 #allMetaData p strong { padding: 1px 5px; background-color: var(--dgr); color: var(--mutedwhite); font-weight: 700; font-size: 1.1rem; text-transform: uppercase; }
 #allMetaData p span { display: block; margin: 0 0 3px 0; }
 #allMetaData p span span { display: inline-block; color: var(--fc); }
-#clearimage { display: none; position: absolute; top: 0; right: 0; z-index: 200; text-transform: uppercase; padding: 5px; font-size: 1.6rem; line-height: 0.5; background-color: rgba(255,255,255,0.05); cursor: pointer; color: rgba(255,255,255,0.2); }
+#clearimage { display: none; position: absolute; top: 5px; right: 5px; z-index: 200; text-transform: uppercase; padding: 5px; font-size: 1.6rem; line-height: 0.5; background-color: rgba(255,255,255,0.15); cursor: pointer; color: rgba(255,255,255,0.4); border: 1px solid rgba(255,255,255,0); border-radius: 3px; }
 .hasimg #clearimage { display: inline-block; }
 .hasimg:hover p { display: none; }
-.hasimg:hover #clearimage { display: inline-block; }
+#clearimage:hover { display: inline-block; color: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.25); }
 #copyprompt { display: none; color: var(--lg); }
 #copypromptbutton { display: inline-block; margin: 10px 0 0 0; padding: 7px 15px; font-size: 1.2rem; cursor: pointer; background-color: var(--dgr); }
 #copypromptbutton:hover { background-color: var(--lg); }
