@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded',function(event){
             FilterOutput = FilterOutput + '<span data-srch="' + filtername + '">' + filtername + ' <span>' + sortedKeys[key] +'</span></span>';    
         };
     });
-    FilterOutput =  FilterOutput + '<span data-srch="New Styles">New with 1.1.0</span><span data-srch="Opened Styles">Opened Styles</span><span data-srch="&dagger;">Only Deceased Artists <span>&dagger;</span></span>';
+    FilterOutput =  FilterOutput + '<span data-srch="New Styles">New with 1.1.0</span><span data-srch="Opened Styles">Currently Open Styles</span><span data-srch="&dagger;">Only Deceased Artists <span>&dagger;</span></span>';
     catsbox.innerHTML = FilterOutput;
     
     //Vars
