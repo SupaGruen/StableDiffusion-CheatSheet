@@ -51,11 +51,16 @@ body { margin: 0; padding: 0; font-family: Gotham, "Helvetica Neue", Helvetica, 
 * { font-family: 'Roboto Condensed',Gotham,"Helvetica Neue",Helvetica,Arial,sans-serif; color: var(--ow); }
 
 header, section { padding: 0 20px 20px 20px; }
+section { margin-bottom: 30px; }
 footer { padding: 0 0 20px; text-align: center; color: #555; }
 
-h1 { margin: 0; padding: 20px 0 0 50px; font-size: 1.6rem; }
-#selectmore { margin: 0; padding: 0 0 20px 50px; color: #666; font-style: italic; }
+h1 { margin: 0; padding: 20px 0 0 60px; font-size: 1.8rem; }
+h2 { margin: 0 0 25px 65px; }
+#selectmore { margin: 0; padding: 0 0 20px 60px; color: #666; font-style: italic; }
 #allthestyles { overflow-x: auto; }
+
+p { padding: 0 0 0 65px; }
+p.legend { line-height: 1.6; color: #999; font-size: 0.9rem; }
 
 table {}
 tr {}
@@ -63,27 +68,39 @@ tr:hover { background-color: #DDD; }
 tr:hover td:nth-child(1) { color: #BBB; }
 tr th { text-align: left; }
 th, td { padding: 2px 10px 3px 5px; }
-td:nth-child(1) { padding: 2px 10px 3px; text-align: right; color: #CCC; }
+td:nth-child(1) { padding: 2px 10px 3px; width: 35px; text-align: right; color: #CCC; }
 td:nth-child(4), td:nth-child(5) { padding: 2px 30px 3px 5px; }
-th:nth-child(n+3), td:nth-child(n+3) { display: none; }
+#listedartists th:nth-child(n+3), #listedartists td:nth-child(n+3) { display: none; }
 
-body.born th:nth-child(3), body.born td:nth-child(3) { display: table-cell; }
-body.death th:nth-child(4), body.death td:nth-child(4) { display: table-cell; }
-body.checkpoint th:nth-child(5), body.checkpoint td:nth-child(5) { display: table-cell; }
-body.categories th:nth-child(6), body.categories td:nth-child(6) { display: table-cell; }
-body.extrainfo th:nth-child(7), body.extrainfo td:nth-child(7) { display: table-cell; }
+body.born #listedartists th:nth-child(3), body.born #listedartists  td:nth-child(3) { display: table-cell; }
+body.death #listedartists th:nth-child(4), body.death #listedartists  td:nth-child(4) { display: table-cell; }
+body.checkpoint #listedartists th:nth-child(5), body.checkpoint #listedartists  td:nth-child(5) { display: table-cell; }
+body.categories #listedartists th:nth-child(6), body.categories #listedartists  td:nth-child(6) { display: table-cell; }
+body.extrainfo #listedartists th:nth-child(7), body.extrainfo #listedartists  td:nth-child(7) { display: table-cell; }
 
+#excludedartists td:nth-child(2), #excludedartists th:nth-child(2) { padding: 2px 5px 3px 5px; }
+#excludedartists td:nth-child(4), #excludedartists th:nth-child(4), #excludedartists th:nth-child(5) { color: #999; }
+
+.style-404 { color: #ffb3ba; }
+.style-304 { color: #ffdfba; }
+.style-301 { color: #feffa3; }
+.style-205 { color: #ddfffc; }
+.style-204 { color: #e2eeff; }
+.style-500 { color: #e1f7d5; }
+    
 </style>
 <script src="./data.js"></script>
+<script src="./excluded-artists.js"></script>
 <script type="text/javascript">
 document.addEventListener("DOMContentLoaded",function(event){
 
     var SearchEngine = 'https://www.google.com/search?q=';
     var outputdata = '';
+    var outputExcluded = '';
     var tags = {};
     var countstyles = 0;
 
-    outputdata = outputdata + '<table>';
+    outputdata = outputdata + '<table id="listedartists">';
     outputdata = outputdata + '<tr><th></th><th>Name</th><th>Born</th><th></th><th>Checkpoint</th><th>Categories</th><th>Extrainfo</th></tr>';
 
     //Put JSON in DOM
@@ -161,6 +178,45 @@ document.addEventListener("DOMContentLoaded",function(event){
     };
     
     
+    outputExcluded = outputExcluded + '<table id="excludedartists">';
+    outputExcluded = outputExcluded + '<tr><th></th><th></th><th>Name</th><th>Prompt used</th><th>Extrainfo</th></tr>';
+    
+    const titletexts = [];
+    titletexts[404] = 'Artist not known';
+    titletexts[304] = 'Something is recognized, but it\'s not related to the artist';
+    titletexts[301] = 'Something is recognized, but results are too different';
+    titletexts[205] = 'Artist is recognized, but difficult to prompt/not flexible';
+    titletexts[204] = 'Artist is recognized, but too different/generic';
+    titletexts[500] = 'Other';
+
+    //Put JSON in DOM
+    for(var i=0; i<exclArtists.length; i++){
+
+        let CurrentArtistName = exclArtists[i].Name;
+        let CurrentCode = exclArtists[i].Code;
+        let j = i + 1; // don't want to start with zero
+
+        outputExcluded = outputExcluded + '<tr>';
+        outputExcluded = outputExcluded + '<td>' + j + '</td>';
+        outputExcluded = outputExcluded + '<td class="style-' + exclArtists[i].Code + '"><span title="' + titletexts[CurrentCode] + '">&#9608;</span></td>';
+        if(exclArtists[i].FirstName){
+        outputExcluded = outputExcluded + '<td>' + exclArtists[i].Name.replace(/\\/g,'') + ', ' + exclArtists[i].FirstName.replace(/\\/g,'') + '</td>';
+        } else {
+        outputExcluded = outputExcluded + '<td>' + exclArtists[i].Name.replace(/\\/g,'') + '</td>';
+        }
+        outputExcluded = outputExcluded + '<td>' + exclArtists[i].FirstName.replace(/\\/g,'') + ' ' + exclArtists[i].Name.replace(/\\/g,'') + '</td>';
+        outputExcluded = outputExcluded + '<td>' + exclArtists[i].Extrainfo + '</td>';
+        outputExcluded = outputExcluded + '</tr>';
+
+        countstyles++;
+        
+    }
+    
+    outputExcluded = outputExcluded + '</table>';
+    
+    var putExcluded = document.getElementById('excludedArtists');
+    putExcluded.innerHTML = outputExcluded;
+    
 });
 </script>
 </head>
@@ -173,6 +229,9 @@ document.addEventListener("DOMContentLoaded",function(event){
 </header>
 
 <section>
+
+    <h2>Listed Artists</h2>
+
     <div id="selectmore">Show me
         <label for="born"><input type="checkbox" id="born" name="born" checked> Born</label>
         <label for="death"><input type="checkbox" id="death" name="death" checked> Death</label>
@@ -182,6 +241,26 @@ document.addEventListener("DOMContentLoaded",function(event){
     </div>
 
     <div id="allthestyles"></div>
+    
+</section>
+
+<section>
+
+    <h2>Not Available Artists</h2>
+    
+    <p>Manually checked. Hover over colors for more info.</p>
+    
+    <p class="legend">
+        <span class="style-404">█</span> Artist not known by Stable Diffusion<br>
+        <span class="style-304">█</span> Something is recognized, but it's not related to the artist<br>
+        <span class="style-301">█</span> Something is recognized, but results are too different<br>
+        <span class="style-205">█</span> Artist is recognized, but difficult to prompt/not flexible<br>
+        <span class="style-204">█</span> Artist is recognized, but too different/generic<br>
+        <span class="style-500">█</span> Other
+    </p>
+
+    <div id="excludedArtists"></div>
+    
 </section>
 
 <footer>Created 2023 - Version 1.1.0 - <a href="https://github.com/SupaGruen/StableDiffusion-CheatSheet">GitHub</a></footer>
