@@ -45,7 +45,7 @@
 
 :root {
   --bgr: #191D24;
-  --bgr-tp: rgba(25,29,36,.8);
+  --bgr-tp: rgba(25,29,36,.9);
   --dgr: #303744;
   --gr: #2A313C;
   --lg: #47555e;
@@ -104,7 +104,7 @@ nav ul { margin: 5px 0 10px 0; padding: 0; list-style-type: none; }
 nav ul li { display: inline; margin: 0 5px 0 0; }
 nav ul li a, .filterbut { padding: 5px 8px; font-size: 1.2rem; color: #FFF; background-color: var(--dgr); text-decoration: none; }
 .filterbut { margin: 0 5px 0 0; }
-nav ul li a:hover, nav ul li a.active { background-color: var(--lg); }
+nav ul li a:hover, nav ul li a.active, .filterbut.active { background-color: white; color: var(--bgr); }
 
 #suche { position: relative; }
 #suche label { display: none; }
@@ -139,8 +139,8 @@ footer a:hover { color: var(--lg); }
 
 #allcats { position: absolute; top: 125px; left: 0; margin: 10px 0 0 0; padding: 10px 40px; display: none; flex-wrap: wrap; align-items: flex-start; gap: 7px; background-color: var(--bgr-tp); }
 #allcats.show { display: flex; }
-#allcats span { display: inline-block; padding: 5px 8px; font-size: 1rem; color: #FFF; background-color: var(--lg); border-radius: 2px; cursor: pointer; }
-#allcats span:hover { background-color: var(--dgr); }
+#allcats span { display: inline-block; padding: 5px 8px; font-size: 1rem; color: #FFF; background-color: var(--lg); cursor: pointer; }
+#allcats span:hover { background-color: white; color: var(--bgr); }
 #allcats span span { padding: 0; color: var(--lblgr); background-color: transparent!important; }
 
 /* Stylepod with .active class */
@@ -149,7 +149,7 @@ footer a:hover { color: var(--lg); }
 .stylepod.active .styleinfo { display: inline-block; width: 256px; height: 256px; padding-right: 20px; background-color: var(--dgr); }
 .stylepod.active .styleinfo .more { display: block; }
 .stylepod.active .styleinfo .more .category { margin: 10px 0 0 20px; max-height: 41px; overflow: hidden; line-height: 1; font-size: inherit; }
-.stylepod.active .styleinfo .more .category span { display: inline-block; margin: 0 3px 3px 0; padding: 3px 4px 2px; font-size: 0.8rem; font-weight: 700; color: var(--dgr); background-color: var(--lblgr); border-radius: 2px; }
+.stylepod.active .styleinfo .more .category span { display: inline-block; margin: 0 3px 3px 0; padding: 3px 4px 3px; font-size: 0.8rem; font-weight: 700; color: var(--dgr); background-color: var(--lblgr); }
 .stylepod.active .styleinfo .more .category span.checkpointname { background-color: var(--mutedwhite); }
 .clicklinks { display: inline-block; position: absolute; bottom: 0; }
 .stylepod.active .styleinfo .more .extralinks { margin: 15px 10px 15px 20px; font-size: 1rem; line-height: 1; }
@@ -222,7 +222,7 @@ table#dimensions tr td:nth-child(3) { padding: 3px 0 3px 15px; color: var(--mute
     .stylepod.active .gallery figure { display: inline-block; min-width: 256px; height: 256px; background-size: 512px; background-image: inherit; border-radius: 0; }
     .stylepod figure:nth-child(2) { background-position: 100% 0px; }
     .stylepod figure:nth-child(3) { background-position: 0px 100%; }
-    .stylepod figure:nth-child(4) { background-position: 100% 100%; border-radius: 0 5px 5px 0!important; }
+    .stylepod figure:nth-child(4) { background-position: 100% 100%; }
     .stylepod.active .gallery::-webkit-scrollbar { height: 8px; background-color: #aaa; }
 }
 

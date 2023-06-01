@@ -203,6 +203,7 @@ document.addEventListener('DOMContentLoaded',function(event){
     if(filbut){
         filbut.onclick = function(e){
           e.preventDefault();
+          filbut.classList.toggle('active');
           catsbox.classList.toggle('show');
         };
     };
@@ -221,6 +222,7 @@ document.addEventListener('DOMContentLoaded',function(event){
                 document.getElementById('searchbox').value = this.dataset.srch;
                 liveSearch();
                 catsbox.classList.toggle('show');
+                filbut.classList.toggle('active');
             });
         };
     };
