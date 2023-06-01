@@ -208,8 +208,8 @@ table#dimensions tr td:nth-child(3) { padding: 3px 0 3px 15px; color: var(--mute
 .hasimg:hover p { display: none; }
 #clearimage:hover { display: inline-block; color: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.25); }
 #copyprompt { display: none; color: var(--lg); }
-#copypromptbutton { display: inline-block; margin: 10px 0 0 0; padding: 7px 15px; font-size: 1.2rem; cursor: pointer; background-color: var(--dgr); }
-#copypromptbutton:hover { background-color: var(--lg); }
+#copypromptbutton { display: inline-block; margin: 10px 0 0 0; padding: 7px 15px; font-size: 1.2rem; cursor: pointer; background-color: white; color: var(--bgr); }
+#copypromptbutton:hover { background-color: var(--lg); color: white; }
 
 @media screen and (min-width: 660px) {
     h1 { font-size: 2rem; }
