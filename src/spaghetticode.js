@@ -15,6 +15,12 @@ document.addEventListener('DOMContentLoaded',function(event){
     var menulinks = document.querySelectorAll('.mbut');
     var searchdiv = document.getElementById('suche');
     
+    var mystars = JSON.parse(localStorage.getItem('mystars'));
+    if(mystars == null){ var mystars = []; }
+    
+    var starsexport = document.getElementById('starsexport');
+    starsexport.value = mystars;
+    
     function hidepages(){
         if(pages){
             for(var i = 0; i < pages.length; i++){ pages[i].classList.add('is-hidden'); }
@@ -63,11 +69,8 @@ document.addEventListener('DOMContentLoaded',function(event){
             const lookupArray = CurrentArtistName.replace(/ *\([^)]*\) */g, '').split(',').map(function(item){ return item.trim(); }); //remove braces, split at comma, trim spaces
             let LUPart1 = lookupArray[0];
             let LUPart2 = lookupArray[1];
-            if(LUPart2){
-                var LUArtist = SearchEngine + LUPart2 + '%20' + LUPart1;
-            } else { //if no comma in name
-                var LUArtist = SearchEngine + LUPart1;
-            }
+            if(LUPart2){ var LUArtist = SearchEngine + LUPart2 + '%20' + LUPart1; } else { var LUArtist = SearchEngine + LUPart1; } //if no comma in name 
+            if(mystars.includes(data[i].Creation)){ var stylestar = ' stared'; } else { var stylestar = ''; }
             
             outputdata = outputdata + '<div id="' + currentAnchor + '" class="stylepod lazy" data-creatime="' + data[i].Creation + '" data-bg="./img/' + data[i].Image + '">';
             outputdata = outputdata + '<div class="styleinfo">';
@@ -75,7 +78,7 @@ document.addEventListener('DOMContentLoaded',function(event){
             outputdata = outputdata + '<div class="more">';
             outputdata = outputdata + '<p class="category" title="' + catlist + '"><span class="checkpointname">' + data[i].Checkpoint + '</span>' + buildcatlistoutput + '</p>';
             outputdata = outputdata + '<span class="clicklinks"><fieldset><legend>Copy Prompt</legend><span class="copyme">' + data[i].Prompt + '</span></fieldset>';
-            outputdata = outputdata + '<p class="extralinks"><a class="zoomimg" title="Big Image" href="./img/' + data[i].Image + '" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" class="zoomimgsvg" viewBox="0 0 512 512"><path fill="none" stroke="currentColor" stroke-linecap="square" stroke-miterlimit="10" stroke-width="32" d="M432 320v112H320M421.8 421.77L304 304M80 192V80h112M90.2 90.23L208 208M320 80h112v112M421.77 90.2L304 208M192 432H80V320M90.23 421.8L208 304"/></svg><span class="elsp">Big Image</span></a><a href="' + LUArtist + '" title="Look Up Artist" target="_blank" class="lookupartist"><svg xmlns="http://www.w3.org/2000/svg" class="lookupartistsvg" viewBox="0 0 512 512"><path d="M464 428L339.92 303.9a160.48 160.48 0 0030.72-94.58C370.64 120.37 298.27 48 209.32 48S48 120.37 48 209.32s72.37 161.32 161.32 161.32a160.48 160.48 0 0094.58-30.72L428 464zM209.32 319.69a110.38 110.38 0 11110.37-110.37 110.5 110.5 0 01-110.37 110.37z"/></svg><span class="elsp">Look Up</span></a></p></span>';
+            outputdata = outputdata + '<p class="extralinks"><a class="zoomimg" title="Zoom" href="./img/' + data[i].Image + '" target="_blank"><img src="./src/zoom-white.svg" width="25" alt="Zoom"><span class="elsp">Zoom</span></a><a href="' + LUArtist + '" title="Look Up Artist" target="_blank" class="lookupartist"><img src="./src/magnifying-glass-white.svg" width="25" alt="Look Up Artist"><span class="elsp">Look Up</span></a><a class="starthis' + stylestar + '" title="Mark as Favorite"><img class="svg" src="./src/heart-outline-white.svg" width="25" title="Mark as Favorite"></a></p></span>';
             outputdata = outputdata + '</div>';
             outputdata = outputdata + '</div>';
             outputdata = outputdata + '<div class="gallery">';
@@ -122,7 +125,7 @@ document.addEventListener('DOMContentLoaded',function(event){
             FilterOutput = FilterOutput + '<span data-srch="' + filtername + '">' + filtername + ' <span>' + sortedKeys[key] +'</span></span>';    
         };
     });
-    FilterOutput =  FilterOutput + '<span data-srch="New Styles">New with 1.1.0</span><span data-srch="Opened Styles">Currently Open Styles</span><span data-srch="&dagger;">Only Deceased Artists <span>&dagger;</span></span>';
+    FilterOutput =  FilterOutput + '<span data-srch="New Styles">New with 1.1.0</span><span data-srch="Opened Styles">Currently Open Styles</span><span data-srch="Liked">Liked <span><img class="svg" src="./src/heart-outline.svg" width="12"></span></span><span data-srch="&dagger;">Only Deceased Artists <span>&dagger;</span></span>';
     catsbox.innerHTML = FilterOutput;
     
     //Vars
@@ -165,7 +168,7 @@ document.addEventListener('DOMContentLoaded',function(event){
             currentpod.addEventListener('click',function(e){
             
                 var cList = e.target.classList;
-                if(cList.contains('copyme') || cList.contains('extralinks') || cList.contains('elsp') || cList.contains('zoomimg') || cList.contains('zoomimgsvg') || cList.contains('lookupartist') || cList.contains('lookupartistsvg')){ return }
+                if(cList.contains('copyme') || cList.contains('extralinks') || cList.contains('elsp') || cList.contains('zoomimg') || cList.contains('lookupartist') || cList.contains('starthis') || cList.contains('svg')){ return }
                 //if(e.target.classList.contains('copyme')) return 
                 this.classList.toggle('active');
 
@@ -188,6 +191,37 @@ document.addEventListener('DOMContentLoaded',function(event){
             });
         };
     };
+
+    //Stars - Favorite Styles
+    function starfunction(e){
+        if(mystars.includes(e)){
+            let starindex = mystars.indexOf(e);
+            let spliced = mystars.splice(starindex,1);
+            localStorage.setItem('mystars',JSON.stringify(mystars));
+            if(searchInput.value == 'Liked'){
+                liveSearch();
+            }
+        } else {
+            mystars.push(e);
+            localStorage.setItem('mystars',JSON.stringify(mystars));
+        }
+        starsexport.value = mystars;
+    };
+    if(pods){
+        var starbuts = document.querySelectorAll('.starthis');
+        if(starbuts||starbuts1){
+            for(var i = 0; i < starbuts.length; i++){
+                currentstar = starbuts[i];
+                currentstar.addEventListener('click',function(e){
+                    e.preventDefault();
+                    let starbutstyledata = this.closest('.stylepod').dataset.creatime;
+                    starfunction(starbutstyledata);
+                    this.classList.toggle('stared');
+                });
+            };
+        };
+    };
+
 
     //Check if Anchor in url
     if(window.location.hash){
@@ -248,6 +282,14 @@ document.addEventListener('DOMContentLoaded',function(event){
             } else if(search_query == 'Opened Styles'){
                 let currentclasses = pods[i].classList.contains('active');
                 if(currentclasses){
+                    pods[i].classList.remove('is-hidden');
+                    clearbut.classList.remove('show');
+                } else {
+                    pods[i].classList.add('is-hidden');
+                }
+            } else if(search_query == 'Liked'){
+                let currentstyledate = pods[i].dataset.creatime;
+                if(mystars.includes(currentstyledate)){
                     pods[i].classList.remove('is-hidden');
                     clearbut.classList.remove('show');
                 } else {

@@ -152,7 +152,7 @@ footer a:hover { color: var(--lg); }
 .stylepod.active .styleinfo .more .category span { display: inline-block; margin: 0 3px 3px 0; padding: 3px 4px 3px; font-size: 0.8rem; font-weight: 700; color: var(--dgr); background-color: var(--lblgr); }
 .stylepod.active .styleinfo .more .category span.checkpointname { background-color: var(--mutedwhite); }
 .clicklinks { display: inline-block; position: absolute; bottom: 0; }
-.stylepod.active .styleinfo .more .extralinks { margin: 15px 10px 15px 20px; font-size: 1rem; line-height: 1; }
+.stylepod.active .styleinfo .more .extralinks { margin: 10px 10px 15px 20px; font-size: 1rem; line-height: 1; }
 legend { margin: 0 0 3px 0; display: inline-block; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--fc); }
 .stylepod.active .styleinfo .more fieldset { margin: 10px 0 0 20px; padding: 0; width: 235px; border: none; background-color: rgba(255,255,255,0.05); border-radius: 3px; }
 .stylepod.active .styleinfo .more fieldset:hover { background-color: rgba(255,255,255,0.15); }
@@ -161,12 +161,13 @@ legend { margin: 0 0 3px 0; display: inline-block; font-size: 0.8rem; font-weigh
 .stylepod.active .gallery { display: flex; position: initial; width: 256px; height: 256px; background-image: inherit; background-size: 256px; border-radius: 0 5px 5px 0; }
 .stylepod.active .gallery figure { display: none; }
 
-.extralinks a { position: relative; display: inline-block; width: 110px; height: 35px; background-color: rgba(255,255,255,0.05); border-radius: 3px; text-decoration: none; }
-.extralinks a:nth-child(1) { margin: 0 15px 0 0; }
+.extralinks a { position: relative; display: inline-block; height: 35px; background-color: rgba(255,255,255,0.05); border-radius: 3px; text-decoration: none; }
+.extralinks a:nth-child(1) { margin: 0 10px 0 0; width: 82px; }
+.extralinks a:nth-child(2) { margin: 0 10px 0 0; width: 97px; }
 .extralinks a:hover { background-color: rgba(255,255,255,0.15); }
+.extralinks a.stared { background-color: rgba(255,255,255,0.5); }
 .extralinks a span { position: absolute; top: 10px; }
-.zoomimg svg { padding: 5px; width: 25px; fill: white; }
-.lookupartist svg { padding: 5px; width: 25px; fill: white; }
+.extralinks a img { padding: 5px; }
 
 .copyme  { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 220px; }
 .stylepod.prompt .styleinfo .more .checkpoint span { font-size: 0.75rem; font-weight: 400; text-transform: none; color: var(--ow); }
@@ -188,7 +189,7 @@ table#dimensions tr td:nth-child(3) { padding: 3px 0 3px 15px; color: var(--mute
 #ratiobox { width: 80px; font-size: 1rem; text-align: center; background-color: transparent; border-bottom: 1px dashed var(--mutedwhite); }
 
 #metadataboxes { width: 100%; }
-#drop-area { position: relative; z-index: 0; width: 100%; min-height: 250px; margin: 0; background-size: auto auto; background-color: rgba(25, 29, 36, 0); background-image: repeating-linear-gradient(135deg, transparent, transparent 20px, rgba(255, 255, 255, 0.15) 20px, rgba(255, 255, 255, 0.15) 40px ); }
+#drop-area { position: relative; z-index: 0; width: 100%; min-height: 250px; margin: 0; background-size: auto auto; background-color: rgba(25, 29, 36, 0); background-image: repeating-linear-gradient(135deg, transparent, transparent 20px, rgba(255, 255, 255, 0.1) 20px, rgba(255, 255, 255, 0.1) 40px ); }
 #drop-area.highlight {}
 #drop-area p { width: 100%; margin: 40px 0; text-align: center; font-size: 1.8rem; text-transform: uppercase; font-weight: 700; color: rgba(255,255,255,0.35); }
 #my-form { position: absolute; top: 0; left: 0; width: 100%; z-index: 100; }
@@ -210,6 +211,8 @@ table#dimensions tr td:nth-child(3) { padding: 3px 0 3px 15px; color: var(--mute
 #copyprompt { display: none; color: var(--lg); }
 #copypromptbutton { display: inline-block; margin: 10px 0 0 0; padding: 7px 15px; font-size: 1.2rem; cursor: pointer; background-color: white; color: var(--bgr); }
 #copypromptbutton:hover { background-color: var(--lg); color: white; }
+
+#starsexport { width: 50%; background-color: var(--dgr); border: none; color: #FFF; }
 
 @media screen and (min-width: 660px) {
     h1 { font-size: 2rem; }
