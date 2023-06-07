@@ -157,7 +157,7 @@ legend { margin: 0 0 3px 0; display: inline-block; font-size: 0.8rem; font-weigh
 .stylepod.active .styleinfo .more fieldset { margin: 10px 0 0 20px; padding: 0; width: 235px; border: none; background-color: rgba(255,255,255,0.05); border-radius: 3px; }
 .stylepod.active .styleinfo .more fieldset:hover { background-color: rgba(255,255,255,0.15); }
 .stylepod.active .styleinfo .more fieldset legend { margin: 0; padding: 0; color: var(--mutedwhite); }
-.stylepod.active .styleinfo .more fieldset .copyme { display: block; padding: 5px 7px 10px 7px; cursor: copy; }
+.copyme { display: block; padding: 5px 7px 10px 7px; cursor: copy; }
 .stylepod.active .gallery { display: flex; position: initial; width: 256px; height: 256px; background-image: inherit; background-size: 256px; border-radius: 0 5px 5px 0; }
 .stylepod.active .gallery figure { display: none; }
 
