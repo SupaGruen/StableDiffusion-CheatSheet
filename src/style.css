@@ -113,7 +113,7 @@ nav ul li a:hover, nav ul li a.active, .filterbut.active { background-color: whi
 #clearsearch { position: absolute; top: 0px; right: 0; z-index: 9999; display: none; padding: 5px 10px; font-size: 1.2rem; text-decoration: none; background-color: var(--lg); color: #FFF; }
 #clearsearch.show { display: inline-block; }
 
-section { margin: 40px; }
+section, #noscript { margin: 40px; }
 section#styles {}
 #allthestyles { padding-top: 20px; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 20px; }
 
