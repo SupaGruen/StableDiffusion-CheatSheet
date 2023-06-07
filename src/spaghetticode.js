@@ -15,8 +15,9 @@ document.addEventListener('DOMContentLoaded',function(event){
     var menulinks = document.querySelectorAll('.mbut');
     var searchdiv = document.getElementById('suche');
     
-    var mystars = JSON.parse(localStorage.getItem('mystars'));
+    var mystars = localStorage.getItem('mystars');
     if(mystars == null){ var mystars = []; }
+    mystars = JSON.parse(mystars);
     
     var starsexport = document.getElementById('starsexport');
     starsexport.value = mystars;
@@ -125,7 +126,7 @@ document.addEventListener('DOMContentLoaded',function(event){
             FilterOutput = FilterOutput + '<span data-srch="' + filtername + '">' + filtername + ' <span>' + sortedKeys[key] +'</span></span>';    
         };
     });
-    FilterOutput =  FilterOutput + '<span data-srch="New Styles">New with 1.1.0</span><span data-srch="Opened Styles">Currently Open Styles</span><span data-srch="Liked">Liked <span><img class="svg" src="./src/heart-outline.svg" width="12"></span></span><span data-srch="&dagger;">Only Deceased Artists <span>&dagger;</span></span>';
+    FilterOutput =  FilterOutput + '<span class="specialfilters" data-srch="New Styles">New with 1.1.0</span><span class="specialfilters" data-srch="Opened Styles">Currently Open Styles</span><span class="specialfilters" data-srch="Liked">Liked <span><img class="svg" src="./src/heart-outline.svg" width="12"></span></span><span class="specialfilters" data-srch="&dagger;">Only Deceased Artists <span>&dagger;</span></span>';
     catsbox.innerHTML = FilterOutput;
     
     //Vars
@@ -221,6 +222,24 @@ document.addEventListener('DOMContentLoaded',function(event){
             };
         };
     };
+    // Import Styles
+    var StyleDialog = document.getElementById('stylesDialog');
+    document.getElementById('importstyles').addEventListener('click',function(e){
+        StyleDialog.showModal();
+    });
+    document.getElementById('stylesDialogConfirm').addEventListener('click', (event) => {
+        var eximp = document.getElementById('starsexport').value;
+        event.preventDefault();
+        StyleDialog.close();
+        var sanitizeInput = eximp.replace(/[^\d,]+/g,''); // only numbers and commas
+        var newStyleInputarray = sanitizeInput.split(',').map(function(n){ return Number(n); });
+        newStyleInputarray = newStyleInputarray.filter(val => val != '0');
+        for(var i = 0; i < newStyleInputarray.length; i++){
+            newStyleInputarray[i] = newStyleInputarray[i].toString(); // need strings instead of numbers
+        }
+        localStorage.setItem('mystars',JSON.stringify(newStyleInputarray));
+        location.reload(); //need top update style list to update likes -> page reload
+    });
 
 
     //Check if Anchor in url
@@ -419,7 +438,7 @@ document.addEventListener('DOMContentLoaded',function(event){
         document.getElementById('gallery').innerHTML = '';
         dropArea.classList.remove('hasimg');
     });
-    
+
     
     // EXIF Start
     
@@ -540,7 +559,7 @@ document.addEventListener('DOMContentLoaded',function(event){
             if(NewOthers){ MDOut = MDOut + '<p>' + NewOthers + '</p>'; }
             if(PluginMetaData){ MDOut = MDOut + '<p><strong>Other Metadata</strong><br>' + PluginMetaData + '</p>'; }
 
-            let copymetadataprompt = '<span id="copyprompt">' + Encode(prompt.originalMD) + '</span><span id="copypromptbutton">Copy Prompt</span>';
+            let copymetadataprompt = '<span id="copyprompt">' + Encode(prompt.originalMD) + '</span><button id="copypromptbutton">Copy Prompt</button>';
 
             allMetaData.innerHTML = MDOut + copymetadataprompt;
             

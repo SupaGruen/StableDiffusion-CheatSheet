@@ -162,7 +162,7 @@
     <div class="examplegallery">
         <figure>
             <a href="./img/types/46-impasto-painting.webp" target="_blank"><img class="lazy" data-src="./img/types/46-impasto-painting.webp"></a>
-            <figcaption class="copyme">Impasto Painting (Thick Paint)</figcaption>
+            <figcaption class="copyme">Impasto Painting</figcaption>
         </figure>
         <figure>
             <a href="./img/types/40-palette-knife-oil-painting.webp" target="_blank"><img class="lazy" data-src="./img/types/40-palette-knife-oil-painting.webp"></a>
@@ -449,8 +449,20 @@
     
     <h3>Liked Styles Backup</h3>
     
-    <p>Still testing this. In case something breaks, allows you to save a backup of your favorite styles.</p>
-    <textarea id="starsexport"></textarea>
+    <p>In case something breaks, allows you to save a backup of your favorite styles.</p>
+    <p><strong>Clicking 'Import' will replace your liked styles</strong> with what is in this textfield.<br>Leave field empty to delete all likes.</p>
+    <textarea id="starsexport"></textarea><br>
+    <button id="importstyles">Import</button>
+    
+    <dialog id="stylesDialog">
+        <form>
+        <p><strong>Warning!</strong><br>This will replace all currently liked styles.</p>
+        <div>
+        <button id="stylesDialogConfirm" value="default">Confirm</button>
+        <button value="cancel" formmethod="dialog">Cancel</button>
+        </div>
+        </form>
+    </dialog>
     
     <h3>Credits</h3>
     
