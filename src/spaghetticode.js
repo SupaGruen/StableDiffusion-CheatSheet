@@ -16,8 +16,9 @@ document.addEventListener('DOMContentLoaded',function(event){
     var searchdiv = document.getElementById('suche');
     
     var mystars = localStorage.getItem('mystars');
-    if(mystars == null){ var mystars = []; }
-    mystars = JSON.parse(mystars);
+    if(mystars == null){ var mystars = []; } else {
+        mystars = JSON.parse(mystars);
+    }
     
     var starsexport = document.getElementById('starsexport');
     starsexport.value = mystars;
