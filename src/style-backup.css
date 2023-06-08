@@ -137,12 +137,12 @@ footer a:hover { color: var(--lg); }
 .is-hidden { display: none !important; }
 .nobgr { background-color: transparent!important; }
 
-#allcats { display: none; top: 125px; left: 0; margin: 0; padding: 10px 40px 10px 0; max-height: 560px; overflow-x: auto; align-items: flex-start; gap: 7px; background-color: var(--bgr-tp); grid-auto-flow: column; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); grid-template-rows: repeat(11, 1fr); }
-#allcats.show { display: grid; }
-#allcats span { position: relative; display: inline-block; padding: 5px 8px; font-size: 1rem; color: #FFF; background-color: var(--dgr); cursor: pointer; }
+#allcats { position: absolute; top: 125px; left: 0; margin: 10px 0 0 0; padding: 10px 40px; display: none; flex-wrap: wrap; align-items: flex-start; gap: 7px; background-color: var(--bgr-tp); }
+#allcats.show { display: flex; }
+#allcats span { display: inline-block; padding: 5px 8px; font-size: 1rem; color: #FFF; background-color: var(--lg); cursor: pointer; }
 #allcats span.specialfilters { background-color: #69808E; }
 #allcats span:hover { background-color: white; color: var(--bgr); }
-#allcats span span { position: absolute; top: 0; right: 0; color: var(--lblgr); background-color: transparent!important; }
+#allcats span span { padding: 0; color: var(--lblgr); background-color: transparent!important; }
 #allcats span.specialfilters span { color: var(--lg); }
 
 /* Stylepod with .active class */
@@ -150,8 +150,8 @@ footer a:hover { color: var(--lg); }
 .stylepod.active h3 { text-shadow: none; }
 .stylepod.active .styleinfo { display: inline-block; width: 256px; height: 256px; padding-right: 20px; background-color: var(--dgr); }
 .stylepod.active .styleinfo .more { display: block; }
-.stylepod.active .styleinfo .more .category { margin: 10px 0 0 20px; max-height: 45px; overflow: hidden; line-height: 1; font-size: inherit; }
-.stylepod.active .styleinfo .more .category span { display: inline-block; margin: 0 3px 3px 0; padding: 3px 4px 3px; font-size: 0.9rem; font-weight: 700; color: var(--dgr); background-color: var(--lblgr); }
+.stylepod.active .styleinfo .more .category { margin: 10px 0 0 20px; max-height: 41px; overflow: hidden; line-height: 1; font-size: inherit; }
+.stylepod.active .styleinfo .more .category span { display: inline-block; margin: 0 3px 3px 0; padding: 3px 4px 3px; font-size: 0.8rem; font-weight: 700; color: var(--dgr); background-color: var(--lblgr); }
 .stylepod.active .styleinfo .more .category span.checkpointname { background-color: var(--mutedwhite); }
 .clicklinks { display: inline-block; position: absolute; bottom: 0; }
 .stylepod.active .styleinfo .more .extralinks { margin: 10px 10px 15px 20px; font-size: 1rem; line-height: 1; }
@@ -222,14 +222,6 @@ dialog div { text-align: right; }
 dialog div button { color: white; background-color: var(--fc); }
 dialog div button#stylesDialogConfirm { color: white; background-color: #457932; }
 dialog div button#stylesDialogConfirm:hover { background-color: #2d4f21; }
-
-/* category rows changing with screen width */
-@media screen and (max-width: 1425px) { #allcats { grid-template-rows: repeat(12, 1fr); } }
-@media screen and (max-width: 1240px) { #allcats { grid-template-rows: repeat(15, 1fr); } }
-@media screen and (max-width: 1070px) { #allcats { grid-template-rows: repeat(18, 1fr); } }
-@media screen and (max-width: 900px) { #allcats { max-height: 425px; grid-template-rows: repeat(24, 1fr); } }
-@media screen and (max-width: 700px) { #allcats { grid-template-rows: repeat(36, 1fr); } }
-@media screen and (max-width: 510px) { #allcats { grid-template-columns: 1; grid-template-rows: repeat(1000, 1fr); } }
 
 @media screen and (min-width: 660px) {
     h1 { font-size: 2rem; }
