@@ -137,7 +137,7 @@ footer a:hover { color: var(--lg); }
 .is-hidden { display: none !important; }
 .nobgr { background-color: transparent!important; }
 
-#allcats { display: none; top: 125px; left: 0; margin: 0; padding: 10px 40px 10px 0; max-height: 560px; overflow-x: auto; align-items: flex-start; gap: 7px; background-color: var(--bgr-tp); grid-auto-flow: column; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); grid-template-rows: repeat(11, 1fr); }
+#allcats { display: none; top: 125px; left: 0; margin: 0; padding: 10px 0 10px 0; max-height: 560px; overflow-x: auto; align-items: flex-start; gap: 7px; background-color: var(--bgr-tp); grid-auto-flow: column; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); grid-template-rows: repeat(11, 1fr); }
 #allcats.show { display: grid; }
 #allcats span { position: relative; display: inline-block; padding: 5px 8px; font-size: 1rem; color: #FFF; background-color: var(--dgr); cursor: pointer; }
 #allcats span.specialfilters { background-color: #69808E; }
