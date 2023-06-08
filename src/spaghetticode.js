@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded',function(event){
 
     var SearchEngine = 'https://www.google.com/search?q=';
     
+    //var EndOfLastVer = 202306072133; Version 1.2.0
     var EndOfLastVer = 202305050000;
 
     // Filter Buttons - Don't show countries or tags that are too common
