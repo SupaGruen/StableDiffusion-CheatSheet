@@ -50,68 +50,89 @@ document.addEventListener('DOMContentLoaded',function(event){
         };
     };
     
+    // Copy Categories Checkbox
+    var CopyCatCheckbox = document.getElementById('copycat');
+    if(localStorage.getItem('copycat')){
+        CopyCatCheckbox.checked = true;
+    }
+    CopyCatCheckbox.addEventListener('click',function(e){
+        if(CopyCatCheckbox.checked){
+            localStorage.setItem('copycat','1');
+            location.reload(); 
+        } else {
+            localStorage.removeItem('copycat');
+            location.reload(); 
+        }
+    });
     
     //Put JSON in DOM
-    for(var i=0; i<data.length; i++){
-
-        if(data[i].Type==1){
-            
-            let CurrentArtistName = data[i].Name;
-            let currentAnchor = CurrentArtistName.replace(/[^a-zA-Z]+/g,'');
-            let catlist = data[i].Category.replace(/\\/g,''); //remove backslash
-
-            let buildcatlist = catlist.split(',');
-            let buildcatlistoutput = '';
-            buildcatlist.forEach(function(value){ //build output without first
-                buildcatlistoutput = buildcatlistoutput + '<span>' + value.trim() + '</span>';
-            });
-
-            let deathdate = ''; let dagger = ''; deathdate = data[i].Death;
-            if(deathdate!=false){ dagger = '<sup> &dagger;</sup>'; }
-
-            const lookupArray = CurrentArtistName.replace(/ *\([^)]*\) */g, '').split(',').map(function(item){ return item.trim(); }); //remove braces, split at comma, trim spaces
-            let LUPart1 = lookupArray[0];
-            let LUPart2 = lookupArray[1];
-            if(LUPart2){ var LUArtist = SearchEngine + LUPart2 + '%20' + LUPart1; } else { var LUArtist = SearchEngine + LUPart1; } //if no comma in name 
-            if(mystars.includes(data[i].Creation)){ var stylestar = ' stared'; } else { var stylestar = ''; }
-            
-            outputdata = outputdata + '<div id="' + currentAnchor + '" class="stylepod lazy" data-creatime="' + data[i].Creation + '" data-bg="./img/' + data[i].Image + '">';
-            outputdata = outputdata + '<div class="styleinfo">';
-            outputdata = outputdata + '<h3 title="' + data[i].Name + '">' + data[i].Name + dagger + '</h3>';
-            outputdata = outputdata + '<div class="more">';
-            outputdata = outputdata + '<p class="category" title="' + catlist + '"><span class="checkpointname">' + data[i].Checkpoint + '</span>' + buildcatlistoutput + '</p>';
-            outputdata = outputdata + '<span class="clicklinks"><fieldset><legend>Copy Prompt</legend><span class="copyme">' + data[i].Prompt + '</span></fieldset>';
-            outputdata = outputdata + '<p class="extralinks"><a class="zoomimg" title="Zoom" href="./img/' + data[i].Image + '" target="_blank"><img src="./src/zoom-white.svg" width="25" alt="Zoom"><span class="elsp">Zoom</span></a><a href="' + LUArtist + '" title="Look Up Artist" target="_blank" class="lookupartist"><img src="./src/magnifying-glass-white.svg" width="25" alt="Look Up Artist"><span class="elsp">Look Up</span></a><a class="starthis' + stylestar + '" title="Mark as Favorite"><img class="svg" src="./src/heart-outline-white.svg" width="25" title="Mark as Favorite"></a></p></span>';
-            outputdata = outputdata + '</div>';
-            outputdata = outputdata + '</div>';
-            outputdata = outputdata + '<div class="gallery">';
-            outputdata = outputdata + '<figure><figcaption></figcaption></figure>';
-            outputdata = outputdata + '<figure></figure>';
-            outputdata = outputdata + '<figure></figure>';
-            outputdata = outputdata + '<figure></figure>';
-            outputdata = outputdata + '</div>';
-            outputdata = outputdata + '</div>';
-            
-            countstyles++;
-            
-            //fill tags list for filter
-            let arrrrr = data[i].Category.split(', ');
-            arrrrr.forEach(function(tag){
-                if (tag in tags) {
-                  // If animal is present, increment the count
-                  tags[tag] = tags[tag] + 1;
-                } else {
-                  // If animal is not present, add the entry
-                  tags[tag] = 1;
-                }
-            });
-   
-        }
-
-    }
+    function buildstyles(){
     
-    var putStyles = document.getElementById('allthestyles');
-    putStyles.innerHTML = outputdata;
+        for(var i=0; i<data.length; i++){
+
+            if(data[i].Type==1){
+
+                let CurrentArtistName = data[i].Name;
+                let currentAnchor = CurrentArtistName.replace(/[^a-zA-Z]+/g,'');
+                let catlist = data[i].Category.replace(/\\/g,''); //remove backslash
+
+                let buildcatlist = catlist.split(',');
+                let buildcatlistoutput = '';
+                buildcatlist.forEach(function(value){ //build output without first
+                    buildcatlistoutput = buildcatlistoutput + '<span>' + value.trim() + '</span>';
+                });
+
+                let deathdate = ''; let dagger = ''; deathdate = data[i].Death;
+                if(deathdate!=false){ dagger = '<sup> &dagger;</sup>'; }
+
+                const lookupArray = CurrentArtistName.replace(/ *\([^)]*\) */g, '').split(',').map(function(item){ return item.trim(); }); //remove braces, split at comma, trim spaces
+                let LUPart1 = lookupArray[0];
+                let LUPart2 = lookupArray[1];
+                if(LUPart2){ var LUArtist = SearchEngine + LUPart2 + '%20' + LUPart1; } else { var LUArtist = SearchEngine + LUPart1; } //if no comma in name 
+                if(mystars.includes(data[i].Creation)){ var stylestar = ' stared'; } else { var stylestar = ''; }
+
+                let extraclass = '';
+                if(localStorage.getItem('copycat')){ extraclass = ' copythecats'; }
+
+                outputdata = outputdata + '<div id="' + currentAnchor + '" class="stylepod lazy" data-creatime="' + data[i].Creation + '" data-bg="./img/' + data[i].Image + '">';
+                outputdata = outputdata + '<div class="styleinfo">';
+                outputdata = outputdata + '<h3 title="' + data[i].Name + '">' + data[i].Name + dagger + '</h3>';
+                outputdata = outputdata + '<div class="more">';
+                outputdata = outputdata + '<p class="category' + extraclass + '" title="' + catlist + '"><span class="checkpointname">' + data[i].Checkpoint + '</span>' + buildcatlistoutput + '</p>';
+                outputdata = outputdata + '<span class="clicklinks"><fieldset><legend>Copy Prompt</legend><span class="copyme">' + data[i].Prompt + '</span></fieldset>';
+                outputdata = outputdata + '<p class="extralinks"><a class="zoomimg" title="Zoom" href="./img/' + data[i].Image + '" target="_blank"><img src="./src/zoom-white.svg" width="25" alt="Zoom"><span class="elsp">Zoom</span></a><a href="' + LUArtist + '" title="Look Up Artist" target="_blank" class="lookupartist"><img src="./src/magnifying-glass-white.svg" width="25" alt="Look Up Artist"><span class="elsp">Look Up</span></a><a class="starthis' + stylestar + '" title="Mark as Favorite"><img class="svg" src="./src/heart-outline-white.svg" width="25" title="Mark as Favorite"></a></p></span>';
+                outputdata = outputdata + '</div>';
+                outputdata = outputdata + '</div>';
+                outputdata = outputdata + '<div class="gallery">';
+                outputdata = outputdata + '<figure><figcaption></figcaption></figure>';
+                outputdata = outputdata + '<figure></figure>';
+                outputdata = outputdata + '<figure></figure>';
+                outputdata = outputdata + '<figure></figure>';
+                outputdata = outputdata + '</div>';
+                outputdata = outputdata + '</div>';
+
+                countstyles++;
+
+                //fill tags list for filter
+                let arrrrr = data[i].Category.split(', ');
+                arrrrr.forEach(function(tag){
+                    if (tag in tags) {
+                      // If animal is present, increment the count
+                      tags[tag] = tags[tag] + 1;
+                    } else {
+                      // If animal is not present, add the entry
+                      tags[tag] = 1;
+                    }
+                });
+
+            }
+
+        }
+        var putStyles = document.getElementById('allthestyles');
+        putStyles.innerHTML = '';
+        putStyles.innerHTML = outputdata;
+    }
+    buildstyles();
     
     //Create filter tags  DontShowAnyCountries
     var FilterOutput = '';
@@ -147,22 +168,31 @@ document.addEventListener('DOMContentLoaded',function(event){
     
     var ratioInput = document.getElementById('ratiobox');
 
-    var spans = document.getElementsByClassName('copyme');
-
-    //Prompt Clipboard
-    for(var i = 0; i < spans.length; i++){
-        currentspan = spans[i];
-        currentspan.addEventListener('click',function(){
-            var inp = document.createElement('input');
-            var alttxt = this.innerText;
-            document.body.appendChild(inp);
-            inp.value = alttxt;
-            inp.select();
-            document.execCommand('copy',false);
-            inp.remove();
-            showSnackBar();
-        });
+    // Copy Prompt to Clipboard
+    function addcopylistener(e,f){
+        for(var i = 0; i < e.length; i++){
+            currentspan = e[i];
+            currentspan.addEventListener('click',function(){
+                var inp = document.createElement('input');
+                document.body.appendChild(inp);
+                if(f == 'no'){
+                var alttxt = this.title;
+                } else {
+                var alttxt = this.innerText;
+                }
+                inp.value = alttxt;
+                inp.select();
+                document.execCommand('copy',false);
+                inp.remove();
+                showSnackBar();
+            });
+        };
     };
+    
+    var spans = document.getElementsByClassName('copyme');
+    var categorytags = document.getElementsByClassName('copythecats');
+    addcopylistener(spans);
+    addcopylistener(categorytags,'no');
 
     //Style open/close
     if(pods){
@@ -171,7 +201,9 @@ document.addEventListener('DOMContentLoaded',function(event){
             currentpod.addEventListener('click',function(e){
             
                 var cList = e.target.classList;
-                if(cList.contains('copyme') || cList.contains('extralinks') || cList.contains('elsp') || cList.contains('zoomimg') || cList.contains('lookupartist') || cList.contains('starthis') || cList.contains('svg')){ return }
+                let parentclasses = e.target.parentElement.classList; // need this for category copy
+                
+                if(cList.contains('copyme') || parentclasses.contains('copythecats') || cList.contains('extralinks') || cList.contains('elsp') || cList.contains('zoomimg') || cList.contains('lookupartist') || cList.contains('starthis') || cList.contains('svg')){ return }
                 //if(e.target.classList.contains('copyme')) return 
                 this.classList.toggle('active');
 

@@ -79,7 +79,9 @@ h1 { font-size: 1.6rem; }
 h3 { margin: 5rem 0 1rem 0; padding: 0; font-size: 1.7rem; }
 h3:nth-child(1){ margin-top: 0; }
 h4 { display: block;  margin: 0 0 1rem 0; padding: 0; width: 100%; font-size: 1.4rem; color: var(--mutedwhite); }
+#about h4 { margin: 3rem 0 1rem 0; }
 
+label { cursor: pointer; }
 sup { font-weight: 700; font-size: 0.8rem; color: inherit; }
 
 a:hover { text-decoration: none; }
