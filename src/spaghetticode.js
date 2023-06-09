@@ -244,7 +244,7 @@ document.addEventListener('DOMContentLoaded',function(event){
     };
     if(pods){
         var starbuts = document.querySelectorAll('.starthis');
-        if(starbuts||starbuts1){
+        if(starbuts){
             for(var i = 0; i < starbuts.length; i++){
                 currentstar = starbuts[i];
                 currentstar.addEventListener('click',function(e){
@@ -261,7 +261,7 @@ document.addEventListener('DOMContentLoaded',function(event){
     document.getElementById('importstyles').addEventListener('click',function(e){
         StyleDialog.showModal();
     });
-    document.getElementById('stylesDialogConfirm').addEventListener('click', (event) => {
+    document.getElementById('stylesDialogConfirm').addEventListener('click',(event) => {
         var eximp = document.getElementById('starsexport').value;
         event.preventDefault();
         StyleDialog.close();
@@ -277,14 +277,17 @@ document.addEventListener('DOMContentLoaded',function(event){
 
 
     //Check if Anchor in url
-    if(window.location.hash){
-        let thishash = window.location.hash;
-        let thishashnew = thishash.replace('#','');
-        if(thishash){
-            let machaktiv = document.getElementById(thishashnew).classList.add('active');
-            location.hash = thishash;
+    function hashcheck(){
+        if(window.location.hash){
+            let thishash = window.location.hash;
+            let thishashnew = thishash.replace('#','');
+            if(thishash){
+                let machaktiv = document.getElementById(thishashnew).classList.add('active');
+                location.hash = thishash;
+            }
         }
-    }
+    };
+    hashcheck();
 
     //Filter
     if(filbut){
@@ -409,10 +412,26 @@ document.addEventListener('DOMContentLoaded',function(event){
         };
     };
     
-    
+    //Arthistory Clicks
+    var artlinks = document.getElementById('arthistory').getElementsByTagName('a');
+    if(artlinks){
+        for(var i = 0; i < artlinks.length; i++){
+            var currentartlink = artlinks[i];
+            currentartlink.addEventListener('click',function(e){
+                let lala = this.getAttribute('href'); //get href from link
+                let thislalanew = lala.replace('./index.html#',''); //get hashtag from link
+                if(thislalanew){
+                    document.getElementById(thislalanew).classList.add('active'); //make sure style is open
+                }
+                hidepages(); //hide all pages
+                document.querySelector('[data-page="styles"]').classList.add('active'); //styles menu link active
+                document.getElementById('styles').classList.remove('is-hidden'); //activate styles div
+                searchdiv.classList.remove('is-hidden'); //activate filter/search
+            });
+        };
+    };
     
     var allMetaData = document.getElementById('allMetaData');
-
 
     // Drag and Drop Start
     // Joseph Zimmerman - https://www.smashingmagazine.com/2018/01/drag-drop-file-uploader-vanilla-js/

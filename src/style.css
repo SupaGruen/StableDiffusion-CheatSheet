@@ -98,6 +98,8 @@ ul#arthistory li {}
 ul#arthistory li h4 { margin: 0 0 0.5rem 0; }
 ul#arthistory li ul { list-style-type: none; margin: 0 0 1rem 0; }
 ul#arthistory li ul li { margin: 0 0 0.25rem 0; font-size: 1.2rem; }
+ul#arthistory li ul li a { text-decoration: none; border-bottom: 1px dashed var(--mutedwhite); }
+ul#arthistory li ul li a:hover { border: none; }
 ul#arthistory li ul li:nth-child(2) { color: var(--mutedwhite); }
 
 header { position: sticky; margin: 0; padding: 10px 40px 0 40px; height: 125px; top: 0; left: 0; z-index: 999; background-color: var(--bgr-tp); }
