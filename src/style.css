@@ -119,7 +119,6 @@ nav ul li a:hover, nav ul li a.active, .filterbut.active { background-color: whi
 
 section, #noscript { margin: 40px; }
 section#styles {}
-section#styles p { margin: 1rem 0 0 0; }
 #allthestyles { padding-top: 20px; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 20px; }
 
 footer { margin: 100px 20px 20px 20px; text-align: center; color: var(--lg); }
