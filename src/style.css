@@ -54,21 +54,8 @@
   --fc: #637289;
   --lblgr: #7C8AA0;
   --mutedwhite: #b0b9c3;
-  
-  --red: #f94144;
-  --redmuted: #892f34;
-  --orange: #f3722c;
-  --orangemuted: #f3722c;
-  --lorange: #f3722c;
-  --lorangemuted: #885921;
-  --yellow: #f9c74f;
-  --yellowmuted: #897239;
-  --green: #90be6d;
-  --greenmuted: #546d48;
-  --turquoise: #43aa8b;
-  --turquoisemuted: #2e6357;
-  --blue: #577590;
-  --bluemuted: #38495a;
+  --bgr-red: #6d3737;
+  --bgr-green: #728a00;
 }
 
 html { scroll-padding: 140px 0 0 0; }
@@ -126,9 +113,11 @@ footer a { color: var(--fc); text-decoration: none; }
 footer a:hover { color: var(--lg); }
 
 #searchinfo {}
-#notavail { display: block; margin: 2rem 0 0 0; }
+#notavail { display: block; margin: 2rem 0 0 0; padding: 1rem 1rem 0.5rem 1rem; font-size: 1.2rem; background-color: rgba(0,0,0,0.2); border-radius: 5px; }
+#notavail:empty { display: none; }
 #naaresults { display: block; margin: 1rem 0; }
-#naaresults span { display: inline-block; margin: 3px 5px 3px 0; padding: 3px 5px; line-height: 1; background-color: var(--lg); }
+#naaresults span { display: inline-block; margin: 3px 5px 3px 0; padding: 3px 5px; line-height: 1; background-color: var(--bgr-red); }
+#naaresults span.ASearchStatus200 { background-color: var(--bgr-green); cursor: pointer; }
 
 .stylepod { position: relative; display: block; margin: 0; padding: 0; width: 256px; height: 256px; background-size: 512px; border-radius: 5px; overflow: hidden; cursor: pointer; background-repeat: no-repeat; }
 .stylepod h3 { margin: 20px 0 5px 20px; padding: 0 20px 0 0; font-size: 1.1rem; text-transform: uppercase; text-shadow: 1px 1px 3px #111; }
@@ -229,8 +218,8 @@ dialog p { color: #000; }
 dialog p strong { color: var(--redmuted); font-weight: 700; }
 dialog div { text-align: right; }
 dialog div button { color: white; background-color: var(--fc); }
-dialog div button#stylesDialogConfirm { color: white; background-color: #457932; }
-dialog div button#stylesDialogConfirm:hover { background-color: #2d4f21; }
+dialog div button#stylesDialogConfirm { color: white; background-color: var(--bgr-green); }
+dialog div button#stylesDialogConfirm:hover { background-color: var(--bgr); }
 
 /* category rows changing with screen width */
 @media screen and (max-width: 1425px) { #allcats { grid-template-rows: repeat(12, 1fr); } }

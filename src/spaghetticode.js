@@ -407,22 +407,33 @@ document.addEventListener('DOMContentLoaded',function(event){
             var allarrayresults = '';
             for(var i = 0; i < getSimilar.length; i++){
                 var thisperson = searcharray.filter(function(person){ return person.ArtistName == getSimilar[i] });
-                if(thisperson[0].Status!=200){
+                //if(thisperson[0].Status!=200){
                     allarrayresults = allarrayresults + '<span class="ASearchStatus' + thisperson[0].Status + '">' + thisperson[0].ArtistName + '</span>';
-                }
+                //}
             }
         }
         
         if((countshownstyles!=0)&&(search_query!=0)){
             searchinfo.innerHTML = '(' + countshownstyles + ')'; notavail.innerHTML = '';
-            if(allarrayresults){ notavail.innerHTML = '<a href="./only-data.html#notavailable" class="internal">Not available artists list</a> match (very simple check): <span id="naaresults">' + allarrayresults + '</span>'; }
+            if(allarrayresults){ notavail.innerHTML = 'Checking for similar names and <a href="./only-data.html#notavailable" class="internal">artist that are not available</a> (very rudimental): <span id="naaresults">' + allarrayresults + '</span>'; }
         } else if((countshownstyles==0)&&(search_query!=0)) {
             //console.log(matches.bestMatch.target); //produces response with rating to each string   
             searchinfo.innerHTML = ''; notavail.innerHTML = '';
-            if(allarrayresults){ notavail.innerHTML = '<a href="./only-data.html#notavailable" class="internal">Not available artists list</a> match (very simple check): <span id="naaresults">' + allarrayresults + '</span>'; }
+            if(allarrayresults){ notavail.innerHTML = 'Checking for similar names and <a href="./only-data.html#notavailable" class="internal">artist that are not available</a> (very rudimental): <span id="naaresults">' + allarrayresults + '</span>'; }
         } else {
             searchinfo.innerHTML = ''; notavail.innerHTML = '';
         }
+        
+        var similars = document.getElementsByClassName('ASearchStatus200');
+        if(similars){
+            for(var i = 0; i < similars.length; i++){
+                currentspan = similars[i];
+                currentspan.addEventListener('click',function(){
+                    document.getElementById('searchbox').value = this.innerText;
+                    liveSearch();
+                });
+            };
+        };
         
     }
     
