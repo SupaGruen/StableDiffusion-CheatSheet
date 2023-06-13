@@ -333,7 +333,6 @@ document.addEventListener('DOMContentLoaded',function(event){
         
         searcharray.push({'ArtistName':LUArtist,'Status':200});
         simplearray.push(LUArtist);
-        console.log(LUArtist)
     };
     for(var i=0; i<exclArtists.length; i++){
         let LUPart1 = exclArtists[i].Name; let LUPart2 = exclArtists[i].FirstName;
@@ -418,7 +417,6 @@ document.addEventListener('DOMContentLoaded',function(event){
             searchinfo.innerHTML = countshownstyles + ' Matches'; notavail.innerHTML = '';
             if(allarrayresults){ notavail.innerHTML = '<a href="./only-data.html#notavailable" class="internal">Not available artists list</a> match (very simple check): <span id="naaresults">' + allarrayresults + '</span>'; }
         } else if((countshownstyles==0)&&(search_query!=0)) {
-            console.log('this')
             //console.log(matches.bestMatch.target); //produces response with rating to each string   
             searchinfo.innerHTML = ''; notavail.innerHTML = '';
             if(allarrayresults){ notavail.innerHTML = '<a href="./only-data.html#notavailable" class="internal">Not available artists list</a> match (very simple check): <span id="naaresults">' + allarrayresults + '</span>'; }
