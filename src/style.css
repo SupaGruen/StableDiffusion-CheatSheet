@@ -126,9 +126,8 @@ footer { margin: 100px 20px 20px 20px; text-align: center; color: var(--lg); }
 footer a { color: var(--fc); text-decoration: none; }
 footer a:hover { color: var(--lg); }
 
-#searchinfo, #notavail { display: block; }
-#searchinfo { margin: 1rem 0 0 0; line-height: 1; color: white; }
-#notavail { margin: 2rem 0 0 0; }
+#searchinfo {}
+#notavail { display: block; margin: 2rem 0 0 0; }
 #naaresults { display: block; margin: 1rem 0; }
 #naaresults span { display: inline-block; margin: 3px 5px 3px 0; padding: 3px 5px; line-height: 1; background-color: var(--lg); }
 

@@ -414,7 +414,7 @@ document.addEventListener('DOMContentLoaded',function(event){
         }
         
         if((countshownstyles!=0)&&(search_query!=0)){
-            searchinfo.innerHTML = countshownstyles + ' Matches'; notavail.innerHTML = '';
+            searchinfo.innerHTML = '(' + countshownstyles + ')'; notavail.innerHTML = '';
             if(allarrayresults){ notavail.innerHTML = '<a href="./only-data.html#notavailable" class="internal">Not available artists list</a> match (very simple check): <span id="naaresults">' + allarrayresults + '</span>'; }
         } else if((countshownstyles==0)&&(search_query!=0)) {
             //console.log(matches.bestMatch.target); //produces response with rating to each string   
