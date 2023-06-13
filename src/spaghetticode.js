@@ -319,12 +319,36 @@ document.addEventListener('DOMContentLoaded',function(event){
 
     LL = new LazyLoad({});
     
+    // Fill Search Array for Similar Names + Not Available Artists
+    // https://github.com/aceakash/string-similarity
+    !function(t,e){"object"==typeof exports&&"object"==typeof module?module.exports=e():"function"==typeof define&&define.amd?define([],e):"object"==typeof exports?exports.stringSimilarity=e():t.stringSimilarity=e()}(self,(function(){return t={138:t=>{function e(t,e){if((t=t.replace(/\s+/g,""))===(e=e.replace(/\s+/g,"")))return 1;if(t.length<2||e.length<2)return 0;let r=new Map;for(let e=0;e<t.length-1;e++){const n=t.substring(e,e+2),o=r.has(n)?r.get(n)+1:1;r.set(n,o)}let n=0;for(let t=0;t<e.length-1;t++){const o=e.substring(t,t+2),s=r.has(o)?r.get(o):0;s>0&&(r.set(o,s-1),n++)}return 2*n/(t.length+e.length-2)}t.exports={compareTwoStrings:e,findBestMatch:function(t,r){if(!function(t,e){return"string"==typeof t&&!!Array.isArray(e)&&!!e.length&&!e.find((function(t){return"string"!=typeof t}))}(t,r))throw new Error("Bad arguments: First argument should be a string, second should be an array of strings");const n=[];let o=0;for(let s=0;s<r.length;s++){const i=r[s],f=e(t,i);n.push({target:i,rating:f}),f>n[o].rating&&(o=s)}return{ratings:n,bestMatch:n[o],bestMatchIndex:o}}}}},e={},function r(n){if(e[n])return e[n].exports;var o=e[n]={exports:{}};return t[n](o,o.exports,r),o.exports}(138);var t,e}));
+    
+    var searcharray = [];
+    var simplearray = [];
+
+    for(var i=0; i<data.length; i++){
+        const lookupArray = data[i].Name.split(',').map(function(item){ return item.trim(); }); //remove braces, split at comma, trim spaces
+        let LUPart1 = lookupArray[0]; let LUPart2 = lookupArray[1];
+        if(LUPart2){ var LUArtist = LUPart2 + ' ' + LUPart1; } else { var LUArtist = LUPart1; }
+        
+        searcharray.push({'ArtistName':LUArtist,'Status':200});
+        simplearray.push(LUArtist);
+        console.log(LUArtist)
+    };
+    for(var i=0; i<exclArtists.length; i++){
+        let LUPart1 = exclArtists[i].Name; let LUPart2 = exclArtists[i].FirstName;
+        if(LUPart2){ var LUArtist = LUPart2 + ' ' + LUPart1; } else { var LUArtist = LUPart1; }
+        let AStatus = exclArtists[i].Code;
+        
+        searcharray.push({'ArtistName':LUArtist,'Status':AStatus});
+        simplearray.push(LUArtist);
+    };
     
     //Search - https://css-tricks.com/in-page-filtered-search-with-vanilla-javascript/
     function liveSearch(){
         let search_query = document.getElementById('searchbox').value;
         
-        for(var i = 0; i < pods.length; i++) {
+        for(var i = 0; i < pods.length; i++){
             //console.log(search_query.toLowerCase());
             
             if(search_query == 'New Styles'){
@@ -362,7 +386,48 @@ document.addEventListener('DOMContentLoaded',function(event){
             if(search_query){ clearbut.classList.add('show'); } //also catches single html-entities like the cross
         }
         
+        // Display Not Available Artists in Search Results
+        let countshownstyles = 0;
+        let currentpods = document.querySelectorAll('.stylepod');
+        for(var i = 0; i < currentpods.length; i++){
+            let vstatus = currentpods[i].classList;
+            if(!vstatus.contains('is-hidden')){ countshownstyles = countshownstyles + 1; }
+        }
+        var searchinfo = document.getElementById('searchinfo');
+        var notavail = document.getElementById('notavail');
+        var matches = stringSimilarity.findBestMatch(search_query, simplearray);
+        
+        if(matches){
+            var getSimilar = [];
+            for(var i in matches.ratings){
+                if(matches.ratings[i].rating > 0.4){ //console.log(matches.ratings[i].target + ' - ' + matches.ratings[i].rating)
+                    getSimilar.push(matches.ratings[i].target);
+                }
+            }
+            
+            var allarrayresults = '';
+            for(var i = 0; i < getSimilar.length; i++){
+                var thisperson = searcharray.filter(function(person){ return person.ArtistName == getSimilar[i] });
+                if(thisperson[0].Status!=200){
+                    allarrayresults = allarrayresults + '<span class="ASearchStatus' + thisperson[0].Status + '">' + thisperson[0].ArtistName + '</span>';
+                }
+            }
+        }
+        
+        if((countshownstyles!=0)&&(search_query!=0)){
+            searchinfo.innerHTML = countshownstyles + ' Matches'; notavail.innerHTML = '';
+            if(allarrayresults){ notavail.innerHTML = '<a href="./only-data.html#notavailable" class="internal">Not available artists list</a> match (very simple check): <span id="naaresults">' + allarrayresults + '</span>'; }
+        } else if((countshownstyles==0)&&(search_query!=0)) {
+            console.log('this')
+            //console.log(matches.bestMatch.target); //produces response with rating to each string   
+            searchinfo.innerHTML = ''; notavail.innerHTML = '';
+            if(allarrayresults){ notavail.innerHTML = '<a href="./only-data.html#notavailable" class="internal">Not available artists list</a> match (very simple check): <span id="naaresults">' + allarrayresults + '</span>'; }
+        } else {
+            searchinfo.innerHTML = ''; notavail.innerHTML = '';
+        }
+        
     }
+    
     //A little delay
     if(searchInput){
         searchInput.addEventListener('keyup',()=>{
@@ -370,7 +435,6 @@ document.addEventListener('DOMContentLoaded',function(event){
             typingTimer = setTimeout(liveSearch, typeInterval);
         });
     };
-
 
     //Copy Notifier
     function showSnackBar(){

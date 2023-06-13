@@ -98,8 +98,8 @@ ul#arthistory li {}
 ul#arthistory li h4 { margin: 0 0 0.5rem 0; }
 ul#arthistory li ul { list-style-type: none; margin: 0 0 1rem 0; }
 ul#arthistory li ul li { margin: 0 0 0.25rem 0; font-size: 1.2rem; }
-ul#arthistory li ul li a { text-decoration: none; border-bottom: 1px dashed var(--mutedwhite); }
-ul#arthistory li ul li a:hover { border: none; }
+ul#arthistory li ul li a, .internal { text-decoration: none; border-bottom: 1px dashed var(--mutedwhite); }
+ul#arthistory li ul li a:hover, .internal:hover { border: none; }
 ul#arthistory li ul li:nth-child(2) { color: var(--mutedwhite); }
 
 header { position: sticky; margin: 0; padding: 10px 40px 0 40px; height: 125px; top: 0; left: 0; z-index: 999; background-color: var(--bgr-tp); }
@@ -119,11 +119,18 @@ nav ul li a:hover, nav ul li a.active, .filterbut.active { background-color: whi
 
 section, #noscript { margin: 40px; }
 section#styles {}
+section#styles p { margin: 1rem 0 0 0; }
 #allthestyles { padding-top: 20px; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 20px; }
 
 footer { margin: 100px 20px 20px 20px; text-align: center; color: var(--lg); }
 footer a { color: var(--fc); text-decoration: none; }
 footer a:hover { color: var(--lg); }
+
+#searchinfo, #notavail { display: block; }
+#searchinfo { margin: 1rem 0 0 0; line-height: 1; color: white; }
+#notavail { margin: 2rem 0 0 0; }
+#naaresults { display: block; margin: 1rem 0; }
+#naaresults span { display: inline-block; margin: 3px 5px 3px 0; padding: 3px 5px; line-height: 1; background-color: var(--lg); }
 
 .stylepod { position: relative; display: block; margin: 0; padding: 0; width: 256px; height: 256px; background-size: 512px; border-radius: 5px; overflow: hidden; cursor: pointer; background-repeat: no-repeat; }
 .stylepod h3 { margin: 20px 0 5px 20px; padding: 0 20px 0 0; font-size: 1.1rem; text-transform: uppercase; text-shadow: 1px 1px 3px #111; }

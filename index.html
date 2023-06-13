@@ -7,6 +7,7 @@
 <script src="./src/lazyload.min.js"></script>
 <script src="./src/exif-reader.js"></script>
 <script src="./src/data.js"></script>
+<script src="./src/data-excluded-artists.js"></script>
 <script src="./src/spaghetticode.js"></script>
 </head>
 <body>
@@ -41,8 +42,13 @@
 
 <section id="styles">
     <h3>Artist Inspired Styles</h3>
-    <p>A collection of what Stable Diffusion imagines these artists' styles look like.</p><p>While having an overview is helpful, keep in mind that these styles only imitate certain aspects of the artist's work (color, medium, location, etc.). They are limited by the rather superficial knowledge of SD, but can probably give you a good base for your own creations.</p>
+    <p>A collection of what Stable Diffusion imagines these artists' styles look like.</p>
+    <p>
+        While having an overview is helpful, keep in mind that these styles only imitate certain aspects of the artist's work (color, medium, location, etc.). They are limited by the rather superficial knowledge of SD, but can probably give you a good base for your own creations.
+        <span id="searchinfo"></span>
+    </p>
     <div id="allthestyles"></div>
+    <p><span id="notavail"></span></p>
 </section>
 
 <section id="info">
