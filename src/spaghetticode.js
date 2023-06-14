@@ -92,7 +92,8 @@ document.addEventListener('DOMContentLoaded',function(event){
             if(data[i].Type==1){
 
                 let CurrentArtistName = data[i].Name;
-                let currentAnchor = CurrentArtistName.replace(/[^a-zA-Z]+/g,'');
+                let currentAnchor = removedia(CurrentArtistName); // remove special characters (diacritics)
+                currentAnchor = currentAnchor.replace(/[^a-zA-Z]+/g,'-').replace(/^-+/,'').replace(/-+$/,''); // replace everything thats not a letter with a dash, trim dash from front and back
                 let catlist = data[i].Category.replace(/\\/g,''); //remove backslash
 
                 let buildcatlist = catlist.split(',');
