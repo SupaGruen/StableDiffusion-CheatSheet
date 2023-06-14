@@ -3,27 +3,46 @@ document.addEventListener('DOMContentLoaded',function(event){
     var SearchEngine = 'https://www.google.com/search?q=';
     
     //var EndOfLastVer = 202306072133; Version 1.2.0
-    var EndOfLastVer = 202305050000;
+    var EndOfLastVer = 202305050000; // Version 1.1.0
 
     // Filter Buttons - Don't show countries or tags that are too common
     var DontShowAnyCountries = ['Blizzard','DC Comics','Disney','Marvel','MTG','Tolkien','Oil','Painting','Illustration','Portrait','Character Design','Cover Art','Concept Art','Norway','Ireland','Lithuania','Sweden','South Korea','Portugal','Switzerland','USA','Ukraine','Belarus','Spain','Brazil','Denmark','Japan','Austria','France','Philippines','UK','Poland','Poland','Germany','Canada','Netherlands','Italy','Israel','Taiwan','Belgium','Russia','Australia','Czech Republic','Bulgaria','Turkey','China'];
 
+    // ----------------------
+
     var outputdata = '';
-    var tags = {};
+    var FilterOutput = '';
+    var tags = [];
     var countstyles = 0;
-    
+    var typingTimer;
+    var typeInterval = 500;
     var pages = document.querySelectorAll('section');
     var menulinks = document.querySelectorAll('.mbut');
     var searchdiv = document.getElementById('suche');
+    var searchInput = document.getElementById('searchbox');
+    var ratioInput = document.getElementById('ratiobox');
+    var filbut = document.querySelector('.filterbut');
+    var clearbut = document.getElementById('clearsearch');
+    var numlines = document.querySelectorAll('.numberline span');
+    var catsbox = document.getElementById('allcats');
     
+    const titletexts = [];
+    titletexts[404] = 'Artist not known';
+    titletexts[304] = 'Something is recognized, but it\'s not related to the artist';
+    titletexts[301] = 'Something is recognized, but results are too different';
+    titletexts[205] = 'Artist is recognized, but difficult to prompt/not flexible';
+    titletexts[204] = 'Artist is recognized, but too different/generic';
+    titletexts[500] = 'Other';
+    
+    // Prepare Liked Styles
     var mystars = localStorage.getItem('mystars');
     if(mystars == null){ var mystars = []; } else {
         mystars = JSON.parse(mystars);
     }
-    
     var starsexport = document.getElementById('starsexport');
     starsexport.value = mystars;
     
+    // Initialize Sections as 'Pages'
     function hidepages(){
         if(pages){
             for(var i = 0; i < pages.length; i++){ pages[i].classList.add('is-hidden'); }
@@ -65,7 +84,7 @@ document.addEventListener('DOMContentLoaded',function(event){
         }
     });
     
-    //Put JSON in DOM
+    // Put JSON in DOM
     function buildstyles(){
     
         for(var i=0; i<data.length; i++){
@@ -117,10 +136,8 @@ document.addEventListener('DOMContentLoaded',function(event){
                 let arrrrr = data[i].Category.split(', ');
                 arrrrr.forEach(function(tag){
                     if (tag in tags) {
-                      // If animal is present, increment the count
                       tags[tag] = tags[tag] + 1;
                     } else {
-                      // If animal is not present, add the entry
                       tags[tag] = 1;
                     }
                 });
@@ -133,11 +150,9 @@ document.addEventListener('DOMContentLoaded',function(event){
         putStyles.innerHTML = outputdata;
     }
     buildstyles();
+    searchInput.placeholder = 'Search ' + countstyles + ' Styles';
     
-    //Create filter tags  DontShowAnyCountries
-    var FilterOutput = '';
-    var catsbox = document.getElementById('allcats');
-    
+    // Create filter tags
     var sortedKeys = Object.keys(tags).sort().reduce((objEntries, key) => {
         objEntries[key] = tags[key];
         return objEntries;
@@ -152,22 +167,6 @@ document.addEventListener('DOMContentLoaded',function(event){
     FilterOutput =  FilterOutput + '<span class="specialfilters" data-srch="New Styles">New with 1.1.0</span><span class="specialfilters" data-srch="Opened Styles">Currently Opened Styles</span><span class="specialfilters" data-srch="Liked">Liked <span><img class="svg" src="./src/heart-outline.svg" width="12"></span></span><span class="specialfilters" data-srch="&dagger;">Only Deceased Artists <span>&dagger;</span></span>';
     catsbox.innerHTML = FilterOutput;
     
-    //Vars
-    var filbut = document.querySelector('.filterbut');
-    
-    var clearbut = document.getElementById('clearsearch');
-    var filters = document.querySelectorAll('#allcats span');
-    var numlines = document.querySelectorAll('.numberline span');
-
-    var pods = document.querySelectorAll('.stylepod');
-
-    var typingTimer;               
-    var typeInterval = 500;  
-    var searchInput = document.getElementById('searchbox');
-    searchInput.placeholder = 'Search ' + countstyles + ' Styles';
-    
-    var ratioInput = document.getElementById('ratiobox');
-
     // Copy Prompt to Clipboard
     function addcopylistener(e,f){
         for(var i = 0; i < e.length; i++){
@@ -188,13 +187,19 @@ document.addEventListener('DOMContentLoaded',function(event){
             });
         };
     };
-    
     var spans = document.getElementsByClassName('copyme');
     var categorytags = document.getElementsByClassName('copythecats');
     addcopylistener(spans);
     addcopylistener(categorytags,'no');
+    
+    // Remove Diacritics (Special Characters)
+    function removedia(e){
+        let updatedstring = e.normalize('NFD').replace(/\p{Diacritic}/gu,'');
+        return updatedstring;
+    };
 
-    //Style open/close
+    // Styles open/close
+    var pods = document.querySelectorAll('.stylepod');
     if(pods){
         for(var i = 0; i < pods.length; i++){
             var currentpod = pods[i];
@@ -204,12 +209,11 @@ document.addEventListener('DOMContentLoaded',function(event){
                 let parentclasses = e.target.parentElement.classList; // need this for category copy
                 
                 if(cList.contains('copyme') || parentclasses.contains('copythecats') || cList.contains('extralinks') || cList.contains('elsp') || cList.contains('zoomimg') || cList.contains('lookupartist') || cList.contains('starthis') || cList.contains('svg')){ return }
-                //if(e.target.classList.contains('copyme')) return 
                 this.classList.toggle('active');
 
                 //Anchor in url bar
                 var getnewanker = e.target.id;
-                //console.log(getnewanker);
+                
                 if(!getnewanker){
                     const url = window.location.href.replace(/#.*/, '');
                     history.pushState({}, '', url);
@@ -276,7 +280,7 @@ document.addEventListener('DOMContentLoaded',function(event){
     });
 
 
-    //Check if Anchor in url
+    // Check if Anchor in url
     function hashcheck(){
         if(window.location.hash){
             let thishash = window.location.hash;
@@ -289,7 +293,7 @@ document.addEventListener('DOMContentLoaded',function(event){
     };
     hashcheck();
 
-    //Filter
+    // Filter
     if(filbut){
         filbut.onclick = function(e){
           e.preventDefault();
@@ -305,6 +309,7 @@ document.addEventListener('DOMContentLoaded',function(event){
         };
     };
 
+    var filters = document.querySelectorAll('#allcats span');
     if(filters){
         for(var i = 0; i < filters.length; i++){
             var currentfilter = filters[i];
@@ -317,6 +322,7 @@ document.addEventListener('DOMContentLoaded',function(event){
         };
     };
 
+    // Initialize Lazy Loading
     LL = new LazyLoad({});
     
     // Fill Search Array for Similar Names + Not Available Artists
@@ -343,12 +349,11 @@ document.addEventListener('DOMContentLoaded',function(event){
         simplearray.push(LUArtist);
     };
     
-    //Search - https://css-tricks.com/in-page-filtered-search-with-vanilla-javascript/
+    // Search - https://css-tricks.com/in-page-filtered-search-with-vanilla-javascript/
     function liveSearch(){
         let search_query = document.getElementById('searchbox').value;
         
         for(var i = 0; i < pods.length; i++){
-            //console.log(search_query.toLowerCase());
             
             if(search_query == 'New Styles'){
                 let currentstyledate = pods[i].dataset.creatime;
@@ -375,17 +380,19 @@ document.addEventListener('DOMContentLoaded',function(event){
                     pods[i].classList.add('is-hidden');
                 }
             } else {
-                if(pods[i].textContent.toLowerCase().includes(search_query.toLowerCase())){
+                if(removedia(pods[i].textContent.toLowerCase()).includes(removedia(search_query.toLowerCase()))){
                     pods[i].classList.remove('is-hidden');
                     clearbut.classList.remove('show');
                 } else {
                     pods[i].classList.add('is-hidden');
                 }
             }
+            
             if(search_query){ clearbut.classList.add('show'); } //also catches single html-entities like the cross
+            
         }
         
-        // Display Not Available Artists in Search Results
+        // Display Unavailable Artists in Search Results
         let countshownstyles = 0;
         let currentpods = document.querySelectorAll('.stylepod');
         for(var i = 0; i < currentpods.length; i++){
@@ -405,25 +412,29 @@ document.addEventListener('DOMContentLoaded',function(event){
             }
             
             var allarrayresults = '';
+            var onlyavailable = '';
             for(var i = 0; i < getSimilar.length; i++){
                 var thisperson = searcharray.filter(function(person){ return person.ArtistName == getSimilar[i] });
-                //if(thisperson[0].Status!=200){
-                    allarrayresults = allarrayresults + '<span class="ASearchStatus' + thisperson[0].Status + '">' + thisperson[0].ArtistName + '</span>';
-                //}
+                if(thisperson[0].Status!=200){
+                    allarrayresults = allarrayresults + '<span class="ASearchStatus' + thisperson[0].Status + '" title="' + titletexts[thisperson[0].Status] + '">' + thisperson[0].ArtistName + '</span>';
+                } else {
+                    onlyavailable = onlyavailable + '<span class="ASearchStatus' + thisperson[0].Status + '">' + thisperson[0].ArtistName + '</span>';
+                }
             }
         }
         
         if((countshownstyles!=0)&&(search_query!=0)){
-            searchinfo.innerHTML = '(' + countshownstyles + ')'; notavail.innerHTML = '';
-            if(allarrayresults){ notavail.innerHTML = 'Checking for similar names and <a href="./only-data.html#notavailable" class="internal">artist that are not available</a> (very rudimental): <span id="naaresults">' + allarrayresults + '</span>'; }
+            searchinfo.innerHTML = ' - ' + search_query + ' (' + countshownstyles + ')'; notavail.innerHTML = '';
+            if(allarrayresults){ notavail.innerHTML = 'Similar names of <a href="./only-data.html#notavailable" class="internal">artists that are unavailable</a>: <span id="naaresults">' + allarrayresults + '</span>'; }
         } else if((countshownstyles==0)&&(search_query!=0)) {
             //console.log(matches.bestMatch.target); //produces response with rating to each string   
             searchinfo.innerHTML = ''; notavail.innerHTML = '';
-            if(allarrayresults){ notavail.innerHTML = 'Checking for similar names and <a href="./only-data.html#notavailable" class="internal">artist that are not available</a> (very rudimental): <span id="naaresults">' + allarrayresults + '</span>'; }
+            if(allarrayresults){ notavail.innerHTML = 'Checking for similar names and <a href="./only-data.html#notavailable" class="internal">artists that are unavailable</a>: <span id="naaresults">' + onlyavailable + allarrayresults + '</span>'; }
         } else {
             searchinfo.innerHTML = ''; notavail.innerHTML = '';
         }
         
+        // Click on Similar Name Search Result
         var similars = document.getElementsByClassName('ASearchStatus200');
         if(similars){
             for(var i = 0; i < similars.length; i++){
@@ -437,7 +448,7 @@ document.addEventListener('DOMContentLoaded',function(event){
         
     }
     
-    //A little delay
+    // A little delay
     if(searchInput){
         searchInput.addEventListener('keyup',()=>{
             clearTimeout(typingTimer);
@@ -445,14 +456,14 @@ document.addEventListener('DOMContentLoaded',function(event){
         });
     };
 
-    //Copy Notifier
+    // Copy Notifier
     function showSnackBar(){
         var sb = document.getElementById('snackbar');
         sb.className = 'show';
         setTimeout(()=>{ sb.className = sb.className.replace('show', ''); }, 1500);
     };
     
-    //Image Ratio
+    // Image Ratio Calculation
     function ratioCalc(){
         let imgbasesize = document.getElementById('ratiobox').value;
         if(imgbasesize>0){
@@ -465,16 +476,14 @@ document.addEventListener('DOMContentLoaded',function(event){
             let twentyonebynine = (imgbasesize / 9) * 21; document.getElementById('ir21b9').innerHTML = Math.round(twentyonebynine) + ' &times; ' + imgbasesize;
         }
     }
-
-    //Imaga Ratio Delay
+    // Imaga Ratio Delay
     if(ratioInput){
         ratioInput.addEventListener('keyup',()=>{
             clearTimeout(typingTimer);
             typingTimer = setTimeout(ratioCalc, typeInterval);
         });
     };
-    
-    //Click on 'Numberline' span
+    // Click on 'Numberline' span
     if(numlines){
         for(var i = 0; i < numlines.length; i++){
             var currentnumlines = numlines[i];
@@ -485,7 +494,7 @@ document.addEventListener('DOMContentLoaded',function(event){
         };
     };
     
-    //Arthistory Clicks
+    // Arthistory Clicks
     var artlinks = document.getElementById('arthistory').getElementsByTagName('a');
     if(artlinks){
         for(var i = 0; i < artlinks.length; i++){
@@ -503,6 +512,8 @@ document.addEventListener('DOMContentLoaded',function(event){
             });
         };
     };
+    
+    // Start of Metadata Viewer Stuff
     
     var allMetaData = document.getElementById('allMetaData');
 
@@ -653,7 +664,6 @@ document.addEventListener('DOMContentLoaded',function(event){
             }
             makeData(prompt);
         }
-
 
         function makeData(prompt) {
             const positive = prompt.positive;
