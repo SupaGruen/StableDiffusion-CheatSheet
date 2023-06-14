@@ -25,6 +25,9 @@ document.addEventListener('DOMContentLoaded',function(event){
     var clearbut = document.getElementById('clearsearch');
     var numlines = document.querySelectorAll('.numberline span');
     var catsbox = document.getElementById('allcats');
+    var metadatawrapper = document.getElementById('metadataboxes');
+    var dropArea = document.getElementById('drop-area');
+    var allMetaData = document.getElementById('allMetaData');
     
     const titletexts = [];
     titletexts[404] = 'Artist not known';
@@ -516,12 +519,8 @@ document.addEventListener('DOMContentLoaded',function(event){
     
     // Start of Metadata Viewer Stuff
     
-    var allMetaData = document.getElementById('allMetaData');
-
     // Drag and Drop Start
     // Joseph Zimmerman - https://www.smashingmagazine.com/2018/01/drag-drop-file-uploader-vanilla-js/
-    
-    let dropArea = document.getElementById('drop-area');
 
     // Prevent default drag behaviors
     ;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
@@ -574,7 +573,7 @@ document.addEventListener('DOMContentLoaded',function(event){
         document.getElementById('my-form').reset();
         allMetaData.innerHTML = '';
         document.getElementById('gallery').innerHTML = '';
-        dropArea.classList.remove('hasimg');
+        metadatawrapper.classList.remove('hasimg');
     });
 
     
@@ -592,7 +591,7 @@ document.addEventListener('DOMContentLoaded',function(event){
             img.src = reader.result;
             document.getElementById('gallery').innerHTML = '';
             document.getElementById('gallery').appendChild(img);
-            dropArea.classList.add('hasimg');
+            metadatawrapper.classList.add('hasimg');
         }
 
         const tags = await ExifReader.load(file).catch(error => { console.log('No EXIF Data'); allMetaData.innerHTML = '<p>No EXIF data detected</p>'; });

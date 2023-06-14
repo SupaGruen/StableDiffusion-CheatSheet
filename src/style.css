@@ -192,8 +192,9 @@ table#dimensions tr td:nth-child(3) { padding: 3px 0 3px 15px; color: var(--mute
 #metadataboxes { width: 100%; }
 #drop-area { position: relative; z-index: 0; width: 100%; min-height: 250px; margin: 0; background-size: auto auto; background-color: rgba(25, 29, 36, 0); background-image: repeating-linear-gradient(135deg, transparent, transparent 20px, rgba(255, 255, 255, 0.1) 20px, rgba(255, 255, 255, 0.1) 40px ); }
 #drop-area.highlight {}
-#drop-area p { width: 100%; margin: 40px 0; text-align: center; font-size: 1.8rem; text-transform: uppercase; font-weight: 700; color: rgba(255,255,255,0.35); }
+#drop-area p { width: 100%; max-width: 100%; margin: 40px 0; text-align: center; font-size: 1.8rem; text-transform: uppercase; font-weight: 700; color: rgba(255,255,255,0.35); }
 #my-form { position: absolute; top: 0; left: 0; width: 100%; z-index: 100; }
+.hasimg #drop-area:hover p { display: none; }
 #gallery { position: relative; z-index: 50; }
 #gallery img { position: relative; display: block; z-index: 50; width: 100%; }
 .button { display: inline-block; padding: 10px; background: #ccc; cursor: pointer; border-radius: 5px; border: 1px solid #ccc; }
@@ -207,7 +208,6 @@ table#dimensions tr td:nth-child(3) { padding: 3px 0 3px 15px; color: var(--mute
 #allMetaData p span span { display: inline-block; color: var(--fc); }
 #clearimage { display: none; position: absolute; top: 5px; right: 5px; z-index: 200; text-transform: uppercase; padding: 5px; font-size: 1.6rem; line-height: 0.5; background-color: rgba(255,255,255,0.15); cursor: pointer; color: rgba(255,255,255,0.4); border: 1px solid rgba(255,255,255,0); border-radius: 3px; }
 .hasimg #clearimage { display: inline-block; }
-.hasimg:hover p { display: none; }
 #clearimage:hover { display: inline-block; color: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.25); }
 #copyprompt { display: none; color: var(--lg); }
 button { display: inline-block; margin: 10px 0 0 0; padding: 7px 15px; border: none; font-size: 1.2rem; cursor: pointer; background-color: white; color: var(--bgr); }
@@ -232,7 +232,7 @@ dialog div button#stylesDialogConfirm:hover { background-color: var(--bgr); }
 
 @media screen and (min-width: 660px) {
     h1 { font-size: 2rem; }
-    #metadataboxes { display: grid; gap: 40px; grid-template-columns: minmax(320px, 480px) 1fr; }
+    #metadataboxes.hasimg { display: grid; gap: 40px; grid-template-columns: minmax(320px, 480px) 1fr; }
 }
 @media screen and (min-width: 900px) {
     .stylepod.active { width: 100%; /*max-width: 1300px;*/ }
