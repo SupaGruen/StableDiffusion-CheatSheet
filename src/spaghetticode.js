@@ -2,8 +2,8 @@ document.addEventListener('DOMContentLoaded',function(event){
 
     var SearchEngine = 'https://www.google.com/search?q=';
     
-    //var EndOfLastVer = 202306072133; Version 1.2.0
-    var EndOfLastVer = 202305050000; // Version 1.1.0
+    var EndOfLastVer120 = 202306072133; // Version 1.2.0
+    var EndOfLastVer110 = 202305050000; // Version 1.1.0
 
     // Filter Buttons - Don't show countries or tags that are too common
     var DontShowAnyCountries = ['Blizzard','DC Comics','Disney','Marvel','MTG','Tolkien','Oil','Painting','Illustration','Portrait','Character Design','Cover Art','Concept Art','Norway','Mexico','Ireland','Lithuania','Sweden','South Korea','Portugal','Switzerland','USA','Ukraine','Belarus','Spain','Brazil','Denmark','Japan','Austria','France','Philippines','UK','Poland','Poland','Germany','Canada','Netherlands','Italy','Israel','Taiwan','Belgium','Russia','Australia','Czech Republic','Bulgaria','Turkey','China'];
@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded',function(event){
             FilterOutput = FilterOutput + '<span data-srch="' + filtername + '">' + filtername + ' <span>' + sortedKeys[key] +'</span></span>';    
         };
     });
-    FilterOutput =  FilterOutput + '<span class="specialfilters" data-srch="New Styles">New with 1.1.0</span><span class="specialfilters" data-srch="Opened Styles">Currently Opened Styles</span><span class="specialfilters" data-srch="Liked">Liked <span><img class="svg" src="./src/heart-outline.svg" width="12"></span></span><span class="specialfilters" data-srch="&dagger;">Only Deceased Artists <span>&dagger;</span></span>';
+    FilterOutput =  FilterOutput + '<span class="specialfilters" data-srch="New Styles 1.2.0">New with 1.2.0</span><span class="specialfilters" data-srch="New Styles 1.1.0">New with 1.1.0</span><span class="specialfilters" data-srch="Opened Styles">Currently Opened Styles</span><span class="specialfilters" data-srch="Liked">Liked <span><img class="svg" src="./src/heart-outline.svg" width="12"></span></span><span class="specialfilters" data-srch="&dagger;">Only Deceased Artists <span>&dagger;</span></span>';
     catsbox.innerHTML = FilterOutput;
     
     // Copy Prompt to Clipboard
@@ -216,7 +216,7 @@ document.addEventListener('DOMContentLoaded',function(event){
                 this.classList.toggle('active');
 
                 //Anchor in url bar
-                var getnewanker = e.target.id;
+                var getnewanker = e.target.id; // hehe
                 
                 if(!getnewanker){
                     const url = window.location.href.replace(/#.*/, '');
@@ -356,12 +356,15 @@ document.addEventListener('DOMContentLoaded',function(event){
     // Search - https://css-tricks.com/in-page-filtered-search-with-vanilla-javascript/
     function liveSearch(){
         let search_query = document.getElementById('searchbox').value;
+        let stylebegindate; let styleenddate;
+        if(search_query == 'New Styles 1.1.0'){ stylebegindate = EndOfLastVer110; styleenddate = EndOfLastVer120; }
+        if(search_query == 'New Styles 1.2.0'){ stylebegindate = EndOfLastVer120; styleenddate = 999999999999; }
         
         for(var i = 0; i < pods.length; i++){
             
-            if(search_query == 'New Styles'){
+            if((search_query == 'New Styles 1.1.0')||(search_query == 'New Styles 1.2.0')){
                 let currentstyledate = pods[i].dataset.creatime;
-                if(currentstyledate>EndOfLastVer){
+                if((currentstyledate>stylebegindate)&&(currentstyledate<styleenddate)){
                     pods[i].classList.remove('is-hidden');
                     clearbut.classList.remove('show');
                 } else {
