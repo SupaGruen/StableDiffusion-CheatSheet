@@ -125,7 +125,7 @@ footer a:hover { color: var(--lg); }
 .stylepod .styleinfo .more { display: none; }
 .stylepod .gallery { display: none; position: absolute; bottom: 10px; left: 10px; margin: 0; padding: 0; width: 236px; height: 50px; background-image: inherit; background-size: 0 0; justify-content: space-between; }
 .stylepod:hover .gallery { display: flex; }
-.stylepod figure { display: inline-block; margin: 0; padding: 0; width: 50px; height: 50px; background-size: 100px; background-image: inherit; border-radius: 3px; }
+.stylepod figure { display: inline-block; margin: 0; padding: 0; width: 50px; height: 50px; background-size: 100px; background-image: inherit; border-radius: 3px; box-shadow: 0 0 10px rgba(0,0,0,0.75); }
 .stylepod figure:nth-child(1) { }
 .stylepod figure:nth-child(2) { background-position: 100% 0px; }
 .stylepod figure:nth-child(3) { background-position: 0px 100%; }
@@ -160,7 +160,7 @@ legend { margin: 0 0 3px 0; display: inline-block; font-size: 0.8rem; font-weigh
 .stylepod.active .styleinfo .more fieldset legend { margin: 0; padding: 0; color: var(--mutedwhite); }
 .copyme { display: block; padding: 5px 7px 10px 7px; cursor: copy; }
 .stylepod.active .gallery { display: flex; position: initial; width: 256px; height: 256px; background-image: inherit; background-size: 256px; border-radius: 0 5px 5px 0; }
-.stylepod.active .gallery figure { display: none; }
+.stylepod.active .gallery figure { display: none; box-shadow: none; }
 
 .extralinks a { position: relative; display: inline-block; height: 35px; background-color: rgba(255,255,255,0.05); border-radius: 3px; text-decoration: none; }
 .extralinks a:nth-child(1) { margin: 0 10px 0 0; width: 82px; }
