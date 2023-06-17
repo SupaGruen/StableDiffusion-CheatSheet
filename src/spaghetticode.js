@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded',function(event){
     var EndOfLastVer = 202305050000; // Version 1.1.0
 
     // Filter Buttons - Don't show countries or tags that are too common
-    var DontShowAnyCountries = ['Blizzard','DC Comics','Disney','Marvel','MTG','Tolkien','Oil','Painting','Illustration','Portrait','Character Design','Cover Art','Concept Art','Norway','Ireland','Lithuania','Sweden','South Korea','Portugal','Switzerland','USA','Ukraine','Belarus','Spain','Brazil','Denmark','Japan','Austria','France','Philippines','UK','Poland','Poland','Germany','Canada','Netherlands','Italy','Israel','Taiwan','Belgium','Russia','Australia','Czech Republic','Bulgaria','Turkey','China'];
+    var DontShowAnyCountries = ['Blizzard','DC Comics','Disney','Marvel','MTG','Tolkien','Oil','Painting','Illustration','Portrait','Character Design','Cover Art','Concept Art','Norway','Mexico','Ireland','Lithuania','Sweden','South Korea','Portugal','Switzerland','USA','Ukraine','Belarus','Spain','Brazil','Denmark','Japan','Austria','France','Philippines','UK','Poland','Poland','Germany','Canada','Netherlands','Italy','Israel','Taiwan','Belgium','Russia','Australia','Czech Republic','Bulgaria','Turkey','China'];
 
     // ----------------------
 
