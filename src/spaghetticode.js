@@ -422,8 +422,11 @@ document.addEventListener('DOMContentLoaded',function(event){
             var onlyavailable = '';
             for(var i = 0; i < getSimilar.length; i++){
                 var thisperson = searcharray.filter(function(person){ return person.ArtistName == getSimilar[i] });
+                let currentAnchor = removedia(thisperson[0].ArtistName); // remove special characters (diacritics)
+                currentAnchor = currentAnchor.replace(/[^a-zA-Z]+/g,'-').replace(/^-+/,'').replace(/-+$/,''); // replace everything thats not a letter with a dash, trim dash from front and back
+                
                 if(thisperson[0].Status!=200){
-                    allarrayresults = allarrayresults + '<span class="ASearchStatus' + thisperson[0].Status + '" title="' + titletexts[thisperson[0].Status] + '">' + thisperson[0].ArtistName + '</span>';
+                    allarrayresults = allarrayresults + '<a href="./only-data.html#' + currentAnchor + '" target="_onlydata" class="ASearchStatus' + thisperson[0].Status + '" title="' + titletexts[thisperson[0].Status] + '">' + thisperson[0].ArtistName + '</a>';
                 } else {
                     onlyavailable = onlyavailable + '<span class="ASearchStatus' + thisperson[0].Status + '">' + thisperson[0].ArtistName + '</span>';
                 }

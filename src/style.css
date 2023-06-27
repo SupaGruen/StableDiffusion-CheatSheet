@@ -116,9 +116,9 @@ footer a:hover { color: var(--lg); }
 #notavail { display: block; margin: 2rem 0 0 0; padding: 1rem 1rem 0.5rem 1rem; color: var(--mutedwhite); font-size: 1.2rem; background-color: rgba(0,0,0,0.2); border-radius: 5px; }
 #notavail:empty { display: none; }
 #naaresults { display: block; margin: 1rem 0; }
-#naaresults span { display: inline-block; margin: 3px 5px 3px 0; padding: 3px 5px; line-height: 1; background-color: var(--dgr); cursor: not-allowed; }
+#naaresults span, #naaresults a { display: inline-block; margin: 3px 5px 3px 0; padding: 3px 5px; line-height: 1; background-color: var(--dgr); text-decoration: none; }
 #naaresults span.ASearchStatus200 { background-color: var(--bgr-green); cursor: pointer; }
-#naaresults span.ASearchStatus200:hover { background-color: white; color: var(--bgr); }
+#naaresults span.ASearchStatus200:hover, #naaresults a:hover { background-color: white; color: var(--bgr); }
 
 .stylepod { position: relative; display: block; margin: 0; padding: 0; width: 256px; height: 256px; background-size: 512px; border-radius: 5px; overflow: hidden; cursor: pointer; background-repeat: no-repeat; }
 .stylepod h3 { margin: 15px 0 0 20px; padding: 0 20px 0 0; font-size: 1.1rem; text-transform: uppercase; text-shadow: 1px 1px 3px #111; }
