@@ -121,7 +121,7 @@ footer a:hover { color: var(--lg); }
 #naaresults span.ASearchStatus200:hover { background-color: white; color: var(--bgr); }
 
 .stylepod { position: relative; display: block; margin: 0; padding: 0; width: 256px; height: 256px; background-size: 512px; border-radius: 5px; overflow: hidden; cursor: pointer; background-repeat: no-repeat; }
-.stylepod h3 { margin: 20px 0 5px 20px; padding: 0 20px 0 0; font-size: 1.1rem; text-transform: uppercase; text-shadow: 1px 1px 3px #111; }
+.stylepod h3 { margin: 15px 0 0 20px; padding: 0 20px 0 0; font-size: 1.1rem; text-transform: uppercase; text-shadow: 1px 1px 3px #111; }
 .stylepod .styleinfo .more { display: none; }
 .stylepod .gallery { display: none; position: absolute; bottom: 10px; left: 10px; margin: 0; padding: 0; width: 236px; height: 50px; background-image: inherit; background-size: 0 0; justify-content: space-between; }
 .stylepod:hover .gallery { display: flex; }
@@ -146,7 +146,7 @@ footer a:hover { color: var(--lg); }
 
 /* Stylepod with .active class */
 .stylepod.active { display: flex; flex-wrap: nowrap; width: 532px; background-position: -999px -999px; align-items: flex-start; }
-.stylepod.active h3 { text-shadow: none; }
+.stylepod.active h3 { text-shadow: none; padding: 0; }
 .stylepod.active .styleinfo { display: inline-block; width: 256px; height: 256px; padding-right: 20px; background-color: var(--dgr); }
 .stylepod.active .styleinfo .more { display: block; }
 .stylepod.active .styleinfo .more .category { margin: 10px 0 0 20px; max-height: 45px; overflow: hidden; line-height: 1; font-size: inherit; }
@@ -206,7 +206,7 @@ table#dimensions tr td:nth-child(3) { padding: 3px 0 3px 15px; color: var(--mute
 #allMetaData p strong { padding: 1px 5px; background-color: var(--dgr); color: var(--mutedwhite); font-weight: 700; font-size: 1.1rem; text-transform: uppercase; }
 #allMetaData p span { display: block; margin: 0 0 3px 0; }
 #allMetaData p span span { display: inline-block; color: var(--fc); }
-#clearimage { display: none; position: absolute; top: 5px; right: 5px; z-index: 200; text-transform: uppercase; padding: 5px; font-size: 1.6rem; line-height: 0.5; background-color: rgba(255,255,255,0.15); cursor: pointer; color: rgba(255,255,255,0.4); border: 1px solid rgba(255,255,255,0); border-radius: 3px; }
+#clearimage { display: none; position: absolute; top: 5px; right: 5px; z-index: 200; text-transform: uppercase; padding: 5px; font-size: 1.6rem; line-height: 0.5; background-color: rgba(255,255,255,0.4); cursor: pointer; color: var(--bgr); border: 1px solid var(--bgr); border-radius: 3px; }
 .hasimg #clearimage { display: inline-block; }
 #clearimage:hover { display: inline-block; color: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.25); }
 #copyprompt { display: none; color: var(--lg); }
