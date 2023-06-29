@@ -439,38 +439,12 @@
 </section>
 
 <section id="about">
-
-    <h3>Image Generation for Styles</h3>
     
-    <p>All images were generated with either the <a href="https://huggingface.co/XpucT/Deliberate">Deliberate v2</a> or the <a href="https://huggingface.co/Lykon/DreamShaper">DreamShaper 3.2</a> Checkpoint.<br>Sampler was DMP++ 2M Karras or DMP++ SDE Karras, depending on the better result.<br>Final resolution never smaller than 768px &times; 768px.</p>
-    <p>The prompt for the <a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Features#prompts-from-file-or-textbox">textbox</a> was:
-        <code>
-        --prompt style of ArtistName --negative_prompt nude, nsfw, frame, border, text<br>
-        --prompt style of ArtistName, woman --negative_prompt same as above<br>
-        --prompt style of ArtistName, Henry C_____ --negative_prompt superman<br>
-        --prompt style of ArtistName, city --negative_prompt text, frame, border
-        </code>
-        While Deliberate has some NSFW Checkpoint mixed in and needs 'nsfw' in the negative prompt, DreamShaper likes manga a lot and frequently requires 'manga, anime' in the np.
-    </p>
-    <p><em>Why these prompts?</em></p>
-    <p>The first line produces a broad, uninfluenced impression of what is most common for that artist (landscape, person, etc.).</p>
-    <p>With 'woman', you will get a wider range of portraits that are more in line with the artist's personal aesthetic.</p>
-    <p>For the third line: The actor Henry C. is currently well-known and has been well-trained into SD. You can also judge the dominance of a style if he is still rendered normally (weak artist style) or when his superhero costume appears.</p>
-    <p>The last line, 'city' (sometimes replaced by 'village'), will give you a good idea of how houses, people, and technical items (cars, bikes, etc.) appear.</p>
-
-    <h3>Pure Data</h3>
+    <h3>Data and Documentation</h3>
     
     <p>Use <a href="./only-data.html" target="_blank">only-data.html</a> for a version <strong>without images</strong>.<br>That page also includes a list of all artists that were checked for availability.</p>
+    <p class="highlightp">Information on how the images were generated can be found on the <a href="./documentation/index.html" target="_blank">documentation page</a>.</p>
     <p>The JSON data files had to be changed to .js and wrapped with a variable to allow offline use (CORS).</p>
-
-    <h3>Useful Links</h3>
-    
-    <p>Links that helped me understand the technical side of Stable Diffusion (no affiliation):</p>
-    
-    <ul>
-        <li><a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki">Automatic111 Wiki</a></li>
-        <li><a href="https://stable-diffusion-art.com/tutorials/">Stable-Diffusion-Art.com - Tutorials</a></li>
-    </ul>
     
     <h3>Credits</h3>
     
@@ -480,6 +454,15 @@
     <p><a href="https://github.com/verlok/vanilla-lazyload">Lazyload Script</a> from Verlok, webfont is Google's <a href="https://fonts.google.com/specimen/Roboto">Roboto</a>, SVG icons from <a href="https://github.com/ionic-team/ionicons">Ionicons</a></p>
     <p>Automatic1111 for the <a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui">Stable Diffusion Web UI</a></p>
     <p>Stable Diffusion by <a href="https://ommer-lab.com/research/latent-diffusion-models/">LMU</a> and <a href="https://stability.ai/">stability.ai</a></p>
+
+    <h3>Useful Links</h3>
+    
+    <p>Links that helped me understand the technical side of Stable Diffusion (no affiliation):</p>
+    
+    <ul>
+        <li><a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki">Automatic111 Wiki</a></li>
+        <li><a href="https://stable-diffusion-art.com/tutorials/">Stable-Diffusion-Art.com - Tutorials</a></li>
+    </ul>
 
     <h3>Errors</h3>
     

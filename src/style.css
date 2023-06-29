@@ -75,6 +75,7 @@ a:hover { text-decoration: none; }
 
 p { max-width: 800px; font-size: 1.2rem; line-height: 1.7rem; color: var(--mutedwhite); }
 p strong { color: white; font-weight: 400; }
+p.highlightp { display: inline-block; margin: 0; padding: 10px; background-color: var(--dgr); }
 code { display: block; margin: 20px 0; padding: 10px; font-family: Consolas,"courier new"; font-size: 1rem; line-height: 1.4rem; background-color: var(--dgr); }
 ul { margin: 0 0 1rem 1rem; padding: 0; list-style-type: square; }
 ul li { margin: 0 0 1rem 0; }
@@ -242,6 +243,7 @@ dialog div button#stylesDialogConfirm:hover { background-color: var(--bgr); }
     .stylepod figure:nth-child(2) { background-position: 100% 0px; }
     .stylepod figure:nth-child(3) { background-position: 0px 100%; }
     .stylepod figure:nth-child(4) { background-position: 100% 100%; }
+    .stylepod.active figure:nth-child(4) { border-radius: 0 5px 5px 0!important; }
     .stylepod.active .gallery::-webkit-scrollbar { height: 8px; background-color: #aaa; }
 }
 

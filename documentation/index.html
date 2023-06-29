@@ -1,0 +1,278 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Stable Diffusion 1.5 - Cheat Sheet</title>
+<link href="../img/other/favicon.ico" rel="icon" type="image/x-icon">
+<script src="../src/lazyload.min.js"></script>
+<style>
+/* roboto-condensed-regular - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'Roboto Condensed';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/roboto-condensed-v25-latin-regular.eot'); /* IE9 Compat Modes */
+  src: url('../fonts/roboto-condensed-v25-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/roboto-condensed-v25-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/roboto-condensed-v25-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/roboto-condensed-v25-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/roboto-condensed-v25-latin-regular.svg#RobotoCondensed') format('svg'); /* Legacy iOS */
+}
+
+/* roboto-condensed-700 - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'Roboto Condensed';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../fonts/roboto-condensed-v25-latin-700.eot'); /* IE9 Compat Modes */
+  src: url('../fonts/roboto-condensed-v25-latin-700.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/roboto-condensed-v25-latin-700.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/roboto-condensed-v25-latin-700.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/roboto-condensed-v25-latin-700.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/roboto-condensed-v25-latin-700.svg#RobotoCondensed') format('svg'); /* Legacy iOS */
+}
+
+/* roboto-slab-regular - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/roboto-slab-v24-latin-regular.eot'); /* IE9 Compat Modes */
+  src: url('../fonts/roboto-slab-v24-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/roboto-slab-v24-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/roboto-slab-v24-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/roboto-slab-v24-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/roboto-slab-v24-latin-regular.svg#RobotoSlab') format('svg'); /* Legacy iOS */
+}
+
+html {}
+body { margin: 0; padding: 0; font-family: Gotham, "Helvetica Neue", Helvetica, Arial, "sans-serif"; background-color: var(--bgr); }
+* { font-family: 'Roboto Condensed',Gotham,"Helvetica Neue",Helvetica,Arial,sans-serif; color: var(--ow); }
+
+h1 { font-size: 2rem; }
+h3 { margin: 5rem 0 1rem 0; padding: 0; font-size: 1.7rem; }
+h4 { font-size: 1.3rem; }
+
+header { padding: 10px 40px 0 40px; }
+section { margin: 40px; }
+footer { padding: 0 0 20px; text-align: center; color: #555; }
+
+#selectmore { margin: 0; padding: 0 0 20px 60px; color: #666; font-style: italic; }
+#allthestyles { overflow-x: auto; }
+
+p { margin-bottom: 1.6rem; max-width: 800px; font-size: 1.2rem; line-height: 1.5; color: #222; }
+a { font-weight: 700; }
+a:hover { text-decoration: none; }
+
+ul { margin: 0; padding: 0; }
+ul li { margin: 0 0 1rem 1rem; padding: 0; font-size: 1.2rem; }
+
+figure { position: relative; margin: 0; padding: 0; }
+figure.wide { width: 100%; max-width: 800px; }
+figcaption { position: absolute; left: 20px; bottom: 20px; padding: 3px 5px; background-color: rgba(0,0,0,0.8); font-size: 1rem; color: white; }
+.gallery figure { display: inline-block; margin: 0 10px 0 0; }
+.gallery figure figcaption { left: 10px; bottom: 20px; width: 226px; font-size: 0.9rem; text-align: center; }
+
+code { display: block; max-width: 800px; margin: 0 0 0.5rem 0; padding: 10px; line-height: 1.4; font-family: Consolas,"courier new"; font-size: 1rem; background-color: #EEE; }
+code span, code i, code em, code strong { font-family: inherit; padding: 0 3px; }
+code .code-prompt { background-color: #E2F0CB; }
+code .code-negprompt { background-color: #FDD1D2; }
+code .code-negkw { background-color: #F2DBE0; }
+code .code-style { background-color: #D3DCE6; }
+code .code-kw1 { background-color: #FFF8D1; }
+code .code-kw2 { background-color: #FFE6C2; }
+code .code-kw3 { background-color: #f0defd; }
+
+fieldset { max-width: 800px; padding: 10px 0; border: none; border-top: 1px solid #CCC; }
+legend { padding: 0 1rem 0 0; }
+
+aside { max-width: 800px; margin: 0 40px; background-color: rgba(255,255,255,0.7); }
+aside h4 { margin: 0 0 10px 0; font-size: 1.2rem; }
+aside a { display: block; margin: 0 0 5px 0; padding: 2px 5px; font-weight: 400; text-decoration: none; background-color: rgba(175,175,175,0.40); }
+aside a:hover { background-color: rgba(146,146,146,0.40); }
+
+@media screen and (min-width: 1000px) {
+    aside { position: fixed; top: 9rem; right: 1rem; z-index: 999; margin: 0; padding: 5px; width: 200px; }
+}
+
+</style>
+<script type="text/javascript">
+document.addEventListener("DOMContentLoaded",function(event){
+    // Initialize Lazy Loading
+    LL = new LazyLoad({});
+});
+</script>
+</head>
+<body>
+
+<header>
+
+    <h1>Stable Diffusion 1.5 Cheat Sheet - Documentation &amp; FAQ</h1>
+    
+</header>
+
+<aside>
+    <h4>Table of Contents</h4>
+    <a href="#generation">Image Generation for Styles</a>
+    <a href="#artistcheck">How to Test an Artist Style</a>
+    <a href="#forceresults">Forcing Results</a>
+    <a href="#faq">FAQ</a>
+</aside>
+
+<section id="generation">
+
+    <h3>Image Generation for Styles</h3>
+    
+    <p>All images were generated with either the <a href="https://huggingface.co/XpucT/Deliberate">Deliberate v2</a> or the <a href="https://huggingface.co/Lykon/DreamShaper">DreamShaper 3.2</a> Checkpoint.<br>Sampler was DMP++ 2M Karras or DMP++ SDE Karras, depending on the better result.<br>Final resolution never smaller than 768px &times; 768px.</p>
+    
+    <h4>The prompts for the <a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Features#prompts-from-file-or-textbox">textbox</a> were:</h4>
+    
+    <code><span class="code-prompt">--prompt</span> <span class="code-style">style of ArtistName</span></code>
+    <code><span class="code-prompt">--prompt</span> <span class="code-style">style of ArtistName</span>, <span class="code-kw1">woman</span></code>
+    <code><span class="code-prompt">--prompt</span> <span class="code-style">style of ArtistName</span>, <span class="code-kw2">Henry C_____</span> <span class="code-negprompt">--negative_prompt</span> <span class="code-negkw">superman</span></code>
+    <code><span class="code-prompt">--prompt</span> <span class="code-style">style of ArtistName</span>, <span class="code-kw3">city</span> <em>or</em> <span class="code-kw3">village</span> <em>or</em> <span class="code-kw3">landscape</span></code>
+    
+    <p>While Deliberate has some NSFW Checkpoint mixed in and needs 'nsfw' in the negative prompt, DreamShaper likes manga a lot and frequently requires 'manga, anime' in the np.</p>
+    
+    <h4>Why these prompts?</h4>
+    
+    <p><strong>The first line</strong> produces a broad, uninfluenced impression of what is most common for that artist (landscape, person, etc.).</p>
+    <p><strong>With 'woman',</strong> you will get a wider range of portraits that are more in line with the artist's personal aesthetic.</p>
+    <p><strong>For the third line:</strong> The actor Henry C. is currently well-known and has been well-trained into SD. You can also judge the dominance of a style if he is still rendered normally (weak artist style) or when his superhero costume appears.</p>
+    <p><strong>The last line</strong>, 'city' (sometimes replaced by 'village'), will give you a good idea of how houses, people, and technical items (cars, bikes, etc.) appear.</p>
+
+    <h4>Negative Prompt Styles</h4>
+
+    <p>These are the negative prompts that were used to generate the images. They are reduced to contain the minimum keywords (human anatomy) to not influence the styles too much.</p>
+    
+    <p>I'm including these for documentation purposes only; please make sure to do your own research.</p>
+    
+    <fieldset>
+        <legend>Basic Negative Prompt</legend>
+        <code>mutation, deformed, deformed iris, duplicate, morbid, mutilated, disfigured, poorly drawn hand, poorly drawn face, bad proportions, gross proportions, extra limbs, cloned face, long neck, malformed limbs, missing arm, missing leg, extra arm, extra leg, fused fingers, too many fingers, extra fingers, mutated hands, blurry, bad anatomy, out of frame, contortionist, contorted limbs, exaggerated features, disproportionate, twisted posture, unnatural pose, disconnected, disproportionate, warped, misshapen, out of scale</code>
+    </fieldset>
+    
+    <p>'NSFW', 'Border' and 'Signature' were always selected.</p>
+    
+    <fieldset>
+        <legend>NSFW</legend>
+        <code>nude, naked, nsfw, nipple, genitals, penis, vagina</code>
+    </fieldset>
+    
+    <fieldset>
+        <legend>Border</legend>
+        <code>border, frame, picture frame</code>
+    </fieldset>
+    
+    <fieldset>
+        <legend>Signature</legend>
+        <code>logo, text, signature, watermark, copyright</code>
+    </fieldset>
+    
+    <p>In order to limit the influence of manga/anime from checkpoint merges, it is occasionally necessary to include Southeast Asian countries in the negative prompt. This is not done for Asian artists or manga or anime styles.</p>
+    
+    <fieldset>
+        <legend>No Anime / Manga</legend>
+        <code>anime, manga, asian <em>[OPTIONAL IF NEEDED: chinese, japanese, korean]</em></code>
+    </fieldset>
+    
+</section>
+
+<section id="artistcheck">
+
+    <h3>How To Check if an Artist Is Known</h3>
+    
+    <p><strong>Use the 1.5 base model of SD</strong>, which has all information uninfluenced by any merges, and look for consistency in the results. At the same time, check the search results for that artist's name to compare and get a feel for what they are known for.</p>
+    <p>Here are two examples, both made with the standard prompts:</p>
+    
+    <figure class="wide">
+        <img class="lazy" data-src="img/stable-diffusion-artist-check-charles-dauphin.webp" width="100%" height="auto">
+        <figcaption>Charles Dauphin - Two batches of four prompts, at 512px &times; 512px</figcaption>
+    </figure>
+    
+    <p>The results for 'Charles Dauphin' are all over the place - photos, paintings, a catalog page - save to say he's unknown to SD.</p>
+    
+    <figure class="wide">
+        <img class="lazy" data-src="img/stable-diffusion-artist-check-petros-afshar.webp" width="100%" height="auto">
+        <figcaption>Petros Afshar - Two batches of four prompts, at 512px &times; 512px</figcaption>
+    </figure>
+    
+    <p>The results for 'Petros Afshar' are consistent. Similar colors, shapes, the art medium - SD knows this artist.</p>
+    
+    <p>Sometimes things aren't as black and white, and more testing is required. Create a few more test images or switch to a more refined checkpoint/model and test there.</p>
+
+</section>
+
+<section id="forceresults">
+
+    <h3>Forcing Results</h3>
+
+    <p>Sometimes the generated images of a person are 'unflexible' or the style is not strong enough to produce the results you want.</p>
+
+    <figure class="wide">
+        <img class="lazy" data-src="img/stable-diffusion-artist-check-emily-balivet-h-c-problem.webp" width="100%" height="auto">
+        <figcaption>Emily Balivet - The generated image of H.C. is not in the desired style</figcaption>
+    </figure>
+    
+    <p>In this case, you can try and force a style by using the <a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Features#prompt-editing">[from:to:when]</a> tag.</p>
+    
+    <code>[<span class="code-prompt">from</span>:<span class="code-style">to</span>:<span class="code-kw3">when</span>] - [<span class="code-prompt">man</span>:<span class="code-style">Henry Cavill</span>:<span class="code-kw3">0.3</span>]</code>
+    
+    <p>This will begin with an image of a man in the desired style and will then transition to H.C. at 30% of the generation. (For example, if you set it to 100 steps, it would switch over at step 30.)</p>
+    
+    <div class="gallery">
+    
+    <figure>
+        <img class="lazy" data-src="img/forced-style-01.webp">
+        <figcaption>[man:Henry Cavill:0.1] - too early</figcaption>
+    </figure>
+    
+    <figure>
+        <img class="lazy" data-src="img/forced-style-02.webp">
+        <figcaption>[man:Henry Cavill:0.2] - still too early</figcaption>
+    </figure>
+    
+    <figure>
+        <img class="lazy" data-src="img/forced-style-03.webp">
+        <figcaption>[man:Henry Cavill:0.3] - good</figcaption>
+    </figure>
+    
+    </div>
+    
+    <p>A good percentage for the switch seems to be between 0.25 and 0.35.</p>
+    
+</section>
+
+<section id="tipstricks">
+
+    <h3>Additional Tips</h3>
+    
+    <ul>
+        <li>The term "portrait of" has a bias towards old master oil paintings and frequently creates images of a person's upper body from the head to the shoulders.</li>
+        <li>Try to use a low number of steps. When I use the 'DPM++ 2M Karas' sampler, I usually go with 20 (+ 10 for Highres Fix).</li>
+    </ul>
+
+</section>
+
+<section id="faq">
+
+    <h3>FAQ</h3>
+    
+    <h4>How can I add my own styles? Why is there no option to add my own?</h4>
+    
+    <p>There is no simple way to add your own styles. Either manually edit the JSON data, or write your own script to edit the dataset.</p>
+    <p>I made a very simple PHP script for my own use, but I don't have the time to deal with any security or support issues if I made that publicly available.</p>
+    
+    <h4>Why no website?</h4>
+    
+    <p>I liked the concept of a tool that doesn't require the internet and runs on every computer (with a browser). No matter what happens elsewhere, all you have to do is download it, and it is yours. Renting web space that is quick and has a sufficient amount of traffic would also require financial investment. That's not something I'm interested in.</p>
+
+</section>
+
+<footer>Created 2023 - Version 1.2.0 - <a href="https://github.com/SupaGruen/StableDiffusion-CheatSheet">GitHub</a></footer>
+
+</body>
+</html>
