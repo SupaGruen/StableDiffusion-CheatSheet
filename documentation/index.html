@@ -68,7 +68,7 @@ a { font-weight: 700; }
 a:hover { text-decoration: none; }
 
 ul { margin: 0; padding: 0; }
-ul li { margin: 0 0 1rem 1rem; padding: 0; font-size: 1.2rem; }
+ul li { margin: 0 0 1rem 1rem; padding: 0; max-width: 800px; font-size: 1.2rem; }
 
 figure { position: relative; margin: 0; padding: 0; }
 figure.wide { width: 100%; max-width: 800px; }
@@ -252,7 +252,7 @@ document.addEventListener("DOMContentLoaded",function(event){
     
     <ul>
         <li>The term "portrait of" has a bias towards old master oil paintings and frequently creates images of a person's upper body from the head to the shoulders.</li>
-        <li>Try to use a low number of steps. When I use the 'DPM++ 2M Karas' sampler, I usually go with 20 (+ 10 for Highres Fix).</li>
+        <li>Try to use a low number of steps.<br>When I use the 'DPM++ 2M Karas' sampler, I usually go with 20 (+ 10 for Highres Fix).</li>
     </ul>
 
 </section>
@@ -260,6 +260,10 @@ document.addEventListener("DOMContentLoaded",function(event){
 <section id="faq">
 
     <h3>FAQ</h3>
+    
+    <h4>Help! All my liked styles are gone!?</h4>
+    
+    <p>Your likes are saved in your browser and connected to the folder where the cheat sheet is saved. Simply move the folder back if you moved it.</p>
     
     <h4>How can I add my own styles? Why is there no option to add my own?</h4>
     
@@ -269,6 +273,10 @@ document.addEventListener("DOMContentLoaded",function(event){
     <h4>Why no website?</h4>
     
     <p>I liked the concept of a tool that doesn't require the internet and runs on every computer (with a browser). No matter what happens elsewhere, all you have to do is download it, and it is yours. Renting web space that is quick and has a sufficient amount of traffic would also require financial investment. That's not something I'm interested in.</p>
+    
+    <h4>How much time did all of this take?</h4>
+    
+    <p>I'm using a Nvidia GeForce RTX 3060 (12GB) and generate a minimum of 20 images (easy to prompt style) and a maximum of around 120 images per style (if I can't get it right). All the free time! (I didn't do the math, sorry. :)</p>
 
 </section>
 

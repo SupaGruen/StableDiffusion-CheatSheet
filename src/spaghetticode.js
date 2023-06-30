@@ -622,7 +622,7 @@ document.addEventListener('DOMContentLoaded',function(event){
 
         // https://github.com/himuro-majika/Stable_Diffusion_image_metadata_viewer
         function getComment(tags) {
-            //console.dir(JSON.parse(JSON.stringify(tags)));
+            console.dir(JSON.parse(JSON.stringify(tags)));
             let com = '';
 
             // Exif - JPG
@@ -636,6 +636,26 @@ document.addEventListener('DOMContentLoaded',function(event){
                 com = tags.parameters.description;
                 extractPrompt(com);
                 return;
+            }
+            
+            // Non SD image but tags available - experimental, might remove again
+            if(tags && (tags.UserComment === undefined) && (tags.parameters === undefined)) {
+                function printValues(obj) {
+                    for(var k in obj) {
+                        if(obj[k] instanceof Object) {
+                            tagoutput = tagoutput + '<br>' + k + ': ';
+                            printValues(obj[k]);
+                        } else {
+                            tagoutput = tagoutput + obj[k] + ' ';
+                        };
+                    }
+                };
+                
+                let tagoutput = '';
+                var test1 = JSON.stringify(tags).replace(/(^,)|(,$)/g,""); //trim commas to prevent JSON parse error
+                var tagsobj = JSON.parse(test1);
+                printValues(tagsobj);
+                allMetaData.innerHTML = '<p>No Stable Diffusion EXIF data detected</p><p>' + tagoutput + '</p>';
             }
         }
 
