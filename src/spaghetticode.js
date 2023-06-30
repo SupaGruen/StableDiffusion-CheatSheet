@@ -413,7 +413,7 @@ document.addEventListener('DOMContentLoaded',function(event){
         if(matches){
             var getSimilar = [];
             for(var i in matches.ratings){
-                if(matches.ratings[i].rating > 0.4){ //console.log(matches.ratings[i].target + ' - ' + matches.ratings[i].rating)
+                if(matches.ratings[i].rating > 0.4){
                     getSimilar.push(matches.ratings[i].target);
                 }
             }
@@ -437,7 +437,6 @@ document.addEventListener('DOMContentLoaded',function(event){
             searchinfo.innerHTML = ' - ' + search_query + ' (' + countshownstyles + ')'; notavail.innerHTML = '';
             if(allarrayresults){ notavail.innerHTML = 'Similar names of <a href="./only-data.html#notavailable" class="internal">artists that are unavailable</a>: <span id="naaresults">' + allarrayresults + '</span>'; }
         } else if((countshownstyles==0)&&(search_query!=0)) {
-            //console.log(matches.bestMatch.target); //produces response with rating to each string   
             searchinfo.innerHTML = ''; notavail.innerHTML = '';
             if(allarrayresults){ notavail.innerHTML = 'Checking for similar names and <a href="./only-data.html#notavailable" class="internal">artists that are unavailable</a>: <span id="naaresults">' + onlyavailable + allarrayresults + '</span>'; }
         } else {
@@ -523,7 +522,7 @@ document.addEventListener('DOMContentLoaded',function(event){
         };
     };
     
-    // Start of Metadata Viewer Stuff
+    // Start of Metadata Viewer
     
     // Drag and Drop Start
     // Joseph Zimmerman - https://www.smashingmagazine.com/2018/01/drag-drop-file-uploader-vanilla-js/
@@ -600,7 +599,7 @@ document.addEventListener('DOMContentLoaded',function(event){
             metadatawrapper.classList.add('hasimg');
         }
 
-        const tags = await ExifReader.load(file).catch(error => { console.log('No EXIF Data'); allMetaData.innerHTML = '<p>No EXIF data detected</p>'; });
+        const tags = await ExifReader.load(file).catch(error => { allMetaData.innerHTML = '<p>No EXIF data detected</p>'; });
         if(tags){ getComment(tags); }
 
         // https://www.geeksforgeeks.org/how-to-convert-special-characters-to-html-in-javascript/
@@ -622,7 +621,7 @@ document.addEventListener('DOMContentLoaded',function(event){
 
         // https://github.com/himuro-majika/Stable_Diffusion_image_metadata_viewer
         function getComment(tags) {
-            console.dir(JSON.parse(JSON.stringify(tags)));
+            //console.dir(JSON.parse(JSON.stringify(tags)));
             let com = '';
 
             // Exif - JPG
@@ -638,15 +637,17 @@ document.addEventListener('DOMContentLoaded',function(event){
                 return;
             }
             
-            // Non SD image but tags available - experimental, might remove again
+            // Non SD image but tags
             if(tags && (tags.UserComment === undefined) && (tags.parameters === undefined)) {
                 function printValues(obj) {
                     for(var k in obj) {
-                        if(obj[k] instanceof Object) {
-                            tagoutput = tagoutput + '<br>' + k + ': ';
-                            printValues(obj[k]);
-                        } else {
-                            tagoutput = tagoutput + obj[k] + ' ';
+                        if(!(k=='value'||k=='Thumbnail'||k=='Special Instructions'||k=='Padding')){
+                            if(obj[k] instanceof Object) {
+                                tagoutput = tagoutput + '<br>' + k + ': ';
+                                printValues(obj[k]);
+                            } else {
+                                tagoutput = tagoutput + obj[k] + ' ';
+                            };
                         };
                     }
                 };
