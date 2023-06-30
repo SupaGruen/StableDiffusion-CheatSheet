@@ -6,7 +6,7 @@ This began as a personal collection of styles and notes. I was curious to see ho
 
 ## Artist Inspired Styles
 
-- Over 700 manually tested styles
+- Over 833 manually tested styles
 - Copy the style prompt with one click
 - Search and filter
 - One click to look up the artist via search engine
