@@ -625,7 +625,7 @@ document.addEventListener('DOMContentLoaded',function(event){
             let com = '';
 
             // Exif - JPG
-            if(tags && tags.UserComment) {
+            if(tags.UserComment) {
                 com = decodeUnicode(tags.UserComment.value);
                 extractPrompt(com);
                 return;
@@ -637,8 +637,15 @@ document.addEventListener('DOMContentLoaded',function(event){
                 return;
             }
             
+            // Comfy UI
+            if(tags.prompt) {
+                com = JSON.parse(tags.prompt.value);
+                extractComfyPrompt(com);
+                return;
+            }
+            
             // Non SD image but tags
-            if(tags && (tags.UserComment === undefined) && (tags.parameters === undefined)) {
+            if(tags && (tags.UserComment === undefined) && (tags.parameters === undefined) && (tags.prompt === undefined)) {
                 function printValues(obj) {
                     for(var k in obj) {
                         if(!(k=='value'||k=='Thumbnail'||k=='Special Instructions'||k=='Padding')){
@@ -673,6 +680,38 @@ document.addEventListener('DOMContentLoaded',function(event){
             })
             return decode;
         }
+
+
+        function extractComfyPrompt(com) {
+            
+            const noduplicates = [];
+            let MDOut = '<p><span><strong>UI</strong>ComfyUI</span>';
+            
+            const isObject = (val) => {
+                if(val === null) { return false; }
+                return typeof val === 'object';
+            };
+
+            const nestedObject = (obj) => {
+                
+                for (const key in obj) {
+                    if(isObject(obj[key])){
+                        nestedObject(obj[key]);
+                    } else {
+                       if((isNaN(key) == true) && !noduplicates.includes(key)){
+                           MDOut = MDOut + '<span><strong>' + key + '</strong> ' + obj[key] + '</span>';
+                           noduplicates.push(key);
+                       }
+                    }  
+                }
+                
+            };
+            nestedObject(com);
+
+            MDOut = MDOut + '</p>';
+            allMetaData.innerHTML = MDOut;
+        }
+
 
         function extractPrompt(com) {
 
